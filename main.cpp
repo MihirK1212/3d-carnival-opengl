@@ -25,6 +25,7 @@ using namespace std;
 
 double Txval = 0, Tyval = 0, Tzval = 0;
 double windowHeight = 1000, windowWidth = 1000;
+double  human_x = 10, human_y = -15 , human_z = 50, angle_x = 0, leg_angle_1 = 0, leg_angle_2 = 0, leg_flag = 0, leg_coming_back = 0, hand_angle_1 = 0, hand_angle_2 = 0;
 GLfloat alpha = 0.0, theta = 0.0, orbiterAlpha = -45.0, orbiterTheta = 0.0, testTheta = -45.0, pirateBoatTheta = 0.0, cmOrbiterAlpha = 0.0, cmOrbiterTheta = 0.0, skyDropPos = 0.0;
 double eyeX = -10, eyeY = 5.0, eyeZ = 100, refX = 0, refY = 0, refZ = 0;
 GLboolean bRotate = false, uRotate = false, fanSwitch = false, door1 = false, orbiterFlag = false, testFlag = true, pirateBoatFlag = false, pirateBoatCheck = false, cmOrbiterFlag = false, skyDropFlag = false, upFlag = true, downFlag1 = true, downFlag2 = false, downFlag3 = false, show = false, day = true, switchOne = false, switchTwo = false, switchThree = false, switchFour = false;
@@ -1562,10 +1563,19 @@ void chair()
 
 void table()
 {
+    // // table
+    // glPushMatrix();
+    // glScalef(4, 0.3, 4);
+    // drawSphere(0.8, 0.4, 0.00, 0.4, 0.2, 0);
+    // glPopMatrix();
+
     // table
     glPushMatrix();
-    glScalef(4, 0.3, 4);
-    drawSphere(0.8, 0.4, 0.00, 0.4, 0.2, 0);
+    // glScalef(4, 0.3, 4);
+    // drawSphere(0.8, 0.4, 0.00, 0.4, 0.2, 0);
+    glTranslatef(-2.5, 0, -2);
+    glScalef(1.6, 0.3, 1.6);
+    drawCube1(0.8, 0.4, 0.00, 0.4, 0.2, 0);
     glPopMatrix();
 
     // stand
@@ -2931,6 +2941,75 @@ void bench2()
     glDisable(GL_TEXTURE_2D);
 }
 
+void drawHuman()
+{
+    drawCube1(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
+}
+
+double radian(double angle)
+{
+    double pi = 3.14159265359;
+    return (angle * (pi / 180));
+}
+
+void human() 
+{
+    int body_x = human_x , body_y = human_y, body_z = human_z;
+
+    //mainbody
+    glPushMatrix();
+    glTranslatef(body_x, body_y, body_z);
+    glRotatef(-(90-angle_x),0,1,0);
+    glScalef(1.5, 5, 1);
+    drawHuman();
+    glPopMatrix();
+
+    //hand1
+    glPushMatrix();
+    glTranslatef(body_x, body_y, body_z); //translate to actual position of the human
+    glRotatef(-(90-angle_x),0,1,0); //rotate w.r.t y axis to simulate orientation of human
+    glTranslatef(1.5,5,1); //translate relative to the main body of the human
+    glRotatef(hand_angle_1,1,0,0); //rotate w.r.t x axis to simulate hand movement
+    glScalef(0.5, 0.5, 1.5); //scaling
+    glTranslatef(-3,-3,-3); //take top right corner of box to origin
+    drawHuman();
+    glPopMatrix();
+
+    //hand2
+    glPushMatrix();
+    glTranslatef(body_x, body_y, body_z);
+    glRotatef(-(90-angle_x),0,1,0);
+    glTranslatef(4,5,1);
+    glRotatef(hand_angle_2,1,0,0);
+    glScalef(0.5, 0.5, 1.5);
+    glTranslatef(-3,-3,-3);
+    drawHuman();
+    glPopMatrix();
+
+    //leg1
+    glPushMatrix();
+    glTranslatef(body_x, body_y, body_z);
+    glRotatef(-(90-angle_x),0,1,0);
+    glTranslatef(1.5,0,2);
+    glRotatef(leg_angle_1,1,0,0);
+    glScalef(0.5, 2, 0.5);
+    glTranslatef(-3,-3,-3);
+    drawHuman();
+    glPopMatrix();
+
+    //leg2
+    glPushMatrix();
+    glTranslatef(body_x, body_y, body_z);
+    glRotatef(-(90-angle_x),0,1,0);
+    glTranslatef(4,0,2);
+    glRotatef(leg_angle_2,1,0,0);
+    glScalef(0.5, 2, 0.5);
+    glTranslatef(-3,-3,-3);
+    drawHuman();
+    glPopMatrix();
+}
+
+
 void display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -2960,38 +3039,39 @@ void display(void)
     ground();
     walls();
     trees();
+    human();
 
-    // for (float i = -70; i <= -10; i += 20)
-    // {
-    //     glPushMatrix();
-    //     glTranslatef(i, -20, 55);
-    //     bench1();
-    //     glPopMatrix();
-    // }
+    for (float i = -70; i <= -10; i += 20)
+    {
+        glPushMatrix();
+        glTranslatef(i, -20, 55);
+        bench1();
+        glPopMatrix();
+    }
 
-    // for (float i = -60; i <= -20; i += 20)
-    // {
-    //     glPushMatrix();
-    //     glTranslatef(i, -20, 55);
-    //     bench2();
-    //     glPopMatrix();
-    // }
+    for (float i = -60; i <= -20; i += 20)
+    {
+        glPushMatrix();
+        glTranslatef(i, -20, 55);
+        bench2();
+        glPopMatrix();
+    }
 
-    // for (float i = 30; i <= 100; i += 20)
-    // {
-    //     glPushMatrix();
-    //     glTranslatef(i, -20, 55);
-    //     bench1();
-    //     glPopMatrix();
-    // }
+    for (float i = 30; i <= 100; i += 20)
+    {
+        glPushMatrix();
+        glTranslatef(i, -20, 55);
+        bench1();
+        glPopMatrix();
+    }
 
-    // for (float i = 40; i <= 90; i += 20)
-    // {
-    //     glPushMatrix();
-    //     glTranslatef(i, -20, 55);
-    //     bench2();
-    //     glPopMatrix();
-    // }
+    for (float i = 40; i <= 90; i += 20)
+    {
+        glPushMatrix();
+        glTranslatef(i, -20, 55);
+        bench2();
+        glPopMatrix();
+    }
 
     /*  glPushMatrix();
       glTranslatef(-40, -20, 55);
@@ -3018,75 +3098,75 @@ void display(void)
     streetLight4();
     glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(0, 0, 10);
-    // cafeteria();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(0, 0, 10);
+    cafeteria();
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(65, 0, -30);
-    // ferrisWheel();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(65, 0, -30);
+    ferrisWheel();
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(75, 0, 20);
-    // orbiter();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(75, 0, 20);
+    orbiter();
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(-50, 0, -30);
-    // complexOrbiter();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-50, 0, -30);
+    complexOrbiter();
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(-50, 0, 10);
-    // pirateBoat();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-50, 0, 10);
+    pirateBoat();
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(-20, -20, -40);
-    // skyDrop();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-20, -20, -40);
+    skyDrop();
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(-30, 0, 40);
-    // balloonCart();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-30, 0, 40);
+    balloonCart();
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(-60, 0, 40);
-    // balloonCart();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-60, 0, 40);
+    balloonCart();
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(45, 0, 48);
-    // balloonCart();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(45, 0, 48);
+    balloonCart();
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(80, 0, 48);
-    // balloonCart();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(80, 0, 48);
+    balloonCart();
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(15, 0, -3);
-    // flagpole();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(15, 0, -3);
+    flagpole();
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(5, 0, -3);
-    // flagpole1();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(5, 0, -3);
+    flagpole1(0);
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(25, 0, -3);
-    // flagpole2();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(25, 0, -3);
+    flagpole2();
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(-5, 0, -3);
-    // flagpole3();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-5, 0, -3);
+    flagpole3();
+    glPopMatrix();
 
     glDisable(GL_LIGHTING);
 
@@ -3292,6 +3372,82 @@ void myKeyboardFunc(unsigned char key, int x, int y)
     glutPostRedisplay();
 }
 
+void specialKeyboardFunc(int key, int x, int y)
+{
+    double delta_hand = 5, delta_leg = 10;
+
+    switch(key)
+    {
+        
+        case GLUT_KEY_UP:
+
+            human_x+=(cos(radian(angle_x)));
+            human_z-=(sin(radian(angle_x)));
+
+            if(!leg_flag) {
+                if(!leg_coming_back){
+                    leg_angle_1+=delta_leg;
+                    hand_angle_1-=(delta_hand);
+                    hand_angle_2+=(delta_hand);
+                }
+                else{
+                    leg_angle_1-=delta_leg;
+                    hand_angle_1+=(delta_hand);
+                    hand_angle_2-=(delta_hand);
+                }
+                
+                if(leg_angle_1<=0 && leg_coming_back) {
+                    leg_angle_1 = leg_angle_2 = 0;
+                    leg_flag = 1;
+                    leg_coming_back = 0;
+                }
+                else if(leg_angle_1>=90 && !leg_coming_back) {
+                    leg_angle_1 = 90; leg_angle_2 = 0;
+                    leg_flag = 0;
+                    leg_coming_back = 1;
+                }
+            }
+            else {
+                if(!leg_coming_back){
+                    leg_angle_2+=delta_leg;
+                    hand_angle_1+=(delta_hand);
+                    hand_angle_2-=(delta_hand);
+                }
+                else{
+                    leg_angle_2-=delta_leg;
+                    hand_angle_1-=(delta_hand);
+                    hand_angle_2+=(delta_hand);
+                }
+                
+                if(leg_angle_2<=0 && leg_coming_back) {
+                    leg_angle_1 = leg_angle_2 = 0;
+                    leg_flag = 0;
+                    leg_coming_back = 0;
+                }
+                else if(leg_angle_2>=90 && !leg_coming_back) {
+                    leg_angle_1 = 0; leg_angle_2 = 90;
+                    leg_flag = 1;
+                    leg_coming_back = 1;
+                }
+            }
+        break;
+        case GLUT_KEY_DOWN:
+            human_x-=(cos(radian(angle_x)));
+            human_z+=(sin(radian(angle_x)));
+        break;
+        case GLUT_KEY_LEFT:
+            angle_x = angle_x + 5;
+            if(angle_x<=-360 || angle_x>=360){angle_x = 0;}
+        break;
+        case GLUT_KEY_RIGHT:
+            angle_x = (angle_x - 5);
+            if(angle_x<=-360 || angle_x>=360){angle_x = 0;}
+        break;
+    }
+
+    glutPostRedisplay();
+}
+
 void animate()
 {
     if (skyDropFlag == true)
@@ -3457,7 +3613,37 @@ void animate()
     {
         xf += 0.1;
         if (xf >= 0.6)
-        {
+        { for (float i = -70; i <= -10; i += 20)
+    {
+        glPushMatrix();
+        glTranslatef(i, -20, 55);
+        bench1();
+        glPopMatrix();
+    }
+
+    for (float i = -60; i <= -20; i += 20)
+    {
+        glPushMatrix();
+        glTranslatef(i, -20, 55);
+        bench2();
+        glPopMatrix();
+    }
+
+    for (float i = 30; i <= 100; i += 20)
+    {
+        glPushMatrix();
+        glTranslatef(i, -20, 55);
+        bench1();
+        glPopMatrix();
+    }
+
+    for (float i = 40; i <= 90; i += 20)
+    {
+        glPushMatrix();
+        glTranslatef(i, -20, 55);
+        bench2();
+        glPopMatrix();
+    }
             xflag = false;
         }
     }
@@ -3557,14 +3743,21 @@ int main(int argc, char **argv)
 
     LoadTexture2("sgi images/dunkindonuts.sgi", 8);
 
-    //sky
-    LoadTexture2("sgi images/front.sgi", 9);
-    LoadTexture2("sgi images/left.sgi", 12);
-    LoadTexture2("sgi images/right.sgi", 11);
-    LoadTexture2("sgi images/back.sgi", 10);
-    LoadTexture2("sgi images/up.sgi", 28);
-    LoadTexture2("sgi images/nightsky.sgi", 29);
+    // //sky
+    // LoadTexture2("sgi images/front.sgi", 9);
+    // LoadTexture2("sgi images/left.sgi", 12);
+    // LoadTexture2("sgi images/right.sgi", 11);
+    // LoadTexture2("sgi images/back.sgi", 10);
+    // LoadTexture2("sgi images/up.sgi", 28);
+    // LoadTexture2("sgi images/nightsky.sgi", 29);
 
+
+    LoadTexture2("sgi images/whiteground.sgi", 9);
+    LoadTexture2("sgi images/whiteground.sgi", 12);
+    LoadTexture2("sgi images/whiteground.sgi", 11);
+    LoadTexture2("sgi images/whiteground.sgi", 10);
+    LoadTexture2("sgi images/whiteground.sgi", 28);
+    LoadTexture2("sgi images/whiteground.sgi", 29);
 
     LoadTexture2("sgi images/skydrop.sgi", 13);
 
@@ -3643,6 +3836,7 @@ int main(int argc, char **argv)
 
     glutReshapeFunc(fullScreen);
     glutKeyboardFunc(myKeyboardFunc);
+    glutSpecialFunc(specialKeyboardFunc);
     glutDisplayFunc(display);
     glutIdleFunc(animate);
     glutMainLoop();
