@@ -1010,11 +1010,11 @@ void tree()
 
     glBindTexture(GL_TEXTURE_2D, ID2[30]);
 
-    glPushMatrix();
-    glScalef(1, 2, 1);
-    gluQuadricTexture(quad, 1);
-    gluSphere(quad, 4, 100, 100);
-    glPopMatrix();
+    // glPushMatrix();
+    // glScalef(1, 2, 1);
+    // gluQuadricTexture(quad, 1);
+    // gluSphere(quad, 4, 100, 100);
+    // glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[29]);
     glPushMatrix();
@@ -2475,7 +2475,7 @@ void flagpole()
     drawFlag();
 }
 
-void flagpole1()
+void flagpole1(int seed)
 {
     glPushMatrix();
     glTranslatef(0, 5.5, 0);
@@ -2490,7 +2490,13 @@ void flagpole1()
     drawSphere(.502, 0, 0, 0.26, 0, 0);
     glPopMatrix();
 
-    matCurve(1, 1, 0);
+    srand(seed);
+
+    float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+    float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+    float r3 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+
+    matCurve(r1, r2, r3);
     drawFlag();
 }
 
@@ -2534,11 +2540,12 @@ void flagpole3()
 
 void trees()
 {
+    
     for (float i = -40; i <= 55; i += 15)
     {
         glPushMatrix();
         glTranslatef(-70, -2, i);
-        tree();
+        flagpole1(i);
         glPopMatrix();
     }
 
@@ -2546,7 +2553,7 @@ void trees()
     {
         glPushMatrix();
         glTranslatef(100, -2, i);
-        tree();
+        flagpole1(i);
         glPopMatrix();
     }
 }
@@ -2558,9 +2565,9 @@ void wall()
     glBindTexture(GL_TEXTURE_2D, ID2[31]);
     glBegin(GL_QUADS);
     glTexCoord2f(1.0f, 1.0f);
-    glVertex3f(10, 4, 3);
+    glVertex3f(10, 10, 3);
     glTexCoord2f(0.0f, 1.0f);
-    glVertex3f(0, 4, 3);
+    glVertex3f(0, 10, 3);
     glTexCoord2f(0.0f, 0.0f);
     glVertex3f(0, 0, 3);
     glTexCoord2f(1.0f, 0.0f);
@@ -2671,10 +2678,17 @@ void spotLight1()
 
 void streetLight1()
 {
-    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat mat_ambient[] = {0.7, 0.7, 0.7, 1.0};
-    GLfloat mat_ambient_color[] = {0.8, 0.8, 0.2, 1.0};
-    GLfloat mat_diffuse[] = {1.000, 0.843, 0.000, 1.0};
+    // GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+    // GLfloat mat_ambient[] = {0.7, 0.7, 0.7, 1.0};
+    // GLfloat mat_ambient_color[] = {0.8, 0.8, 0.2, 1.0};
+    // GLfloat mat_diffuse[] = {1.000, 0.843, 0.000, 1.0};
+    // GLfloat high_shininess[] = {100.0};
+    // GLfloat mat_emission[] = {1, 1, 1, 1.0};
+
+    GLfloat no_mat[] = {0.4, 0.3, 0.2, 1.0};
+    GLfloat mat_ambient[] = {0.5, 0.2, 0.6, 1.0};
+    GLfloat mat_ambient_color[] = {0.2, 0.5, 0.4, 1.0};
+    GLfloat mat_diffuse[] = {1.000, 0.443, 0.100, 1.0};
     GLfloat high_shininess[] = {100.0};
     GLfloat mat_emission[] = {1, 1, 1, 1.0};
 
@@ -2695,7 +2709,7 @@ void streetLight1()
     }
     glutSolidSphere(1.0, 16, 16);
     glPopMatrix();
-
+    
     streetLampbody();
 }
 
@@ -2733,10 +2747,17 @@ void spotLight2()
 
 void streetLight2()
 {
-    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat mat_ambient[] = {0.7, 0.7, 0.7, 1.0};
-    GLfloat mat_ambient_color[] = {0.8, 0.8, 0.2, 1.0};
-    GLfloat mat_diffuse[] = {1.000, 0.843, 0.000, 1.0};
+    // GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+    // GLfloat mat_ambient[] = {0.7, 0.7, 0.7, 1.0};
+    // GLfloat mat_ambient_color[] = {0.8, 0.8, 0.2, 1.0};
+    // GLfloat mat_diffuse[] = {1.000, 0.843, 0.000, 1.0};
+    // GLfloat high_shininess[] = {100.0};
+    // GLfloat mat_emission[] = {1, 1, 1, 1.0};
+
+    GLfloat no_mat[] = {0.4, 0.2, 0.0, 1.0};
+    GLfloat mat_ambient[] = {0.3, 0.3, 0.5, 1.0};
+    GLfloat mat_ambient_color[] = {0.5, 0.5, 0.0, 1.0};
+    GLfloat mat_diffuse[] = {0.000, 0.543, 0.100, 1.0};
     GLfloat high_shininess[] = {100.0};
     GLfloat mat_emission[] = {1, 1, 1, 1.0};
 
@@ -2795,10 +2816,17 @@ void spotLight3()
 
 void streetLight3()
 {
-    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat mat_ambient[] = {0.7, 0.7, 0.7, 1.0};
-    GLfloat mat_ambient_color[] = {0.8, 0.8, 0.2, 1.0};
-    GLfloat mat_diffuse[] = {1.000, 0.843, 0.000, 1.0};
+    // GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+    // GLfloat mat_ambient[] = {0.7, 0.7, 0.7, 1.0};
+    // GLfloat mat_ambient_color[] = {0.8, 0.8, 0.2, 1.0};
+    // GLfloat mat_diffuse[] = {1.000, 0.843, 0.000, 1.0};
+    // GLfloat high_shininess[] = {100.0};
+    // GLfloat mat_emission[] = {1, 1, 1, 1.0};
+
+    GLfloat no_mat[] = {0.0, 1.0, 0.4, 1.0};
+    GLfloat mat_ambient[] = {0.2, 0.2, 0.1, 1.0};
+    GLfloat mat_ambient_color[] = {0.4, 0.6, 0.5, 1.0};
+    GLfloat mat_diffuse[] = {0.000, 0.843, 0.000, 1.0};
     GLfloat high_shininess[] = {100.0};
     GLfloat mat_emission[] = {1, 1, 1, 1.0};
 
@@ -2933,37 +2961,37 @@ void display(void)
     walls();
     trees();
 
-    for (float i = -70; i <= -10; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        bench1();
-        glPopMatrix();
-    }
+    // for (float i = -70; i <= -10; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     bench1();
+    //     glPopMatrix();
+    // }
 
-    for (float i = -60; i <= -20; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        bench2();
-        glPopMatrix();
-    }
+    // for (float i = -60; i <= -20; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     bench2();
+    //     glPopMatrix();
+    // }
 
-    for (float i = 30; i <= 100; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        bench1();
-        glPopMatrix();
-    }
+    // for (float i = 30; i <= 100; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     bench1();
+    //     glPopMatrix();
+    // }
 
-    for (float i = 40; i <= 90; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        bench2();
-        glPopMatrix();
-    }
+    // for (float i = 40; i <= 90; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     bench2();
+    //     glPopMatrix();
+    // }
 
     /*  glPushMatrix();
       glTranslatef(-40, -20, 55);
@@ -2990,75 +3018,75 @@ void display(void)
     streetLight4();
     glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(0, 0, 10);
-    cafeteria();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(0, 0, 10);
+    // cafeteria();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(65, 0, -30);
-    ferrisWheel();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(65, 0, -30);
+    // ferrisWheel();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(75, 0, 20);
-    orbiter();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(75, 0, 20);
+    // orbiter();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-50, 0, -30);
-    complexOrbiter();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-50, 0, -30);
+    // complexOrbiter();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-50, 0, 10);
-    pirateBoat();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-50, 0, 10);
+    // pirateBoat();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-20, -20, -40);
-    skyDrop();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-20, -20, -40);
+    // skyDrop();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-30, 0, 40);
-    balloonCart();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-30, 0, 40);
+    // balloonCart();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-60, 0, 40);
-    balloonCart();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-60, 0, 40);
+    // balloonCart();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(45, 0, 48);
-    balloonCart();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(45, 0, 48);
+    // balloonCart();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(80, 0, 48);
-    balloonCart();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(80, 0, 48);
+    // balloonCart();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(15, 0, -3);
-    flagpole();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(15, 0, -3);
+    // flagpole();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(5, 0, -3);
-    flagpole1();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(5, 0, -3);
+    // flagpole1();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(25, 0, -3);
-    flagpole2();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(25, 0, -3);
+    // flagpole2();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-5, 0, -3);
-    flagpole3();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-5, 0, -3);
+    // flagpole3();
+    // glPopMatrix();
 
     glDisable(GL_LIGHTING);
 
@@ -3445,7 +3473,8 @@ void animate()
     glutPostRedisplay();
 }
 
-void fullScreen(int w, int h)
+//DONE
+void fullScreen(int w, int h) 
 {
     // Prevent a divide by zero, when window is too short;you cant make a window of zero width.
     if (h == 0)
@@ -3523,24 +3552,26 @@ int main(int argc, char **argv)
     LoadTexture2("sgi images/red-metal.sgi", 5);
 
     LoadTexture2("sgi images/baskinrobbinslogo.sgi", 6);
-
+    
     LoadTexture2("sgi images/pizzahut.sgi", 7);
 
     LoadTexture2("sgi images/dunkindonuts.sgi", 8);
 
+    //sky
     LoadTexture2("sgi images/front.sgi", 9);
-
-    LoadTexture2("sgi images/back.sgi", 10);
-
-    LoadTexture2("sgi images/right.sgi", 11);
-
     LoadTexture2("sgi images/left.sgi", 12);
+    LoadTexture2("sgi images/right.sgi", 11);
+    LoadTexture2("sgi images/back.sgi", 10);
+    LoadTexture2("sgi images/up.sgi", 28);
+    LoadTexture2("sgi images/nightsky.sgi", 29);
+
 
     LoadTexture2("sgi images/skydrop.sgi", 13);
 
     LoadTexture2("sgi images/skydroplogo.sgi", 14);
 
-    LoadTexture2("sgi images/grass.sgi", 15);
+    // LoadTexture2("sgi images/grass.sgi", 15);
+    LoadTexture2("sgi images/whiteground.sgi", 15);
 
     LoadTexture2("sgi images/blackred.sgi", 16);
 
@@ -3566,15 +3597,15 @@ int main(int argc, char **argv)
 
     LoadTexture2("sgi images/redwhite.sgi", 27);
 
-    LoadTexture2("sgi images/up.sgi", 28);
 
-    LoadTexture2("sgi images/nightsky.sgi", 29);
+    
 
     LoadTexture2("sgi images/treebark.sgi", 30);
 
     LoadTexture2("sgi images/bush.sgi", 31);
 
-    LoadTexture2("sgi images/purplewall.sgi", 32);
+    // LoadTexture2("sgi images/purplewall.sgi", 32);
+    LoadTexture2("sgi images/iitindore.sgi", 32);
 
     /* This portion is written for Windows.
 
