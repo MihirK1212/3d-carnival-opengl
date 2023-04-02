@@ -1,10 +1,3 @@
-//
-//  main.cpp
-//  FerrisWheel
-//
-//  Created by Noushin Gauhar on 16/5/21.
-//
-
 #define GL_SILENCE_DEPRECATION
 #include <GL/gl.h>
 #ifdef __APPLE_CC__
@@ -534,6 +527,181 @@ void sky(float x, float y, float z, float width, float height, float length)
     glDisable(GL_TEXTURE_2D);
 
     //
+}
+
+void ground3()
+{
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, ID2[14]);
+    glPushMatrix();
+    materialProperty();
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(250, -20, 150);
+    glTexCoord2f(5.0f, 0.0f);
+    glVertex3f(250, -20, -150);
+    glTexCoord2f(5.0f, 5.0f);
+    glVertex3f(200, -20, -150);
+    glTexCoord2f(0.0f, 5.0f);
+    glVertex3f(200, -20, 150);
+    glEnd();
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+}
+
+void ground4(){
+
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, ID2[14]);
+    glPushMatrix();
+    materialProperty();
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(150, -20, 150);
+    glTexCoord2f(5.0f, 0.0f);
+    glVertex3f(150, -20, 50);
+    glTexCoord2f(5.0f, 5.0f);
+    glVertex3f(200, -20, 50);
+    glTexCoord2f(0.0f, 5.0f);
+    glVertex3f(200, -20, 150);
+    glEnd();
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+}
+
+void ground5(){
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, ID2[14]);
+    glPushMatrix();
+    materialProperty();
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(150, -20, -50);
+    glTexCoord2f(5.0f, 0.0f);
+    glVertex3f(150, -20, -150);
+    glTexCoord2f(5.0f, 5.0f);
+    glVertex3f(200, -20, -150);
+    glTexCoord2f(0.0f, 5.0f);
+    glVertex3f(200, -20, -50);
+    glEnd();
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+}
+
+void drawPool(){
+
+    // glColor3f(0.2,0.2,0.2);
+
+    // right side
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, ID2[32]);
+    glPushMatrix();
+    materialProperty();
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(200, -20, 50);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(200, -40, 50);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(200, -40, -50);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex3f(200, -20, -50);
+    glEnd();
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    // left side
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, ID2[32]);
+    glPushMatrix();
+    materialProperty();
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(150, -20, 50);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(150, -40, 50);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(150, -40, -50);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex3f(150, -20, -50);
+    glEnd();
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+    // front side
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, ID2[32]);
+    glPushMatrix();
+    materialProperty();
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(150, -20, 50);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(150, -40, 50);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(200, -40, 50);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex3f(200, -20, 50);
+    glEnd();
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+
+    // back side
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, ID2[32]);
+    glPushMatrix();
+    materialProperty();
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(150, -20, -50);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(150, -40, -50);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(200, -40, -50);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex3f(200, -20, -50);
+    glEnd();
+
+    // bottom
+    // glColor4f(0.5,0.77,0.87,0.8);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, ID2[32]);
+    glPushMatrix();
+    materialProperty();
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(150, -40, 50);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(150, -40, -50);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(200, -40, -50);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex3f(200, -40, 50);
+    glEnd();
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+
+
+    // water
+    // glColor4f(0.5,0.77,0.87,0.8);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, ID2[33]);
+    glPushMatrix();
+    materialProperty();
+    glBegin(GL_QUADS);
+    // glNormal3f(0,1,0);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(150, -20, 50);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(150, -20, -50);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(200, -20, -50);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex3f(200, -20, 50);
+    glEnd();
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
 }
 
 void ground()
@@ -3040,6 +3208,10 @@ void display(void)
     walls();
     trees();
     human();
+    ground3();
+    ground5();
+    ground4();
+    drawPool();
 
     for (float i = -70; i <= -10; i += 20)
     {
@@ -3800,6 +3972,10 @@ int main(int argc, char **argv)
     // LoadTexture2("sgi images/purplewall.sgi", 32);
     LoadTexture2("sgi images/iitindore.sgi", 32);
 
+        LoadTexture2("sgi images/tiles.sgi", 33);
+
+    LoadTexture2("sgi images/water.sgi", 34);
+
     /* This portion is written for Windows.
 
      LoadTexture("whiteground.bmp",2);
@@ -3837,6 +4013,8 @@ int main(int argc, char **argv)
     glutReshapeFunc(fullScreen);
     glutKeyboardFunc(myKeyboardFunc);
     glutSpecialFunc(specialKeyboardFunc);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glutDisplayFunc(display);
     glutIdleFunc(animate);
     glutMainLoop();
