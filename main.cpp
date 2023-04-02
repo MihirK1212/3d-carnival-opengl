@@ -529,83 +529,28 @@ void sky(float x, float y, float z, float width, float height, float length)
     //
 }
 
-void ground3()
+void drawPool()
 {
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, ID2[14]);
-    glPushMatrix();
-    materialProperty();
-    glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(250, -20, 150);
-    glTexCoord2f(5.0f, 0.0f);
-    glVertex3f(250, -20, -150);
-    glTexCoord2f(5.0f, 5.0f);
-    glVertex3f(200, -20, -150);
-    glTexCoord2f(0.0f, 5.0f);
-    glVertex3f(200, -20, 150);
-    glEnd();
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-}
-
-void ground4(){
-
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, ID2[14]);
-    glPushMatrix();
-    materialProperty();
-    glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(150, -20, 150);
-    glTexCoord2f(5.0f, 0.0f);
-    glVertex3f(150, -20, 50);
-    glTexCoord2f(5.0f, 5.0f);
-    glVertex3f(200, -20, 50);
-    glTexCoord2f(0.0f, 5.0f);
-    glVertex3f(200, -20, 150);
-    glEnd();
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-}
-
-void ground5(){
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, ID2[14]);
-    glPushMatrix();
-    materialProperty();
-    glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(150, -20, -50);
-    glTexCoord2f(5.0f, 0.0f);
-    glVertex3f(150, -20, -150);
-    glTexCoord2f(5.0f, 5.0f);
-    glVertex3f(200, -20, -150);
-    glTexCoord2f(0.0f, 5.0f);
-    glVertex3f(200, -20, -50);
-    glEnd();
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-}
-
-void drawPool(){
 
     // glColor3f(0.2,0.2,0.2);
+
+    int tx = -175, ty = 5, tz = 10;
 
     // right side
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[32]);
     glPushMatrix();
+    glTranslatef(tx,ty,tz);
     materialProperty();
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(200, -20, 50);
+    glVertex3f(200, -20, 25);
     glTexCoord2f(1.0f, 0.0f);
-    glVertex3f(200, -40, 50);
+    glVertex3f(200, -40, 25);
     glTexCoord2f(1.0f, 1.0f);
-    glVertex3f(200, -40, -50);
+    glVertex3f(200, -40, -25);
     glTexCoord2f(0.0f, 1.0f);
-    glVertex3f(200, -20, -50);
+    glVertex3f(200, -20, -25);
     glEnd();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
@@ -614,16 +559,17 @@ void drawPool(){
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[32]);
     glPushMatrix();
+    glTranslatef(tx,ty,tz);
     materialProperty();
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(150, -20, 50);
+    glVertex3f(175, -20, 25);
     glTexCoord2f(1.0f, 0.0f);
-    glVertex3f(150, -40, 50);
+    glVertex3f(175, -40, 25);
     glTexCoord2f(1.0f, 1.0f);
-    glVertex3f(150, -40, -50);
+    glVertex3f(175, -40, -25);
     glTexCoord2f(0.0f, 1.0f);
-    glVertex3f(150, -20, -50);
+    glVertex3f(175, -20, -25);
     glEnd();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
@@ -632,16 +578,17 @@ void drawPool(){
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[32]);
     glPushMatrix();
+    glTranslatef(tx,ty,tz);
     materialProperty();
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(150, -20, 50);
+    glVertex3f(175, -20, 25);
     glTexCoord2f(1.0f, 0.0f);
-    glVertex3f(150, -40, 50);
+    glVertex3f(175, -40, 25);
     glTexCoord2f(1.0f, 1.0f);
-    glVertex3f(200, -40, 50);
+    glVertex3f(200, -40, 25);
     glTexCoord2f(0.0f, 1.0f);
-    glVertex3f(200, -20, 50);
+    glVertex3f(200, -20, 25);
     glEnd();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
@@ -651,76 +598,112 @@ void drawPool(){
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[32]);
     glPushMatrix();
+    glTranslatef(tx,ty,tz);
     materialProperty();
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(150, -20, -50);
+    glVertex3f(175, -20, -25);
     glTexCoord2f(1.0f, 0.0f);
-    glVertex3f(150, -40, -50);
+    glVertex3f(175, -40, -25);
     glTexCoord2f(1.0f, 1.0f);
-    glVertex3f(200, -40, -50);
+    glVertex3f(200, -40, -25);
     glTexCoord2f(0.0f, 1.0f);
-    glVertex3f(200, -20, -50);
+    glVertex3f(200, -20, -25);
     glEnd();
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
 
     // bottom
     // glColor4f(0.5,0.77,0.87,0.8);
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[32]);
     glPushMatrix();
+    glTranslatef(tx,ty,tz);
     materialProperty();
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(150, -40, 50);
+    glVertex3f(175, -40, 25);
     glTexCoord2f(1.0f, 0.0f);
-    glVertex3f(150, -40, -50);
+    glVertex3f(175, -40, -25);
     glTexCoord2f(1.0f, 1.0f);
-    glVertex3f(200, -40, -50);
+    glVertex3f(200, -40, -25);
     glTexCoord2f(0.0f, 1.0f);
-    glVertex3f(200, -40, 50);
+    glVertex3f(200, -40, 25);
     glEnd();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
 
     // water
-    // glColor4f(0.5,0.77,0.87,0.8);
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[33]);
     glPushMatrix();
+    glTranslatef(tx,ty,tz);
     materialProperty();
     glBegin(GL_QUADS);
-    // glNormal3f(0,1,0);
     glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(150, -20, 50);
+    glVertex3f(175, -20, 25);
     glTexCoord2f(1.0f, 0.0f);
-    glVertex3f(150, -20, -50);
+    glVertex3f(175, -20, -25);
     glTexCoord2f(1.0f, 1.0f);
-    glVertex3f(200, -20, -50);
+    glVertex3f(200, -20, -25);
     glTexCoord2f(0.0f, 1.0f);
-    glVertex3f(200, -20, 50);
+    glVertex3f(200, -20, 25);
     glEnd();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
+
 }
 
 void ground()
 {
+    // Set the number of segments in the circle
+    int numSegments = 1000;
+
+    // Enable texturing
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[14]);
+
+    // Push the current transformation matrix onto the stack
     glPushMatrix();
+
+    // Apply any material properties you need
     materialProperty();
-    glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(150, -20, 150);
-    glTexCoord2f(5.0f, 0.0f);
-    glVertex3f(150, -20, -150);
-    glTexCoord2f(5.0f, 5.0f);
-    glVertex3f(-100, -20, -100);
-    glTexCoord2f(0.0f, 5.0f);
-    glVertex3f(-100, -20, 100);
+
+    // Begin drawing the circle
+    glBegin(GL_TRIANGLE_FAN);
+
+    // Set the texture coordinates for the center of the circle
+    glTexCoord2f(0.5f, 0.5f);
+
+    // Set the center of the circle
+    float centerX = 0.0f;
+    float centerY = 0.0f;
+    float radius = 150.0f;
+
+    // Define the vertices of the circle
+    for (int i = 0; i <= numSegments; i++) {
+        // Compute the angle of the current segment
+        float angle = 2.0f * M_PI * ((float)i / (float)numSegments);
+
+        // Compute the x and y coordinates of the vertex
+        float x = centerX + radius * cosf(angle);
+        float y = centerY + radius * sinf(angle);
+
+        // Set the texture coordinates for the current vertex
+        glTexCoord2f((x - centerX) / (2.0f * radius) + 0.5f, (y - centerY) / (2.0f * radius) + 0.5f);
+
+        // Define the vertex
+        glVertex3f(x, -20.0f, y);
+    }
+
+    // End drawing the circle
     glEnd();
+
+    // Pop the transformation matrix from the stack
     glPopMatrix();
+
+    // Disable texturing
     glDisable(GL_TEXTURE_2D);
 }
 
@@ -1225,14 +1208,13 @@ void orbiter()
     glScalef(2, 1, 2);
     ground2();
     glPopMatrix();
-    /* //the base
-     glPushMatrix();
-     glTranslatef(0, -19.5, 0);
-     glScalef(10,0.5,10);
-     glTranslatef(-1.5, -1.5, -1.5);
-     //drawBox();
-     drawCube1(0.545, 0.271, 0.075,  0.2725,0.1355,0.0375);
-     glPopMatrix(); */
+    //the base
+    glPushMatrix();
+    glTranslatef(0, -19.5, 0);
+    glScalef(10,0.5,10);
+    glTranslatef(-1.5, -1.5, -1.5);
+    drawCube1(0.545, 0.271, 0.075,  0.2725,0.1355,0.0375);
+    glPopMatrix(); 
 
     // the 1st torus at the bottom
 
@@ -1989,6 +1971,7 @@ void cafeteria()
         for (float j = 2; j <= 26; j += 12)
         {
             glPushMatrix();
+            glTranslatef(40,0,-60);
             glTranslatef(i, 10, j);
             glScalef(1, 1.5, 1);
             diningSet();
@@ -1997,35 +1980,37 @@ void cafeteria()
     }
 
     glPushMatrix();
+    glTranslatef(85,0,-40);
     glTranslatef(5, -18, -10);
     glScalef(1.5, 2, 1);
+    glRotatef(-90,0,1,0);
     pizzaHut();
     glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-12, -18, -10);
-    glScalef(1.5, 2, 1);
-    icecreamParlor();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-12, -18, -10);
+    // glScalef(1.5, 2, 1);
+    // icecreamParlor();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(22, -18, -10);
-    glScalef(1.5, 2, 1);
-    dunkinDonuts();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(22, -18, -10);
+    // glScalef(1.5, 2, 1);
+    // dunkinDonuts();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(13, 0, 5);
-    glScalef(2.9, 1, 2.4);
-    ground2();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(13, 0, 5);
+    // glScalef(2.9, 1, 2.4);
+    // ground2();
+    // glPopMatrix();
 
-    cafeteriaFence();
+    // cafeteriaFence();
 
-    glPushMatrix();
-    glTranslatef(58, 0, 0);
-    cafeteriaFence();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(58, 0, 0);
+    // cafeteriaFence();
+    // glPopMatrix();
 }
 
 void complexOrbiterUnit()
@@ -3175,6 +3160,24 @@ void human()
     glTranslatef(-3,-3,-3);
     drawHuman();
     glPopMatrix();
+
+    //balloon body
+    matCurve(1, 0, 0);
+    glPushMatrix();
+    glTranslatef(body_x, body_y, body_z);
+    glRotatef(-(90-angle_x),0,1,0);
+    glTranslatef(3, 15, -2);
+    balloon();
+    glPopMatrix();
+
+    //balloon rope
+    glPushMatrix();
+    glTranslatef(body_x, body_y, body_z);
+    glRotatef(-(90-angle_x),0,1,0);
+    glTranslatef(2, 4, -2);
+    glScalef(1,1.5,1);
+    balloonLine();
+    glPopMatrix();
 }
 
 
@@ -3208,47 +3211,40 @@ void display(void)
     walls();
     trees();
     human();
-    ground3();
-    ground5();
-    ground4();
     drawPool();
 
-    for (float i = -70; i <= -10; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        bench1();
-        glPopMatrix();
-    }
+    // for (float i = -70; i <= -10; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     bench1();
+    //     glPopMatrix();
+    // }
 
-    for (float i = -60; i <= -20; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        bench2();
-        glPopMatrix();
-    }
+    // for (float i = -60; i <= -20; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     bench2();
+    //     glPopMatrix();
+    // }
 
-    for (float i = 30; i <= 100; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        bench1();
-        glPopMatrix();
-    }
+    // for (float i = 30; i <= 100; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     bench1();
+    //     glPopMatrix();
+    // }
 
-    for (float i = 40; i <= 90; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        bench2();
-        glPopMatrix();
-    }
+    // for (float i = 40; i <= 90; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     bench2();
+    //     glPopMatrix();
+    // }
 
-    /*  glPushMatrix();
-      glTranslatef(-40, -20, 55);
-      bench1();
-      glPopMatrix(); */
 
     glPushMatrix();
     glTranslatef(-25, 0, 0);
@@ -3275,70 +3271,71 @@ void display(void)
     cafeteria();
     glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(65, 0, -30);
-    ferrisWheel();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(65, 0, -30);
+    // ferrisWheel();
+    // glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(75, 0, 20);
+    glTranslatef(15,0,10);
+    glTranslatef(-60, 0, -50);
     orbiter();
     glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-50, 0, -30);
-    complexOrbiter();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-50, 0, -30);
+    // complexOrbiter();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-50, 0, 10);
-    pirateBoat();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-50, 0, 10);
+    // pirateBoat();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-20, -20, -40);
-    skyDrop();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-20, -20, -40);
+    // skyDrop();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-30, 0, 40);
-    balloonCart();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-30, 0, 40);
+    // balloonCart();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-60, 0, 40);
-    balloonCart();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-60, 0, 40);
+    // balloonCart();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(45, 0, 48);
-    balloonCart();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(45, 0, 48);
+    // balloonCart();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(80, 0, 48);
-    balloonCart();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(80, 0, 48);
+    // balloonCart();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(15, 0, -3);
-    flagpole();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(15, 0, -3);
+    // flagpole();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(5, 0, -3);
-    flagpole1(0);
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(5, 0, -3);
+    // flagpole1(0);
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(25, 0, -3);
-    flagpole2();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(25, 0, -3);
+    // flagpole2();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-5, 0, -3);
-    flagpole3();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-5, 0, -3);
+    // flagpole3();
+    // glPopMatrix();
 
     glDisable(GL_LIGHTING);
 
@@ -3907,11 +3904,13 @@ int main(int argc, char **argv)
 
     LoadTexture2("sgi images/pirate-copy.sgi", 4);
 
-    LoadTexture2("sgi images/red-metal.sgi", 5);
+    // LoadTexture2("sgi images/red-metal.sgi", 5);
+    LoadTexture2("sgi images/blue_gradient.sgi", 5);
 
     LoadTexture2("sgi images/baskinrobbinslogo.sgi", 6);
     
-    LoadTexture2("sgi images/pizzahut.sgi", 7);
+    // LoadTexture2("sgi images/pizzahut.sgi", 7);
+    LoadTexture2("sgi images/iitindore.sgi", 7);
 
     LoadTexture2("sgi images/dunkindonuts.sgi", 8);
 
@@ -3936,9 +3935,11 @@ int main(int argc, char **argv)
     LoadTexture2("sgi images/skydroplogo.sgi", 14);
 
     // LoadTexture2("sgi images/grass.sgi", 15);
-    LoadTexture2("sgi images/whiteground.sgi", 15);
+    // LoadTexture2("sgi images/whiteground.sgi", 15);
+    LoadTexture2("sgi images/sand.sgi", 15);
 
-    LoadTexture2("sgi images/blackred.sgi", 16);
+    // LoadTexture2("sgi images/blackred.sgi", 16);
+    LoadTexture2("sgi images/blue_gradient.sgi", 16);
 
     LoadTexture2("sgi images/pinkblue.sgi", 17);
 
@@ -3952,7 +3953,8 @@ int main(int argc, char **argv)
 
     LoadTexture2("sgi images/dd.sgi", 22);
 
-    LoadTexture2("sgi images/pizzahutad.sgi", 23);
+    // LoadTexture2("sgi images/pizzahutad.sgi", 23);
+    LoadTexture2("sgi images/abhinandan.sgi", 23);
 
     LoadTexture2("sgi images/bush.sgi", 24);
 
@@ -3975,40 +3977,6 @@ int main(int argc, char **argv)
         LoadTexture2("sgi images/tiles.sgi", 33);
 
     LoadTexture2("sgi images/water.sgi", 34);
-
-    /* This portion is written for Windows.
-
-     LoadTexture("whiteground.bmp",2);
-     LoadTexture("pirate-copy.bmp",3);
-     LoadTexture("red-metal.bmp",4);
-     LoadTexture("baskinrobbinslogo.bmp",5);
-     LoadTexture("pizzahut.bmp",6);
-     LoadTexture("dunkindonuts.bmp",7);
-     LoadTexture("front.bmp",8);
-     LoadTexture("back.bmp",9);
-     LoadTexture("right.bmp",10);
-     LoadTexture("left.bmp",11);
-     LoadTexture("skydrop.bmp", 12);
-     LoadTexture("skydroplogo.bmp", 13);
-     LoadTexture("grass.bmp", 14);
-     LoadTexture("blackred.bmp", 15);
-     LoadTexture("pinkblue.bmp", 16);
-     LoadTexture("baskin-robin-ad.bmp", 17);
-     LoadTexture("de5b9e.bmp", 18);
-     LoadTexture("pinkorange.bmp", 19);
-     LoadTexture("ff6d0d.bmp", 20);
-     LoadTexture("dd.bmp", 21);
-     LoadTexture("pizzahutad.bmp", 22);
-     LoadTexture("bush.bmp", 23);
-     LoadTexture("bushflower.bmp", 24);
-     LoadTexture("brickwall.bmp", 25);
-     LoadTexture("redwhite.bmp", 26);
-     LoadTexture("up.bmp", 27);
-     LoadTexture("nightsky.bmp", 28);
-     LoadTexture("treebark.bmp", 29);
-     LoadTexture("bush.bmp", 30);
-     LoadTexture("purplewall.bmp", 31);
-     */
 
     glutReshapeFunc(fullScreen);
     glutKeyboardFunc(myKeyboardFunc);
