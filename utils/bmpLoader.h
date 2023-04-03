@@ -12,9 +12,6 @@ typedef struct _TK_RGBImageRec {
 } TK_RGBImageRec;
 
 
-
-/******************************************************************************/
-
 typedef struct _rawImageRec {
     unsigned short imagic;
     unsigned short type;
@@ -31,7 +28,6 @@ typedef struct _rawImageRec {
     GLint *rowSize;
 } rawImageRec;
 
-/******************************************************************************/
 
 static void ConvertShort(unsigned short *array, long length)
 {
@@ -239,32 +235,3 @@ static void FreeImage( TK_RGBImageRec *image )
    free(image);
 }
 
-
-/*
- * Load an SGI .rgb file and generate a set of 2-D mipmaps from it.
- * Input:  imageFile - name of .rgb to read
- *         intFormat - internal texture format to use, or number of components
- * Return:  GL_TRUE if success, GL_FALSE if error.
- */
-
-/*
-#ifndef BMPLOADER_H
-#define BMPLOADER_H
-#include<windows.h>
-
-class BmpLoader
-{
-    public:
-        unsigned char* textureData;
-        int iWidth, iHeight;
-
-        BmpLoader(const char*);
-        ~BmpLoader();
-
-    private:
-        BITMAPFILEHEADER bfh;
-        BITMAPINFOHEADER bih;
-};
-
-#endif // BMPLOADER_H 
-*/

@@ -14,7 +14,6 @@
 using namespace std;
 
 #include "utils/bmpLoader.h"
-#include "utils/shapes/shapes.h"
 
 GLUquadric *quad;
 
@@ -37,6 +36,42 @@ static GLfloat colors[4][6] =
         {0, 0, 1, 0, 0, 0.5},  // blue
         {1, 1, 0, 0.5, 0.5, 0} // yellow
 };
+
+static GLfloat v_cube[8][3] =
+    {
+        {0.0, 0.0, 0.0}, // 0
+        {0.0, 0.0, 3.0}, // 1
+        {3.0, 0.0, 3.0}, // 2
+        {3.0, 0.0, 0.0}, // 3
+        {0.0, 3.0, 0.0}, // 4
+        {0.0, 3.0, 3.0}, // 5
+        {3.0, 3.0, 3.0}, // 6
+        {3.0, 3.0, 0.0}  // 7
+};
+
+static GLubyte quadIndices[6][4] =
+    {
+        {0, 1, 2, 3}, // bottom
+        {4, 5, 6, 7}, // top
+        {5, 1, 2, 6}, // front
+        {3, 7, 4, 0}, // back
+        {2, 3, 7, 6}, // right
+        {0, 4, 5, 1}  // left
+};
+
+/* //This is the loadtexture() written for Windows
+ void LoadTexture(const char*filename, int index)
+{
+    glGenTextures(1, &ID[index]);
+    glBindTexture(GL_TEXTURE_2D, ID[index]);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, ID[index]);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    BmpLoader bl(filename);
+    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, bl.iWidth, bl.iHeight, GL_RGB, GL_UNSIGNED_BYTE, bl.textureData);
+} */
 
 void LoadTexture2(const char *filename, GLint num)
 {
@@ -68,6 +103,296 @@ void LoadTexture2(const char *filename, GLint num)
     glTexImage2D(GL_TEXTURE_2D, 0, 3,
                  texture1->sizeX, texture1->sizeY, 0,
                  GL_RGB, GL_UNSIGNED_BYTE, texture1->data);
+}
+void materialProperty()
+{
+    glColor3f(1, 1, 1);
+    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat mat_ambient[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat mat_diffuse[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat mat_shininess[] = {60};
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+}
+
+void matCurve(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambfactor = 1.0, GLfloat specfactor = 1.0, GLfloat shine = 50)
+{
+    glColor3f(1, 1, 1);
+    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat mat_ambient[] = {difX * ambfactor, difY * ambfactor, difZ * ambfactor, 1.0};
+    GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
+    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat mat_shininess[] = {60};
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+}
+
+static void getNormal3p(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, GLfloat x3, GLfloat y3, GLfloat z3)
+{
+    GLfloat Ux, Uy, Uz, Vx, Vy, Vz, Nx, Ny, Nz;
+
+    Ux = x2 - x1;
+    Uy = y2 - y1;
+    Uz = z2 - z1;
+
+    Vx = x3 - x1;
+    Vy = y3 - y1;
+    Vz = z3 - z1;
+
+    Nx = Uy * Vz - Uz * Vy;
+    Ny = Uz * Vx - Ux * Vz;
+    Nz = Ux * Vy - Uy * Vx;
+
+    glNormal3f(Nx, Ny, Nz);
+}
+
+void drawCube1(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX = 0, GLfloat ambY = 0, GLfloat ambZ = 0, GLfloat shine = 50)
+{
+    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
+    GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
+    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat mat_shininess[] = {shine};
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+
+    glBegin(GL_QUADS);
+
+    for (GLint i = 0; i < 6; i++)
+    {
+        getNormal3p(v_cube[quadIndices[i][0]][0], v_cube[quadIndices[i][0]][1], v_cube[quadIndices[i][0]][2],
+                    v_cube[quadIndices[i][1]][0], v_cube[quadIndices[i][1]][1], v_cube[quadIndices[i][1]][2],
+                    v_cube[quadIndices[i][2]][0], v_cube[quadIndices[i][2]][1], v_cube[quadIndices[i][2]][2]);
+        glVertex3fv(&v_cube[quadIndices[i][0]][0]);
+        glVertex3fv(&v_cube[quadIndices[i][1]][0]);
+        glVertex3fv(&v_cube[quadIndices[i][2]][0]);
+        glVertex3fv(&v_cube[quadIndices[i][3]][0]);
+    }
+    glEnd();
+}
+
+void drawSphere(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine = 90)
+{
+    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
+    GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
+    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat mat_shininess[] = {shine};
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+    glutSolidSphere(1.0, 16, 16);
+}
+
+void drawTorus(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLdouble innerRadius, GLdouble outerRadius, GLint nsides, GLint rings, GLfloat shine = 90)
+{
+    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
+    GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
+    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat mat_shininess[] = {shine};
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+
+    glutSolidTorus(innerRadius, outerRadius, nsides, rings);
+
+    // glutSolidTorus(0.5, 10.0, 16, 12);
+}
+
+void drawCylinder(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine = 90)
+{
+    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
+    GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
+    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat mat_shininess[] = {shine};
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+
+    GLUquadricObj *quadratic;
+    quadratic = gluNewQuadric();
+    gluCylinder(quadratic, 1.5, 1.5, 19, 32, 32);
+}
+
+static GLfloat v_box[8][3] =
+    {
+        {0.0, 0.0, 0.0}, // 0
+        {3.0, 0.0, 0.0}, // 1
+        {0.0, 0.0, 3.0}, // 2
+        {3.0, 0.0, 3.0}, // 3
+        {0.0, 3.0, 0.0}, // 4
+        {3.0, 3.0, 0.0}, // 5
+        {0.0, 3.0, 3.0}, // 6
+        {3.0, 3.0, 3.0}, // 7
+
+};
+
+static GLubyte BoxquadIndices[6][4] =
+    {
+        {0, 2, 3, 1},
+        {0, 2, 6, 4},
+        {2, 3, 7, 6},
+        {1, 3, 7, 5},
+        {1, 5, 4, 0},
+        {6, 7, 5, 4}};
+
+void drawBox()
+{
+    materialProperty();
+    glBegin(GL_QUADS);
+    for (GLint i = 0; i < 6; i++)
+    {
+        // glColor3f(colors[4][0],colors[4][1],colors[4][2]);
+        getNormal3p(v_box[BoxquadIndices[i][0]][0], v_box[BoxquadIndices[i][0]][1], v_box[BoxquadIndices[i][0]][2],
+                    v_box[BoxquadIndices[i][1]][0], v_box[BoxquadIndices[i][1]][1], v_box[BoxquadIndices[i][1]][2],
+                    v_box[BoxquadIndices[i][2]][0], v_box[BoxquadIndices[i][2]][1], v_box[BoxquadIndices[i][2]][2]);
+
+        glVertex3fv(&v_box[BoxquadIndices[i][0]][0]);
+        glTexCoord2f(1, 1);
+        glVertex3fv(&v_box[BoxquadIndices[i][1]][0]);
+        glTexCoord2f(1, 0);
+        glVertex3fv(&v_box[BoxquadIndices[i][2]][0]);
+        glTexCoord2f(0, 0);
+        glVertex3fv(&v_box[BoxquadIndices[i][3]][0]);
+        glTexCoord2f(0, 1);
+    }
+    glEnd();
+    // glutSolidSphere (3.0, 20, 16);
+}
+
+// Drawing pyramid *************************
+static GLfloat v_pyramid[5][3] =
+    {
+        {0.0, 0.0, 0.0},
+        {0.0, 0.0, 2.0},
+        {2.0, 0.0, 2.0},
+        {2.0, 0.0, 0.0},
+        {1.0, 4.0, 1.0}};
+
+static GLubyte p_Indices[4][3] =
+    {
+        {4, 1, 2},
+        {4, 2, 3},
+        {4, 3, 0},
+        {4, 0, 1}};
+
+static GLubyte PquadIndices[1][4] =
+    {
+        {0, 3, 2, 1}};
+
+void drawpyramid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
+{
+    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
+    GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
+    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat mat_shininess[] = {shine};
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+
+    glBegin(GL_TRIANGLES);
+    for (GLint i = 0; i < 4; i++)
+    {
+        getNormal3p(v_pyramid[p_Indices[i][0]][0], v_pyramid[p_Indices[i][0]][1], v_pyramid[p_Indices[i][0]][2],
+                    v_pyramid[p_Indices[i][1]][0], v_pyramid[p_Indices[i][1]][1], v_pyramid[p_Indices[i][1]][2],
+                    v_pyramid[p_Indices[i][2]][0], v_pyramid[p_Indices[i][2]][1], v_pyramid[p_Indices[i][2]][2]);
+        glVertex3fv(&v_pyramid[p_Indices[i][0]][0]);
+        glVertex3fv(&v_pyramid[p_Indices[i][1]][0]);
+        glVertex3fv(&v_pyramid[p_Indices[i][2]][0]);
+    }
+    glEnd();
+
+    glBegin(GL_QUADS);
+    for (GLint i = 0; i < 1; i++)
+    {
+        getNormal3p(v_pyramid[PquadIndices[i][0]][0], v_pyramid[PquadIndices[i][0]][1], v_pyramid[PquadIndices[i][0]][2],
+                    v_pyramid[PquadIndices[i][1]][0], v_pyramid[PquadIndices[i][1]][1], v_pyramid[PquadIndices[i][1]][2],
+                    v_pyramid[PquadIndices[i][2]][0], v_pyramid[PquadIndices[i][2]][1], v_pyramid[PquadIndices[i][2]][2]);
+        glVertex3fv(&v_pyramid[PquadIndices[i][0]][0]);
+        glVertex3fv(&v_pyramid[PquadIndices[i][1]][0]);
+        glVertex3fv(&v_pyramid[PquadIndices[i][2]][0]);
+        glVertex3fv(&v_pyramid[PquadIndices[i][3]][0]);
+    }
+    glEnd();
+}
+
+static GLfloat v_trapezoid[8][3] =
+    {
+        {0.0, 0.0, 0.0}, // 0
+        {0.0, 0.0, 3.0}, // 1
+        {3.0, 0.0, 3.0}, // 2
+        {3.0, 0.0, 0.0}, // 3
+        {0.5, 3.0, 0.5}, // 4
+        {0.5, 3.0, 2.5}, // 5
+        {2.5, 3.0, 2.5}, // 6
+        {2.5, 3.0, 0.5}  // 7
+};
+
+static GLubyte TquadIndices[6][4] =
+    {
+        {0, 1, 2, 3}, // bottom
+        {4, 5, 6, 7}, // top
+        {5, 1, 2, 6}, // front
+        {3, 7, 4, 0}, // back
+        {2, 3, 7, 6}, // right
+        {0, 4, 5, 1}  // left
+};
+
+void drawTrapezoid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine = 50)
+{
+    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
+    GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
+    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat mat_shininess[] = {shine};
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+
+    glBegin(GL_QUADS);
+    for (GLint i = 0; i < 6; i++)
+    {
+        getNormal3p(v_trapezoid[TquadIndices[i][0]][0], v_trapezoid[TquadIndices[i][0]][1], v_trapezoid[TquadIndices[i][0]][2],
+                    v_trapezoid[TquadIndices[i][1]][0], v_trapezoid[TquadIndices[i][1]][1], v_trapezoid[TquadIndices[i][1]][2],
+                    v_trapezoid[TquadIndices[i][2]][0], v_trapezoid[TquadIndices[i][2]][1], v_trapezoid[TquadIndices[i][2]][2]);
+
+        glVertex3fv(&v_trapezoid[TquadIndices[i][0]][0]);
+        glVertex3fv(&v_trapezoid[TquadIndices[i][1]][0]);
+        glVertex3fv(&v_trapezoid[TquadIndices[i][2]][0]);
+        glVertex3fv(&v_trapezoid[TquadIndices[i][3]][0]);
+    }
+    glEnd();
 }
 
 void light()
@@ -409,14 +734,14 @@ void ferrisWheelSeat()
     glPushMatrix();
     glTranslatef(0, -0.5, 0);
     glScalef(0.5, 0.2, 1.5);
-    drawCube(0.804, 0.361, 0.361, 0.403, 0.1805, 0.1805);
+    drawCube1(0.804, 0.361, 0.361, 0.403, 0.1805, 0.1805);
     glPopMatrix();
 
     // seat belt rod
     glPushMatrix();
     glTranslatef(1.3, 0.7, 0);
     glScalef(0.02, 0.02, 1.5);
-    drawCube(0, 0, 0, 0, 0, 0.0);
+    drawCube1(0, 0, 0, 0, 0, 0.0);
     glPopMatrix();
 
     glEnable(GL_TEXTURE_2D);
@@ -485,7 +810,7 @@ void wheel()
         glRotatef(i, 0, 0, 1);
         glScalef(6.6, 0.1, 0.5);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.867, 0.627, 0.867, 0.4335, 0.3135, 0.4335, 100);
+        drawCube1(0.867, 0.627, 0.867, 0.4335, 0.3135, 0.4335, 100);
         glPopMatrix();
     }
 }
@@ -531,7 +856,7 @@ void ferrisWheel()
     glRotatef(-75, 0, 0, 1);
     glScalef(7, 0.28, 0.1);
     // glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.545, 0.000, 0.545, 0.2725, 0.0, 0.2725);
+    drawCube1(0.545, 0.000, 0.545, 0.2725, 0.0, 0.2725);
     glPopMatrix();
 
     // left stand on the back
@@ -540,7 +865,7 @@ void ferrisWheel()
     glRotatef(-105, 0, 0, 1);
     glScalef(7, 0.28, 0.1);
     // glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.545, 0.000, 0.545, 0.2725, 0.0, 0.2725);
+    drawCube1(0.545, 0.000, 0.545, 0.2725, 0.0, 0.2725);
     glPopMatrix();
 
     // right stand on the front
@@ -548,7 +873,7 @@ void ferrisWheel()
     glTranslatef(-.2, 0, 6);
     glRotatef(-75, 0, 0, 1);
     glScalef(7, 0.28, 0.1);
-    drawCube(0.545, 0.000, 0.545, 0.2725, 0.0, 0.2725);
+    drawCube1(0.545, 0.000, 0.545, 0.2725, 0.0, 0.2725);
     glPopMatrix();
 
     // left stand on the front
@@ -557,7 +882,7 @@ void ferrisWheel()
     glRotatef(-105, 0, 0, 1);
     glScalef(7, 0.28, 0.1);
     // glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.545, 0.000, 0.545, 0.2725, 0.0, 0.2725);
+    drawCube1(0.545, 0.000, 0.545, 0.2725, 0.0, 0.2725);
     glPopMatrix();
 
     // base stand
@@ -566,7 +891,7 @@ void ferrisWheel()
     // glRotatef(-105, 0, 0, 1);
     glScalef(4, 0.5, 3);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
+    drawCube1(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
     glPopMatrix();
 
     // fence in the front
@@ -576,7 +901,7 @@ void ferrisWheel()
         glTranslatef(j, -19.5, 11);
         glScalef(0.1, 2.5, 0.1);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
@@ -591,21 +916,21 @@ void ferrisWheel()
     glTranslatef(4, -17, 11);
     glScalef(10, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(4, -18, 11);
     glScalef(10, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(4, -19, 11);
     glScalef(10, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // gate
@@ -617,7 +942,7 @@ void ferrisWheel()
         glPushMatrix();
         glTranslatef(j, 0, 0);
         glScalef(0.1, 1.5, 0.1);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
@@ -632,7 +957,7 @@ void ferrisWheel()
         glPushMatrix();
         glTranslatef(0, j, 0);
         glScalef(1.5, 0.05, 0.1);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
     }
     glPopMatrix();
@@ -645,7 +970,7 @@ void ferrisWheel()
         glTranslatef(j, -19.5, -5);
         glScalef(0.1, 2.5, 0.1);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
@@ -659,21 +984,21 @@ void ferrisWheel()
     glTranslatef(2, -17, -5);
     glScalef(11.5, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(2, -18, -5);
     glScalef(11.5, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(2, -19, -5);
     glScalef(11.5, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // fence in the left
@@ -683,7 +1008,7 @@ void ferrisWheel()
         glTranslatef(-15, -19.5, j);
         glScalef(0.1, 2.5, 0.1);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
@@ -697,21 +1022,21 @@ void ferrisWheel()
     glTranslatef(-15, -17, 3);
     glScalef(.1, 0.05, 5.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-15, -18, 3);
     glScalef(.1, 0.05, 5.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-15, -19, 3);
     glScalef(.1, 0.05, 5.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // fence in the right
@@ -721,7 +1046,7 @@ void ferrisWheel()
         glTranslatef(19, -19.5, j);
         glScalef(0.1, 2.5, 0.1);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
@@ -735,21 +1060,21 @@ void ferrisWheel()
     glTranslatef(19, -17, 3);
     glScalef(.1, 0.05, 5.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(19, -18, 3);
     glScalef(.1, 0.05, 5.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(19, -19, 3);
     glScalef(.1, 0.05, 5.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // rotating part
@@ -776,7 +1101,7 @@ void ferrisWheel()
     // the middle line between two spheres
     glPushMatrix();
     glScalef(0.1, 0.05, 1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // the smaller lines in between
@@ -789,7 +1114,7 @@ void ferrisWheel()
             glPushMatrix();
             glTranslatef(i, 0, 0);
             glScalef(0.1, 0.05, 1.5);
-            drawCube(0.780, 0.082, 0.522, 0.39, 0.041, 0.261);
+            drawCube1(0.780, 0.082, 0.522, 0.39, 0.041, 0.261);
             glPopMatrix();
         }
         glPopMatrix();
@@ -889,7 +1214,7 @@ void orbiter()
     glTranslatef(0, -19.5, 0);
     glScalef(10,0.5,10);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.545, 0.271, 0.075,  0.2725,0.1355,0.0375);
+    drawCube1(0.545, 0.271, 0.075,  0.2725,0.1355,0.0375);
     glPopMatrix(); 
 
     // the 1st torus at the bottom
@@ -932,7 +1257,7 @@ void orbiter()
         glTranslatef(j, -19.5, 17);
         glScalef(0.1, 2.5, 0.1);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
@@ -947,21 +1272,21 @@ void orbiter()
     glTranslatef(2.5, -17, 17);
     glScalef(9, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(2.5, -18, 17);
     glScalef(9, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(2.5, -19, 17);
     glScalef(9, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // gate
@@ -973,7 +1298,7 @@ void orbiter()
         glPushMatrix();
         glTranslatef(j, 0, 0);
         glScalef(0.1, 1.5, 0.1);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
@@ -988,7 +1313,7 @@ void orbiter()
         glPushMatrix();
         glTranslatef(0, j, 0);
         glScalef(1.5, 0.05, 0.1);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
     }
     glPopMatrix();
@@ -1001,7 +1326,7 @@ void orbiter()
         glTranslatef(j, -19.5, -17);
         glScalef(0.1, 2.5, 0.1);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
@@ -1016,21 +1341,21 @@ void orbiter()
     glTranslatef(0, -17, -17);
     glScalef(10.5, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, -18, -17);
     glScalef(10.5, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, -19, -17);
     glScalef(10.5, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // fence in the right
@@ -1040,7 +1365,7 @@ void orbiter()
         glTranslatef(16, -19.5, j);
         glScalef(0.1, 2.5, 0.1);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
@@ -1055,21 +1380,21 @@ void orbiter()
     glTranslatef(16, -17, 0);
     glScalef(.1, 0.05, 11.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(16, -18, 0);
     glScalef(.1, 0.05, 11.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(16, -19, 0);
     glScalef(.1, 0.05, 11.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // fence in the left
@@ -1079,7 +1404,7 @@ void orbiter()
         glTranslatef(-16, -19.5, j);
         glScalef(0.1, 2.5, 0.1);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
@@ -1094,21 +1419,21 @@ void orbiter()
     glTranslatef(-16, -17, 0);
     glScalef(.1, 0.05, 11.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-16, -18, 0);
     glScalef(.1, 0.05, 11.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-16, -19, 0);
     glScalef(.1, 0.05, 11.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // translating the rotating part down
@@ -1136,7 +1461,7 @@ void orbiter()
         glPushMatrix();
         glRotatef(orbiterAlpha, 0, 0, 1);
         glScalef(5.1, 0.2, 0.2);
-        drawCube(0, 0, 1, 0, 0, 0.5);
+        drawCube1(0, 0, 1, 0, 0, 0.5);
         glPopMatrix();
 
         glPopMatrix();
@@ -1153,7 +1478,7 @@ void boatBody()
     glTranslatef(-1.3, 0, 0);
     glScalef(3.7, 0.1, 1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
+    drawCube1(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
     glPopMatrix();
 
     glPushMatrix();
@@ -1178,7 +1503,7 @@ void boatBody()
     glRotatef(-42, 0, 0, 1);
     glScalef(0.1, 1.3, 1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
+    drawCube1(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
     glPopMatrix();
 
     glPushMatrix();
@@ -1186,7 +1511,7 @@ void boatBody()
     glRotatef(42, 0, 0, 1);
     glScalef(0.1, 1.3, 1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
+    drawCube1(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
     glPopMatrix();
 
     for (float i = -6; i <= 2; i += 2)
@@ -1194,7 +1519,7 @@ void boatBody()
         glPushMatrix();
         glTranslatef(i, 0, -1.5);
         glScalef(0.1, 1, 1);
-        drawCube(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
+        drawCube1(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
         glPopMatrix();
     }
 
@@ -1228,7 +1553,7 @@ void pirateBoat()
     // glRotatef(-105, 0, 0, 1);
     glScalef(6, 0.5, 4);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
+    drawCube1(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
     glPopMatrix();
 
     // translate down
@@ -1257,14 +1582,14 @@ void pirateBoat()
     glPushMatrix();
     glRotatef(-55, 0, 0, 1);
     glScalef(4, 0.28, 0.1);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // right stand
     glPushMatrix();
     glRotatef(-125, 0, 0, 1);
     glScalef(4, 0.28, 0.1);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
     glPopMatrix();
 
@@ -1277,14 +1602,14 @@ void pirateBoat()
     glPushMatrix();
     glRotatef(-55, 0, 0, 1);
     glScalef(4, 0.28, 0.1);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // right stand
     glPushMatrix();
     glRotatef(-125, 0, 0, 1);
     glScalef(4, 0.28, 0.1);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
     glPopMatrix();
 
@@ -1296,14 +1621,14 @@ void pirateBoat()
     glPushMatrix();
     glRotatef(-60, 0, 0, 1);
     glScalef(6, 0.28, 0.1);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // right stand
     glPushMatrix();
     glRotatef(-120, 0, 0, 1);
     glScalef(6, 0.28, 0.1);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.055);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.055);
     glPopMatrix();
     glPopMatrix();
 
@@ -1315,14 +1640,14 @@ void pirateBoat()
     glPushMatrix();
     glRotatef(-60, 0, 0, 1);
     glScalef(6, 0.28, 0.1);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // right stand
     glPushMatrix();
     glRotatef(-120, 0, 0, 1);
     glScalef(6, 0.28, 0.1);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    drawCube1(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
     glPopMatrix();
 
@@ -1334,56 +1659,56 @@ void chair()
     // seat part
     glPushMatrix();
     glScalef(0.5, 0.05, 0.5);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube1(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
     glPopMatrix();
 
     // seat left back
     glPushMatrix();
     glTranslatef(0, -1.5, 0);
     glScalef(0.05, 1.4, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube1(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
     glPopMatrix();
 
     // seat right back
     glPushMatrix();
     glTranslatef(1.35, -1.5, 0);
     glScalef(0.05, 1.4, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube1(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
     glPopMatrix();
 
     // seat horizontal up back
     glPushMatrix();
     glTranslatef(0, 2, 0);
     glScalef(0.5, 0.05, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube1(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
     glPopMatrix();
 
     // seat horizontal up back
     glPushMatrix();
     glTranslatef(0, 1.5, 0);
     glScalef(0.5, 0.05, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube1(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
     glPopMatrix();
 
     // seat horizontal up back
     glPushMatrix();
     glTranslatef(0, 1, 0);
     glScalef(0.5, 0.05, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube1(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
     glPopMatrix();
 
     // seat left front leg
     glPushMatrix();
     glTranslatef(0, -1.5, 1.3);
     glScalef(0.05, .55, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube1(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
     glPopMatrix();
 
     // seat right front leg
     glPushMatrix();
     glTranslatef(1.35, -1.5, 1.3);
     glScalef(0.05, .55, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube1(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
     glPopMatrix();
 }
 
@@ -1401,13 +1726,13 @@ void table()
     // drawSphere(0.8, 0.4, 0.00, 0.4, 0.2, 0);
     glTranslatef(-2.5, 0, -2);
     glScalef(1.6, 0.3, 1.6);
-    drawCube(0.8, 0.4, 0.00, 0.4, 0.2, 0);
+    drawCube1(0.8, 0.4, 0.00, 0.4, 0.2, 0);
     glPopMatrix();
 
     // stand
     glPushMatrix();
     glScalef(0.1, -1, -0.1);
-    drawCube(0, 0, 0, 0, 0, 0.5);
+    drawCube1(0, 0, 0, 0, 0, 0.5);
     glPopMatrix();
 
     // stand bottom
@@ -1715,7 +2040,7 @@ void complexOrbiterUnit()
         glTranslatef(0, 0, -0.5);
         glRotatef(-45, 0, 0, 1);
         glScalef(1.6, 0.2, 0.2);
-        drawCube(colors[j][0], colors[j][1], colors[j][2], colors[j][3], colors[j][4], colors[j][5]);
+        drawCube1(colors[j][0], colors[j][1], colors[j][2], colors[j][3], colors[j][4], colors[j][5]);
         glPopMatrix();
 
         glPopMatrix();
@@ -1738,7 +2063,7 @@ void complexOrbiter()
      glScalef(11,0.5,11);
      glTranslatef(-1.5, -1.5, -1.5);
      //drawBox();
-     drawCube(0.545, 0.271, 0.075,  0.2725,0.1355,0.0375);
+     drawCube1(0.545, 0.271, 0.075,  0.2725,0.1355,0.0375);
      glPopMatrix(); */
 
     // the sphere
@@ -1767,7 +2092,7 @@ void complexOrbiter()
         glTranslatef(0, 0, -0.5);
         glRotatef(-45, 0, 0, 1);
         glScalef(5.8, 0.2, 0.2);
-        drawCube(1, 0, 0, 0.5, 0, 0);
+        drawCube1(1, 0, 0, 0.5, 0, 0);
         glPopMatrix();
 
         glPushMatrix();
@@ -1788,7 +2113,7 @@ void skyDropStructure()
         glPushMatrix();
         glTranslatef(0, i, 0);
         glScalef(0.1, 0.1, -1.5);
-        drawCube(1, 0, 0, 0.5, 0, 0);
+        drawCube1(1, 0, 0, 0.5, 0, 0);
         glPopMatrix();
     }
 
@@ -1798,7 +2123,7 @@ void skyDropStructure()
         glTranslatef(0, i, 0);
         glRotatef(32, 1, 0, 0);
         glScalef(0.1, 0.1, -1.8);
-        drawCube(1, 0, 0, 0.5, 0, 0);
+        drawCube1(1, 0, 0, 0.5, 0, 0);
         glPopMatrix();
     }
 
@@ -1808,7 +2133,7 @@ void skyDropStructure()
         glTranslatef(0, i, 0);
         glRotatef(-32, 1, 0, 0);
         glScalef(0.1, 0.1, -1.8);
-        drawCube(1, 0, 0, 0.5, 0, 0);
+        drawCube1(1, 0, 0, 0.5, 0, 0);
         glPopMatrix();
     }
 }
@@ -1820,12 +2145,12 @@ void skyDropSeat()
 
     glPushMatrix();
     glScalef(6, 1.8, 0.2);
-    drawCube(1, 1, 0, 0.5, 0.5, 0);
+    drawCube1(1, 1, 0, 0.5, 0.5, 0);
     glPopMatrix();
 
     glPushMatrix();
     glScalef(6, 0.2, 1.2);
-    drawCube(1, 1, 0, 0.5, 0.5, 0.5);
+    drawCube1(1, 1, 0, 0.5, 0.5, 0.5);
     glPopMatrix();
 
     glPopMatrix();
@@ -1833,19 +2158,19 @@ void skyDropSeat()
     glPushMatrix();
     glTranslatef(-0.5, 2, 0);
     glScalef(2.2, 0.4, 0.5);
-    drawCube(1, 0, 1, 0.5, 0.5, 0.5);
+    drawCube1(1, 0, 1, 0.5, 0.5, 0.5);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-0.5, 0.5, 0);
     glScalef(0.3, 3, 0.5);
-    drawCube(0, 0, 1, 0, 0.5, 0.5);
+    drawCube1(0, 0, 1, 0, 0.5, 0.5);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(5.2, 0.5, 0);
     glScalef(0.3, 3, 0.5);
-    drawCube(0, 0, 1, 0, 0.5, 0.5);
+    drawCube1(0, 0, 1, 0, 0.5, 0.5);
     glPopMatrix();
 
     for (float i = -5.5; i <= 13; i += 2.1)
@@ -1913,7 +2238,7 @@ void skyDrop()
         glPushMatrix();
         glTranslatef(i, 0, 0);
         glScalef(0.2, 30, 0.2);
-        drawCube(0, 0, 1, 0, 0, 0.5);
+        drawCube1(0, 0, 1, 0, 0, 0.5);
         glPopMatrix();
     }
 
@@ -1922,7 +2247,7 @@ void skyDrop()
         glPushMatrix();
         glTranslatef(i, 0, -5);
         glScalef(0.2, 30, 0.2);
-        drawCube(0, 0, 1, 0, 0, 0.5);
+        drawCube1(0, 0, 1, 0, 0, 0.5);
         glPopMatrix();
     }
 
@@ -2772,7 +3097,7 @@ void bench2()
 
 void drawHuman()
 {
-    drawCube(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
+    drawCube1(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
 }
 
 double radian(double angle)
