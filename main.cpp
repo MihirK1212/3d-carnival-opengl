@@ -21,423 +21,14 @@ using namespace std;
 #include "src/features/human.h"
 #include "src/constants.h"
 
-const int nt = 60;
-const int ntheta = 20;
-const double PI = 3.14159265389;
+Human human;
+Rides rides;
+Objects objects;
 
-void setNormal(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, GLfloat x3, GLfloat y3, GLfloat z3)
-{
-    GLfloat Ux, Uy, Uz, Vx, Vy, Vz, Nx, Ny, Nz;
+GLboolean bRotate = false, uRotate = false, fanSwitch = false, door1 = false, orbiterFlag = false, testFlag = true, pirateBoatFlag = false, pirateBoatCheck = false, cmOrbiterFlag = false, skyDropFlag = false, upFlag = true, downFlag1 = true, downFlag2 = false, downFlag3 = false, day = true;
+static double eyeX = -10, eyeY = 5.0, eyeZ = 100, refX = 0, refY = 0, refZ = 0;
 
-    Ux = x2 - x1;
-    Uy = y2 - y1;
-    Uz = z2 - z1;
-
-    Vx = x3 - x1;
-    Vy = y3 - y1;
-    Vz = z3 - z1;
-
-    Nx = Uy * Vz - Uz * Vy;
-    Ny = Uz * Vx - Ux * Vz;
-    Nz = Ux * Vy - Uy * Vx;
-
-    glNormal3f(-Nx, -Ny, -Nz);
-}
-
-long long nCr(int n, int r)
-{
-    if (r > n / 2)
-        r = n - r; // because C(n, r) == C(n, n - r)
-    long long ans = 1;
-    int i;
-
-    for (i = 1; i <= r; i++)
-    {
-        ans *= n - r + i;
-        ans /= i;
-    }
-
-    return ans;
-}
-
-void BezierCurve(double t, float xy[2], int L, GLfloat ctrlpoints[][3])
-{
-    double y = 0;
-    double x = 0;
-    t = t > 1.0 ? 1.0 : t;
-    for (int i = 0; i <= L; i++)
-    {
-        int ncr = nCr(L, i);
-        double oneMinusTpow = pow(1 - t, double(L - i));
-        double tPow = pow(t, double(i));
-        double coef = oneMinusTpow * tPow * ncr;
-        x += coef * ctrlpoints[i][0];
-        y += coef * ctrlpoints[i][1];
-    }
-    xy[0] = float(x);
-    xy[1] = float(y);
-
-    // return y;
-}
-
-void showControlPoints(int L, GLfloat ctrlpoints[][3])
-{
-    glPointSize(5.0);
-    glColor3f(1.0, 0.0, 1.0);
-    glBegin(GL_POINTS);
-    for (int i = 0; i <= L; i++)
-        glVertex3fv(&ctrlpoints[i][0]);
-    glEnd();
-}
-
-void balloonBezier()
-{
-    int L = 5;
-    GLfloat balloonctrlpoints[6][3] =
-        {
-            {0.0, 0.0, 0.0}, {0.7, 0.8, 0}, {2, 0.9, 0}, {2.3, 0.5, 0}, {2.5, 0.1, 0}, {2.4, 0, 0}};
-
-    int i, j;
-    float x, y, z, r;     // current coordinates
-    float x1, y1, z1, r1; // next coordinates
-    float theta;
-
-    const float startx = 0, endx = balloonctrlpoints[L][0];
-    // number of angular slices
-    const float dx = (endx - startx) / nt; // x step size
-    const float dtheta = 2 * PI / ntheta;  // angular step size
-
-    float t = 0;
-    float dt = 1.0 / nt;
-    float xy[2];
-    BezierCurve(t, xy, 5, balloonctrlpoints);
-    x = xy[0];
-    r = xy[1];
-    // rotate about z-axis
-    float p1x, p1y, p1z, p2x, p2y, p2z;
-    for (i = 0; i < nt; ++i) // step through x
-    {
-        theta = 0;
-        t += dt;
-        BezierCurve(t, xy, 5, balloonctrlpoints);
-        x1 = xy[0];
-        r1 = xy[1];
-
-        // draw the surface composed of quadrilaterals by sweeping theta
-        glBegin(GL_QUAD_STRIP);
-        for (j = 0; j <= ntheta; ++j)
-        {
-            theta += dtheta;
-            double cosa = cos(theta);
-            double sina = sin(theta);
-            y = r * cosa;
-            y1 = r1 * cosa; // current and next y
-            z = r * sina;
-            z1 = r1 * sina; // current and next z
-
-            // edge from point at x to point at next x
-            glVertex3f(x, y, z);
-
-            if (j > 0)
-            {
-                setNormal(p1x, p1y, p1z, p2x, p2y, p2z, x, y, z);
-            }
-            else
-            {
-                p1x = x;
-                p1y = y;
-                p1z = z;
-                p2x = x1;
-                p2y = y1;
-                p2z = z1;
-            }
-            glVertex3f(x1, y1, z1);
-
-            // forms quad with next pair of points with incremented theta value
-        }
-        glEnd();
-        x = x1;
-        r = r1;
-    } // for i
-
-    if (show == true)
-    {
-        showControlPoints(L, balloonctrlpoints);
-    }
-}
-
-void drawFlag()
-{
-    int L = 3;
-    GLfloat ctrlpoints1[4][3] =
-        {
-            {0, 0, 0}, {3.5, 0 + yf, 0}, {3.5, 0 - yf, 0}, {7 + xf, 0, 0}};
-
-    GLfloat ctrlpoints2[4][3] =
-        {
-            {0, 5, 0}, {3.5, 5 + yf, 0}, {3.5, 5 - yf, 0}, {7 + xf, 5, 0}};
-    int i;
-    float x1, y1, x2, y2; // current coordinates
-    // float x1, y1, z1, r1;            //next coordinates
-    const float startx = 0, endx = ctrlpoints1[L][0];
-    float t = 0;
-    float xy1[2];
-    float xy2[2];
-    float dt = 1.0 / nt;
-    // glColor3f(0, 0, 1);
-    glBegin(GL_QUAD_STRIP);
-    for (i = 0; i < nt; i++)
-    {
-        BezierCurve(t, xy1, L, ctrlpoints1);
-        x1 = xy1[0];
-        y1 = xy1[1];
-        glVertex3f(x1, y1, 0);
-        BezierCurve(t, xy2, L, ctrlpoints2);
-        x2 = xy2[0];
-        y2 = xy2[1];
-        glVertex3f(x2, y2, 0);
-        t += dt;
-    }
-
-    glEnd();
-
-    if (show == true)
-    {
-        showControlPoints(L, ctrlpoints1);
-        showControlPoints(L, ctrlpoints2);
-    }
-}
-
-void balloon()
-{
-    glPushMatrix();
-    glRotatef(90, 0, 0, 1);
-    glScalef(2, 2.5, 2);
-    balloonBezier();
-    glPopMatrix();
-}
-
-void balloonLine()
-{
-    matCurve(0, 0, 0);
-    glBegin(GL_LINES);
-    glVertex2f(1, 10);
-    glVertex2f(1, 1);
-    glEnd();
-}
-
-void balloons()
-{
-    matCurve(1, 0, 0);
-    glPushMatrix();
-    glTranslatef(3, -10, 0.6);
-    balloon();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(1.8, -19, 0.6);
-    balloonLine();
-    glPopMatrix();
-
-    matCurve(0, 0, 1);
-    glPushMatrix();
-    glTranslatef(6.2, -11, 0.6);
-    balloon();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(1.8, -18, 0.6);
-    glRotatef(-22, 0, 0, 1);
-    balloonLine();
-    glPopMatrix();
-
-    matCurve(1, 1, 0);
-    glPushMatrix();
-    glTranslatef(0, -11, 0.6);
-    balloon();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(1.8, -18, 0.6);
-    glRotatef(22, 0, 0, 1);
-    balloonLine();
-    glPopMatrix();
-
-    matCurve(1, 0.5, 0);
-    glPushMatrix();
-    glTranslatef(3, -13, 2.6);
-    balloon();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(1.8, -20, 0.6);
-    glRotatef(16, 1, 0, 0);
-    balloonLine();
-    glPopMatrix();
-
-    matCurve(1, 0, 1);
-    glPushMatrix();
-    glTranslatef(3, -13, -1.8);
-    balloon();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(1.8, -20, 0.6);
-    glRotatef(-14, 1, 0, 0);
-    balloonLine();
-    glPopMatrix();
-}
-
-void cart()
-{
-    materialProperty();
-    glEnable(GL_TEXTURE_2D);
-
-    glBindTexture(GL_TEXTURE_2D, ID2[26]);
-    glPushMatrix();
-    glScalef(1, 2, 1);
-    quad1();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, 0, -5);
-    glScalef(1, 2, 1);
-    quad1();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, 0, -2);
-    quad2();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(10, 0, -2);
-    quad2();
-    glPopMatrix();
-
-    glBindTexture(GL_TEXTURE_2D, ID2[4]);
-    glPushMatrix();
-    glTranslatef(0, 11, -2);
-    glRotatef(90, 1, 0, 0);
-    glScalef(1, 1.25, 1);
-    quad1();
-    glPopMatrix();
-
-    glDisable(GL_TEXTURE_2D);
-}
-
-void balloonCart()
-{
-    balloons();
-
-    glPushMatrix();
-    glTranslatef(0, -20, 0);
-    glScalef(0.5, 0.5, 1);
-    cart();
-    glPopMatrix();
-}
-
-void flagpole()
-{
-    glPushMatrix();
-    glTranslatef(0, 5.5, 0);
-    glRotatef(90, 1, 0, 0);
-    glScalef(0.2, 0.2, 1.5);
-    drawCylinder(1, 0, 0, 0.5, 0, 0);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, 5.5, 0);
-    glScalef(0.5, 0.5, 0.5);
-    drawSphere(.502, 0, 0, 0.26, 0, 0);
-    glPopMatrix();
-
-    matCurve(0, 0, 1);
-    drawFlag();
-}
-
-void flagpole1(int seed)
-{
-    glPushMatrix();
-    glTranslatef(0, 5.5, 0);
-    glRotatef(90, 1, 0, 0);
-    glScalef(0.2, 0.2, 1.5);
-    drawCylinder(1, 0, 0, 0.5, 0, 0);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, 5.5, 0);
-    glScalef(0.5, 0.5, 0.5);
-    drawSphere(.502, 0, 0, 0.26, 0, 0);
-    glPopMatrix();
-
-    srand(seed);
-
-    float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-    float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-    float r3 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-
-    matCurve(r1, r2, r3);
-    drawFlag();
-}
-
-void flagpole2()
-{
-    glPushMatrix();
-    glTranslatef(0, 5.5, 0);
-    glRotatef(90, 1, 0, 0);
-    glScalef(0.2, 0.2, 1.5);
-    drawCylinder(1, 0, 0, 0.5, 0, 0);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, 5.5, 0);
-    glScalef(0.5, 0.5, 0.5);
-    drawSphere(.502, 0, 0, 0.26, 0, 0);
-    glPopMatrix();
-
-    matCurve(1, 0.5, 0);
-    drawFlag();
-}
-
-void flagpole3()
-{
-    glPushMatrix();
-    glTranslatef(0, 5.5, 0);
-    glRotatef(90, 1, 0, 0);
-    glScalef(0.2, 0.2, 1.5);
-    drawCylinder(1, 0, 0, 0.5, 0, 0);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, 5.5, 0);
-    glScalef(0.5, 0.5, 0.5);
-    drawSphere(.502, 0, 0, 0.26, 0, 0);
-    glPopMatrix();
-
-    matCurve(1, 0, 1);
-    drawFlag();
-}
-
-void trees()
-{
-    
-    for (float i = -40; i <= 55; i += 15)
-    {
-        glPushMatrix();
-        glTranslatef(-70, -2, i);
-        flagpole1(i);
-        glPopMatrix();
-    }
-
-    for (float i = -40; i <= 55; i += 15)
-    {
-        glPushMatrix();
-        glTranslatef(100, -2, i);
-        flagpole1(i);
-        glPopMatrix();
-    }
-}
+static double windowHeight = 1000, windowWidth = 1000;
 
 void display(void)
 {
@@ -464,16 +55,16 @@ void display(void)
     spotLight3();
     spotLight4();
     ground();
-    walls();
-    trees();
-    human();
-    drawPool();
+    objects.walls();
+    objects.trees();
+    human.drawHuman();
+    objects.drawPool();
 
     for (float i = -70; i <= -10; i += 20)
     {
         glPushMatrix();
         glTranslatef(i, -20, 55);
-        bench1();
+        objects.bench1();
         glPopMatrix();
     }
 
@@ -481,7 +72,7 @@ void display(void)
     {
         glPushMatrix();
         glTranslatef(i, -20, 55);
-        bench2();
+        objects.bench2();
         glPopMatrix();
     }
 
@@ -489,7 +80,7 @@ void display(void)
     {
         glPushMatrix();
         glTranslatef(i, -20, 55);
-        bench1();
+        objects.bench1();
         glPopMatrix();
     }
 
@@ -497,100 +88,80 @@ void display(void)
     {
         glPushMatrix();
         glTranslatef(i, -20, 55);
-        bench2();
+        objects.bench2();
         glPopMatrix();
     }
 
 
     glPushMatrix();
     glTranslatef(-25, 0, 0);
-    streetLight1();
+    objects.streetLight1();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(50, 0, 0);
-    streetLight2();
+    objects.streetLight2();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(50, 0, 30);
-    streetLight3();
+    objects.streetLight3();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-25, 0, 30);
-    streetLight4();
+    objects.streetLight4();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, 0, 10);
-    cafeteria();
+    objects.cafeteria();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(65, 0, -30);
-    ferrisWheel();
+    rides.ferrisWheel();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(15,0,10);
     glTranslatef(-60, 0, -50);
-    orbiter();
+    rides.orbiter();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-50, 0, -30);
-    complexOrbiter();
+    rides.complexOrbiter();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-50, 0, 10);
-    pirateBoat();
+    rides.pirateBoat();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-20, -20, -40);
-    skyDrop();
+    rides.skyDrop();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-30, 0, 40);
-    balloonCart();
+    objects.balloonCart();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-60, 0, 40);
-    balloonCart();
+    objects.balloonCart();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(45, 0, 48);
-    balloonCart();
+    objects.balloonCart();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(80, 0, 48);
-    balloonCart();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(15, 0, -3);
-    flagpole();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(5, 0, -3);
-    flagpole1(0);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(25, 0, -3);
-    flagpole2();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(-5, 0, -3);
-    flagpole3();
+    objects.balloonCart();
     glPopMatrix();
 
     glDisable(GL_LIGHTING);
@@ -703,66 +274,66 @@ void myKeyboardFunc(unsigned char key, int x, int y)
             break;
         }
     case '6': // spot light 1
-        if (switchOne == false)
+        if (objects.switchOne == false)
         {
-            switchOne = true;
+            objects.switchOne  = true;
             glEnable(GL_LIGHT1);
             break;
         }
-        else if (switchOne == true)
+        else if (objects.switchOne  == true)
         {
-            switchOne = false;
+            objects.switchOne  = false;
             glDisable(GL_LIGHT1);
             break;
         }
     case '7': // spot light 2
-        if (switchTwo == false)
+        if (objects.switchTwo  == false)
         {
-            switchTwo = true;
+            objects.switchTwo = true;
             glEnable(GL_LIGHT2);
             break;
         }
-        else if (switchTwo == true)
+        else if (objects.switchTwo == true)
         {
-            switchTwo = false;
+            objects.switchTwo = false;
             glDisable(GL_LIGHT2);
             break;
         }
     case '8': // spot light 3
-        if (switchThree == false)
+        if (objects.switchThree == false)
         {
-            switchThree = true;
+            objects.switchThree = true;
             glEnable(GL_LIGHT3);
             break;
         }
-        else if (switchThree == true)
+        else if (objects.switchThree == true)
         {
-            switchThree = false;
+            objects.switchThree = false;
             glDisable(GL_LIGHT3);
             break;
         }
     case '9': // spot light 4
-        if (switchFour == false)
+        if (objects.switchFour == false)
         {
-            switchFour = true;
+            objects.switchFour = true;
             glEnable(GL_LIGHT4);
             break;
         }
-        else if (switchFour == true)
+        else if (objects.switchFour == true)
         {
-            switchFour = false;
+            objects.switchFour = false;
             glDisable(GL_LIGHT4);
             break;
         }
     case 'z': // turn on/off fan
-        if (show == false)
+        if (objects.controlPointsFlag == false)
         {
-            show = true;
+            objects.controlPointsFlag  = true;
             break;
         }
-        else if (show == true)
+        else if (objects.controlPointsFlag  == true)
         {
-            show = false;
+            objects.controlPointsFlag  = false;
             break;
         }
     case 'g': // turn on/off fan
@@ -799,288 +370,14 @@ void myKeyboardFunc(unsigned char key, int x, int y)
 
 void specialKeyboardFunc(int key, int x, int y)
 {
-    double delta_hand = 5, delta_leg = 10;
-
-    switch(key)
-    {
-        
-        case GLUT_KEY_UP:
-
-            human_x+=(cos(radian(angle_x)));
-            human_z-=(sin(radian(angle_x)));
-
-            if(!leg_flag) {
-                if(!leg_coming_back){
-                    leg_angle_1+=delta_leg;
-                    hand_angle_1-=(delta_hand);
-                    hand_angle_2+=(delta_hand);
-                }
-                else{
-                    leg_angle_1-=delta_leg;
-                    hand_angle_1+=(delta_hand);
-                    hand_angle_2-=(delta_hand);
-                }
-                
-                if(leg_angle_1<=0 && leg_coming_back) {
-                    leg_angle_1 = leg_angle_2 = 0;
-                    leg_flag = 1;
-                    leg_coming_back = 0;
-                }
-                else if(leg_angle_1>=90 && !leg_coming_back) {
-                    leg_angle_1 = 90; leg_angle_2 = 0;
-                    leg_flag = 0;
-                    leg_coming_back = 1;
-                }
-            }
-            else {
-                if(!leg_coming_back){
-                    leg_angle_2+=delta_leg;
-                    hand_angle_1+=(delta_hand);
-                    hand_angle_2-=(delta_hand);
-                }
-                else{
-                    leg_angle_2-=delta_leg;
-                    hand_angle_1-=(delta_hand);
-                    hand_angle_2+=(delta_hand);
-                }
-                
-                if(leg_angle_2<=0 && leg_coming_back) {
-                    leg_angle_1 = leg_angle_2 = 0;
-                    leg_flag = 0;
-                    leg_coming_back = 0;
-                }
-                else if(leg_angle_2>=90 && !leg_coming_back) {
-                    leg_angle_1 = 0; leg_angle_2 = 90;
-                    leg_flag = 1;
-                    leg_coming_back = 1;
-                }
-            }
-        break;
-        case GLUT_KEY_DOWN:
-            human_x-=(cos(radian(angle_x)));
-            human_z+=(sin(radian(angle_x)));
-        break;
-        case GLUT_KEY_LEFT:
-            angle_x = angle_x + 5;
-            if(angle_x<=-360 || angle_x>=360){angle_x = 0;}
-        break;
-        case GLUT_KEY_RIGHT:
-            angle_x = (angle_x - 5);
-            if(angle_x<=-360 || angle_x>=360){angle_x = 0;}
-        break;
-    }
-
+    human.move(key,x,y);
     glutPostRedisplay();
 }
 
 void animate()
 {
-    if (skyDropFlag == true)
-    {
-        if (upFlag == true)
-        {
-            skyDropPos += 0.5;
-            if (skyDropPos >= 80)
-            {
-                upFlag = false;
-            }
-        }
-        else
-        {
-            if (downFlag1 == true && downFlag2 == false && downFlag3 == false)
-            {
-                skyDropPos -= 2;
-                if (skyDropPos <= 5)
-                {
-                    upFlag = true;
-                    downFlag1 = false;
-                    downFlag2 = true;
-                    downFlag3 = false;
-                }
-            }
-            else if (downFlag1 == false && downFlag2 == true && downFlag3 == false)
-            {
-                skyDropPos -= 3;
-                if (skyDropPos <= 45)
-                {
-                    upFlag = true;
-                    downFlag1 = false;
-                    downFlag2 = false;
-                    downFlag3 = true;
-                }
-            }
-            else if (downFlag1 == false && downFlag2 == false && downFlag3 == true)
-            {
-                skyDropPos -= 4;
-                if (skyDropPos <= 15)
-                {
-                    upFlag = true;
-                    downFlag1 = true;
-                    downFlag2 = false;
-                    downFlag3 = false;
-                }
-            }
-        }
-    }
-    else
-    {
-        skyDropPos -= 2;
-        if (skyDropPos <= 2)
-        {
-            skyDropPos = 2;
-        }
-    }
-
-    if (cmOrbiterFlag == true)
-    {
-        cmOrbiterTheta += 10;
-        cmOrbiterAlpha += 1;
-    }
-
-    if (pirateBoatFlag == true)
-    {
-        if (pirateBoatCheck == true)
-        {
-            pirateBoatTheta += 2;
-            if (pirateBoatTheta == 60)
-            {
-                pirateBoatCheck = false;
-            }
-        }
-        else
-        {
-            pirateBoatTheta -= 2;
-            if (pirateBoatTheta == -70)
-            {
-                pirateBoatCheck = true;
-            }
-        }
-    }
-    else
-    {
-        if (pirateBoatTheta < 0)
-        {
-            pirateBoatTheta += 1;
-            if (pirateBoatTheta == 0)
-            {
-                pirateBoatTheta = 0;
-            }
-        }
-        else if (pirateBoatTheta > 0)
-        {
-            pirateBoatTheta -= 1;
-            if (pirateBoatTheta == 0)
-            {
-                pirateBoatTheta = 0;
-            }
-        }
-    }
-
-    if (fanSwitch == true)
-    {
-        theta += 2;
-        if (theta > 360.0)
-            theta -= 360.0 * floor(theta / 360.0);
-    }
-
-    if (orbiterFlag == true)
-    {
-        orbiterTheta += 3;
-        if (orbiterTheta > 360.0)
-            orbiterTheta -= 360.0 * floor(theta / 360.0);
-
-        orbiterAlpha += 2;
-        if (orbiterAlpha >= 45)
-            orbiterAlpha = 45;
-    }
-    else
-    {
-        orbiterAlpha -= 1;
-        if (orbiterAlpha <= -45)
-            orbiterAlpha = -45;
-
-        orbiterTheta += 3;
-        if (orbiterAlpha == -45)
-            orbiterTheta = 0;
-    }
-
-    if (door1 == true)
-    {
-        alpha += 10;
-        if (alpha > 90)
-            alpha = 90;
-    }
-    else if (door1 == false)
-    {
-        alpha -= 10;
-        if (alpha < 0)
-            alpha = 0;
-    }
-
-    if (yflag == true)
-    {
-        yf += 0.1;
-        if (yf >= 2)
-        {
-            yflag = false;
-        }
-    }
-    else
-    {
-        yf -= 0.1;
-        if (yf <= -2)
-        {
-            yflag = true;
-        }
-    }
-
-    if (xflag == true)
-    {
-        xf += 0.1;
-        if (xf >= 0.6)
-        { for (float i = -70; i <= -10; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        bench1();
-        glPopMatrix();
-    }
-
-    for (float i = -60; i <= -20; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        bench2();
-        glPopMatrix();
-    }
-
-    for (float i = 30; i <= 100; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        bench1();
-        glPopMatrix();
-    }
-
-    for (float i = 40; i <= 90; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        bench2();
-        glPopMatrix();
-    }
-            xflag = false;
-        }
-    }
-    else
-    {
-        xf -= 0.1;
-        if (xf <= -0.6)
-        {
-            xflag = true;
-        }
-    }
-
+    rides.animateRides(skyDropFlag,  upFlag,  downFlag1,  downFlag2,  downFlag3, cmOrbiterFlag,  pirateBoatFlag,  pirateBoatCheck,  fanSwitch,  orbiterFlag,  door1);
+    objects.animateFlag();
     glutPostRedisplay();
 }
 

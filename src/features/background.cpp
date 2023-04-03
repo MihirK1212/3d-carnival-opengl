@@ -80,6 +80,8 @@ void sky(float x, float y, float z, float width, float height, float length)
     y = y - height / 2;
     z = z - length / 2;
 
+    GLboolean day = true;
+
     // front
     glEnable(GL_TEXTURE_2D);
     if (day == true)

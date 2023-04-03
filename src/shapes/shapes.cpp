@@ -121,6 +121,35 @@ static void getNormal3p(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat 
     glNormal3f(Nx, Ny, Nz);
 }
 
+
+void quad1()
+{
+    glBegin(GL_QUADS);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(10, 4, 3);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex3f(0, 4, 3);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(0, 0, 3);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(10, 0, 3);
+    glEnd();
+}
+
+void quad2()
+{
+    glBegin(GL_QUADS);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(0, 8, 5);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex3f(0, 8, 0);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(0, 0, 0);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(0, 0, 5);
+    glEnd();
+}
+
 void matCurve(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambfactor, GLfloat specfactor, GLfloat shine)
 {
     glColor3f(1, 1, 1);

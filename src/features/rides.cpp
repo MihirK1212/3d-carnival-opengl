@@ -9,7 +9,7 @@ static GLfloat colors[4][6] =
         {1, 1, 0, 0.5, 0.5, 0} // yellow
 };
 
-void ferrisWheelSeat()
+void Rides::ferrisWheelSeat()
 {
     // seat
     glPushMatrix();
@@ -72,7 +72,7 @@ void ferrisWheelSeat()
 
     glDisable(GL_TEXTURE_2D);
 }
-void wheel()
+void Rides::wheel()
 {
     glPushMatrix();
     glScalef(1, 1, 2);
@@ -94,7 +94,7 @@ void wheel()
         glPopMatrix();
     }
 }
-void bulbsOnFerrisWheel()
+void Rides::bulbsOnFerrisWheel()
 {
     for (int i = 0; i <= 360; i += 45)
     {
@@ -126,7 +126,7 @@ void bulbsOnFerrisWheel()
         glPopMatrix();
     }
 }
-void ferrisWheel()
+void Rides::ferrisWheel()
 {
     // right stand on the back
     glPushMatrix();
@@ -421,7 +421,7 @@ void ferrisWheel()
     glPopMatrix();
 }
 
-void rings()
+void Rides::rings()
 {
     for (float i = -3.5; i >= -17.5; i -= 1)
     {
@@ -443,7 +443,7 @@ void rings()
         glPopMatrix();
     }
 }
-void orbiter()
+void Rides::orbiter()
 {
 
     glPushMatrix();
@@ -713,7 +713,7 @@ void orbiter()
     glPopMatrix();
 }
 
-void boatBody()
+void Rides::boatBody()
 {
     glPushMatrix();
     glTranslatef(-1.3, 0, 0);
@@ -779,7 +779,7 @@ void boatBody()
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 }
-void pirateBoat()
+void Rides::pirateBoat()
 {
     glPushMatrix();
     glTranslatef(1, 0, 0);
@@ -894,7 +894,7 @@ void pirateBoat()
     glPopMatrix();
 }
 
-void complexOrbiterUnit()
+void Rides::complexOrbiterUnit()
 {
     glPushMatrix();
     drawSphere(0, 0, 1, 0, 0, 0.5);
@@ -929,7 +929,7 @@ void complexOrbiterUnit()
     }
     glPopMatrix();
 }
-void complexOrbiter()
+void Rides::complexOrbiter()
 {
     glPushMatrix();
     // glTranslatef(1, 0, 0);
@@ -985,7 +985,7 @@ void complexOrbiter()
     glPopMatrix();
 }
 
-void skyDropStructure()
+void Rides::skyDropStructure()
 {
     for (float i = 0; i <= 90; i += 2.8)
     {
@@ -1016,7 +1016,7 @@ void skyDropStructure()
         glPopMatrix();
     }
 }
-void skyDropSeat()
+void Rides::skyDropSeat()
 {
     glPushMatrix();
     glTranslatef(-6, 3.2, 1);
@@ -1068,7 +1068,7 @@ void skyDropSeat()
         glPopMatrix();
     }
 }
-void skyDropTexture()
+void Rides::skyDropTexture()
 {
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[12]);
@@ -1087,7 +1087,7 @@ void skyDropTexture()
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 }
-void skyDropLogo()
+void Rides::skyDropLogo()
 {
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[13]);
@@ -1106,7 +1106,7 @@ void skyDropLogo()
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 }
-void skyDrop()
+void Rides::skyDrop()
 {
     for (float i = 0; i <= 5; i += 5)
     {
@@ -1161,4 +1161,150 @@ void skyDrop()
     glTranslatef(3, 20, 0);
     ground2();
     glPopMatrix();
+}
+
+void Rides::animateRides(GLboolean skyDropFlag, GLboolean upFlag, GLboolean downFlag1, GLboolean downFlag2, GLboolean downFlag3,
+                        GLboolean cmOrbiterFlag, GLboolean pirateBoatFlag, GLboolean pirateBoatCheck, GLboolean fanSwitch, GLboolean orbiterFlag, GLboolean door1) {
+    
+      if (skyDropFlag == true)
+    {
+        if (upFlag == true)
+        {
+            skyDropPos += 0.5;
+            if (skyDropPos >= 80)
+            {
+                upFlag = false;
+            }
+        }
+        else
+        {
+            if (downFlag1 == true && downFlag2 == false && downFlag3 == false)
+            {
+                skyDropPos -= 2;
+                if (skyDropPos <= 5)
+                {
+                    upFlag = true;
+                    downFlag1 = false;
+                    downFlag2 = true;
+                    downFlag3 = false;
+                }
+            }
+            else if (downFlag1 == false && downFlag2 == true && downFlag3 == false)
+            {
+                skyDropPos -= 3;
+                if (skyDropPos <= 45)
+                {
+                    upFlag = true;
+                    downFlag1 = false;
+                    downFlag2 = false;
+                    downFlag3 = true;
+                }
+            }
+            else if (downFlag1 == false && downFlag2 == false && downFlag3 == true)
+            {
+                skyDropPos -= 4;
+                if (skyDropPos <= 15)
+                {
+                    upFlag = true;
+                    downFlag1 = true;
+                    downFlag2 = false;
+                    downFlag3 = false;
+                }
+            }
+        }
+    }
+    else
+    {
+        skyDropPos -= 2;
+        if (skyDropPos <= 2)
+        {
+            skyDropPos = 2;
+        }
+    }
+
+    if (cmOrbiterFlag == true)
+    {
+        cmOrbiterTheta += 10;
+        cmOrbiterAlpha += 1;
+    }
+
+    if (pirateBoatFlag == true)
+    {
+        if (pirateBoatCheck == true)
+        {
+            pirateBoatTheta += 2;
+            if (pirateBoatTheta == 60)
+            {
+                pirateBoatCheck = false;
+            }
+        }
+        else
+        {
+            pirateBoatTheta -= 2;
+            if (pirateBoatTheta == -70)
+            {
+                pirateBoatCheck = true;
+            }
+        }
+    }
+    else
+    {
+        if (pirateBoatTheta < 0)
+        {
+            pirateBoatTheta += 1;
+            if (pirateBoatTheta == 0)
+            {
+                pirateBoatTheta = 0;
+            }
+        }
+        else if (pirateBoatTheta > 0)
+        {
+            pirateBoatTheta -= 1;
+            if (pirateBoatTheta == 0)
+            {
+                pirateBoatTheta = 0;
+            }
+        }
+    }
+
+    if (fanSwitch == true)
+    {
+        theta += 2;
+        if (theta > 360.0)
+            theta -= 360.0 * floor(theta / 360.0);
+    }
+
+    if (orbiterFlag == true)
+    {
+        orbiterTheta += 3;
+        if (orbiterTheta > 360.0)
+            orbiterTheta -= 360.0 * floor(theta / 360.0);
+
+        orbiterAlpha += 2;
+        if (orbiterAlpha >= 45)
+            orbiterAlpha = 45;
+    }
+    else
+    {
+        orbiterAlpha -= 1;
+        if (orbiterAlpha <= -45)
+            orbiterAlpha = -45;
+
+        orbiterTheta += 3;
+        if (orbiterAlpha == -45)
+            orbiterTheta = 0;
+    }
+
+    if (door1 == true)
+    {
+        alpha += 10;
+        if (alpha > 90)
+            alpha = 90;
+    }
+    else if (door1 == false)
+    {
+        alpha -= 10;
+        if (alpha < 0)
+            alpha = 0;
+    }
 }
