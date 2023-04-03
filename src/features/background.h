@@ -1,4 +1,5 @@
 #include "../shapes/shapes.h"
+#include "../../bmpLoader.h"
 
 void ground();
 void ground2();

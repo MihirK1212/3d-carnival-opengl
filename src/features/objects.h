@@ -22,6 +22,8 @@ struct Objects {
 
     GLboolean controlPointsFlag;
 
+    GLUquadric *quad;
+
     Objects() {
         switchOne = switchTwo = switchThree = switchFour = false;
         xflag = yflag = false;

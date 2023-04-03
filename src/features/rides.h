@@ -1,10 +1,9 @@
 #ifndef RIDES_H
 #define RIDES_H
 
-#include "../constants.h"
-
 #include "background.h"
 #include "../shapes/shapes.h"
+#include "../../bmpLoader.h"
 
 struct Rides {
 

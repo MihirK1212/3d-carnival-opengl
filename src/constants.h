@@ -17,11 +17,4 @@
 #include <math.h>
 using namespace std;
 
-static GLUquadric *quad;
-
-
-static unsigned int ID2[40];
-
-
-
 #endif /* CONSTANTS_H */

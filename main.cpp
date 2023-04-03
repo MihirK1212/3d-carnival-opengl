@@ -25,7 +25,7 @@ Human human;
 Rides rides;
 Objects objects;
 
-GLboolean bRotate = false, uRotate = false, fanSwitch = false, door1 = false, orbiterFlag = false, testFlag = true, pirateBoatFlag = false, pirateBoatCheck = false, cmOrbiterFlag = false, skyDropFlag = false, upFlag = true, downFlag1 = true, downFlag2 = false, downFlag3 = false, day = true;
+GLboolean fanSwitch = false, door1 = false, orbiterFlag = false, pirateBoatFlag = false, pirateBoatCheck = false, cmOrbiterFlag = false, skyDropFlag = false, upFlag = true, downFlag1 = true, downFlag2 = false, downFlag3 = false, day = true;
 static double eyeX = -10, eyeY = 5.0, eyeZ = 100, refX = 0, refY = 0, refZ = 0;
 
 static double windowHeight = 1000, windowWidth = 1000;
@@ -92,7 +92,6 @@ void display(void)
         glPopMatrix();
     }
 
-
     glPushMatrix();
     glTranslatef(-25, 0, 0);
     objects.streetLight1();
@@ -124,7 +123,7 @@ void display(void)
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(15,0,10);
+    glTranslatef(15, 0, 10);
     glTranslatef(-60, 0, -50);
     rides.orbiter();
     glPopMatrix();
@@ -174,195 +173,195 @@ void myKeyboardFunc(unsigned char key, int x, int y)
 {
     switch (key)
     {
-    case 'w': // move eye point upwards along Y axis
-        eyeY += 1.0;
-        break;
-    case 's': // move eye point downwards along Y axis
-        eyeY -= 1.0;
-        break;
-    case 'a': // move eye point left along X axis
-        eyeX -= 1.0;
-        break;
-    case 'd': // move eye point right along X axis
-        eyeX += 1.0;
-        break;
-    case 'o': // zoom out
-        eyeZ += 1;
-        break;
-    case 'i': // zoom in
-        eyeZ -= 1;
-        break;
-    case 'q': // back to default eye point and ref point
-        eyeX = 0.0;
-        eyeY = 2.0;
-        eyeZ = 30.0;
-        refX = 0.0;
-        refY = 0.0;
-        refZ = 0.0;
-        break;
-    case 'j': // move ref point upwards along Y axis
-        refY += 1.0;
-        break;
-    case 'n': // move ref point downwards along Y axis
-        refY -= 1.0;
-        break;
-    case 'b': // move ref point left along X axis
-        refX -= 1.0;
-        break;
-    case 'm': // move eye point right along X axis
-        refX += 1.0;
-        break;
-    case 'k': // move ref point away from screen/ along z axis
-        refZ += 1;
-        break;
-    case 'l': // move ref point towards screen/ along z axis
-        refZ -= 1;
-        break;
-    case '1': // orbiter
-        if (orbiterFlag == false)
-        {
-            orbiterFlag = true;
+        case 'w': // move eye point upwards along Y axis
+            eyeY += 1.0;
             break;
-        }
-        else if (orbiterFlag == true)
-        {
-            orbiterFlag = false;
+        case 's': // move eye point downwards along Y axis
+            eyeY -= 1.0;
             break;
-        }
-    case '2': // ferriswheel
-        if (fanSwitch == false)
-        {
-            fanSwitch = true;
+        case 'a': // move eye point left along X axis
+            eyeX -= 1.0;
             break;
-        }
-        else
-        {
-            fanSwitch = false;
+        case 'd': // move eye point right along X axis
+            eyeX += 1.0;
             break;
-        }
-    case '3': // skydrop
-        if (skyDropFlag == false)
-        {
-            skyDropFlag = true;
+        case 'o': // zoom out
+            eyeZ += 1;
             break;
-        }
-        else if (skyDropFlag == true)
-        {
-            skyDropFlag = false;
+        case 'i': // zoom in
+            eyeZ -= 1;
             break;
-        }
-    case '4': // complex orbiter
-        if (cmOrbiterFlag == false)
-        {
-            cmOrbiterFlag = true;
+        case 'q': // back to default eye point and ref point
+            eyeX = 0.0;
+            eyeY = 2.0;
+            eyeZ = 30.0;
+            refX = 0.0;
+            refY = 0.0;
+            refZ = 0.0;
             break;
-        }
-        else if (cmOrbiterFlag == true)
-        {
-            cmOrbiterFlag = false;
+        case 'j': // move ref point upwards along Y axis
+            refY += 1.0;
             break;
-        }
-    case '5': // pirate boat
-        if (pirateBoatFlag == false)
-        {
-            pirateBoatFlag = true;
+        case 'n': // move ref point downwards along Y axis
+            refY -= 1.0;
             break;
-        }
-        else if (pirateBoatFlag == true)
-        {
-            pirateBoatFlag = false;
+        case 'b': // move ref point left along X axis
+            refX -= 1.0;
             break;
-        }
-    case '6': // spot light 1
-        if (objects.switchOne == false)
-        {
-            objects.switchOne  = true;
-            glEnable(GL_LIGHT1);
+        case 'm': // move eye point right along X axis
+            refX += 1.0;
             break;
-        }
-        else if (objects.switchOne  == true)
-        {
-            objects.switchOne  = false;
-            glDisable(GL_LIGHT1);
+        case 'k': // move ref point away from screen/ along z axis
+            refZ += 1;
             break;
-        }
-    case '7': // spot light 2
-        if (objects.switchTwo  == false)
-        {
-            objects.switchTwo = true;
-            glEnable(GL_LIGHT2);
+        case 'l': // move ref point towards screen/ along z axis
+            refZ -= 1;
             break;
-        }
-        else if (objects.switchTwo == true)
-        {
-            objects.switchTwo = false;
-            glDisable(GL_LIGHT2);
-            break;
-        }
-    case '8': // spot light 3
-        if (objects.switchThree == false)
-        {
-            objects.switchThree = true;
-            glEnable(GL_LIGHT3);
-            break;
-        }
-        else if (objects.switchThree == true)
-        {
-            objects.switchThree = false;
-            glDisable(GL_LIGHT3);
-            break;
-        }
-    case '9': // spot light 4
-        if (objects.switchFour == false)
-        {
-            objects.switchFour = true;
-            glEnable(GL_LIGHT4);
-            break;
-        }
-        else if (objects.switchFour == true)
-        {
-            objects.switchFour = false;
-            glDisable(GL_LIGHT4);
-            break;
-        }
-    case 'z': // turn on/off fan
-        if (objects.controlPointsFlag == false)
-        {
-            objects.controlPointsFlag  = true;
-            break;
-        }
-        else if (objects.controlPointsFlag  == true)
-        {
-            objects.controlPointsFlag  = false;
-            break;
-        }
-    case 'g': // turn on/off fan
-        if (door1 == false)
-        {
-            door1 = true;
-            break;
-        }
-        else
-        {
-            door1 = false;
-            break;
-        }
+        case '1':
+            if (orbiterFlag == false)
+            {
+                orbiterFlag = true;
+                break;
+            }
+            else if (orbiterFlag == true)
+            {
+                orbiterFlag = false;
+                break;
+            }
+        case '2':
+            if (fanSwitch == false)
+            {
+                fanSwitch = true;
+                break;
+            }
+            else
+            {
+                fanSwitch = false;
+                break;
+            }
+        case '3':
+            if (skyDropFlag == false)
+            {
+                skyDropFlag = true;
+                break;
+            }
+            else if (skyDropFlag == true)
+            {
+                skyDropFlag = false;
+                break;
+            }
+        case '4':
+            if (cmOrbiterFlag == false)
+            {
+                cmOrbiterFlag = true;
+                break;
+            }
+            else if (cmOrbiterFlag == true)
+            {
+                cmOrbiterFlag = false;
+                break;
+            }
+        case '5':
+            if (pirateBoatFlag == false)
+            {
+                pirateBoatFlag = true;
+                break;
+            }
+            else if (pirateBoatFlag == true)
+            {
+                pirateBoatFlag = false;
+                break;
+            }
+        case '6':
+            if (objects.switchOne == false)
+            {
+                objects.switchOne = true;
+                glEnable(GL_LIGHT1);
+                break;
+            }
+            else if (objects.switchOne == true)
+            {
+                objects.switchOne = false;
+                glDisable(GL_LIGHT1);
+                break;
+            }
+        case '7':
+            if (objects.switchTwo == false)
+            {
+                objects.switchTwo = true;
+                glEnable(GL_LIGHT2);
+                break;
+            }
+            else if (objects.switchTwo == true)
+            {
+                objects.switchTwo = false;
+                glDisable(GL_LIGHT2);
+                break;
+            }
+        case '8':
+            if (objects.switchThree == false)
+            {
+                objects.switchThree = true;
+                glEnable(GL_LIGHT3);
+                break;
+            }
+            else if (objects.switchThree == true)
+            {
+                objects.switchThree = false;
+                glDisable(GL_LIGHT3);
+                break;
+            }
+        case '9':
+            if (objects.switchFour == false)
+            {
+                objects.switchFour = true;
+                glEnable(GL_LIGHT4);
+                break;
+            }
+            else if (objects.switchFour == true)
+            {
+                objects.switchFour = false;
+                glDisable(GL_LIGHT4);
+                break;
+            }
+        case 'z':
+            if (objects.controlPointsFlag == false)
+            {
+                objects.controlPointsFlag = true;
+                break;
+            }
+            else if (objects.controlPointsFlag == true)
+            {
+                objects.controlPointsFlag = false;
+                break;
+            }
+        case 'g':
+            if (door1 == false)
+            {
+                door1 = true;
+                break;
+            }
+            else
+            {
+                door1 = false;
+                break;
+            }
 
-    case '0': // day/night
-        if (day == false)
-        {
-            day = true;
-            glEnable(GL_LIGHT0);
-            break;
-        }
-        else if (day == true)
-        {
-            day = false;
-            glDisable(GL_LIGHT0);
-            break;
-        }
-    case 27: // Escape key
-        exit(1);
+        case '0':
+            if (day == false)
+            {
+                day = true;
+                glEnable(GL_LIGHT0);
+                break;
+            }
+            else if (day == true)
+            {
+                day = false;
+                glDisable(GL_LIGHT0);
+                break;
+            }
+        case 27:
+            exit(1);
     }
 
     glutPostRedisplay();
@@ -370,32 +369,28 @@ void myKeyboardFunc(unsigned char key, int x, int y)
 
 void specialKeyboardFunc(int key, int x, int y)
 {
-    human.move(key,x,y);
+    human.move(key, x, y);
     glutPostRedisplay();
 }
 
 void animate()
 {
-    rides.animateRides(skyDropFlag,  upFlag,  downFlag1,  downFlag2,  downFlag3, cmOrbiterFlag,  pirateBoatFlag,  pirateBoatCheck,  fanSwitch,  orbiterFlag,  door1);
+    rides.animateRides(skyDropFlag, upFlag, downFlag1, downFlag2, downFlag3, cmOrbiterFlag, pirateBoatFlag, pirateBoatCheck, fanSwitch, orbiterFlag, door1);
     objects.animateFlag();
     glutPostRedisplay();
 }
 
-void fullScreen(int w, int h) 
+void fullScreen(int w, int h)
 {
-    // Prevent a divide by zero, when window is too short;you cant make a window of zero width.
     if (h == 0)
         h = 1;
-    float ratio = (GLfloat)w / (GLfloat)h; // Calculate aspect ratio of the window
+    float ratio = (GLfloat)w / (GLfloat)h;
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
 
-    // Set the perspective coordinate system
-    glMatrixMode(GL_PROJECTION); // Use the Projection Matrix
-    glLoadIdentity();            // Reset Matrix
-
-    glViewport(0, 0, w, h);            // Set the viewport to be the entire window
-    gluPerspective(60, ratio, 1, 500); // Set the correct perspective.
-    // glFrustum(-2.5,2.5,-2.5,2.5, ratio, 200);
-    glMatrixMode(GL_MODELVIEW); // Get Back to the Modelview
+    glViewport(0, 0, w, h);
+    gluPerspective(60, ratio, 1, 500);
+    glMatrixMode(GL_MODELVIEW);
 }
 
 int main(int argc, char **argv)
@@ -405,7 +400,7 @@ int main(int argc, char **argv)
 
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(800, 600);
-    glutCreateWindow("Demo");
+    glutCreateWindow("CS 352 Amusement Park");
 
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
@@ -448,85 +443,81 @@ int main(int argc, char **argv)
     cout << "0: Day/Night" << endl;
     cout << "Z: To show control points" << endl;
 
-    LoadTexture2("sgi images/whiteground.sgi", 2);
+    LoadTexture("sgi images/whiteground.sgi", 2);
 
-    LoadTexture2("sgi images/whiteground.sgi", 3);
+    LoadTexture("sgi images/whiteground.sgi", 3);
 
-    LoadTexture2("sgi images/pirate-copy.sgi", 4);
+    LoadTexture("sgi images/pirate-copy.sgi", 4);
 
-    // LoadTexture2("sgi images/red-metal.sgi", 5);
-    LoadTexture2("sgi images/blue_gradient.sgi", 5);
+    // LoadTexture("sgi images/red-metal.sgi", 5);
+    LoadTexture("sgi images/blue_gradient.sgi", 5);
 
-    LoadTexture2("sgi images/baskinrobbinslogo.sgi", 6);
-    
-    // LoadTexture2("sgi images/pizzahut.sgi", 7);
-    LoadTexture2("sgi images/iitindore.sgi", 7);
+    LoadTexture("sgi images/baskinrobbinslogo.sgi", 6);
 
-    LoadTexture2("sgi images/dunkindonuts.sgi", 8);
+    // LoadTexture("sgi images/pizzahut.sgi", 7);
+    LoadTexture("sgi images/iitindore.sgi", 7);
+
+    LoadTexture("sgi images/dunkindonuts.sgi", 8);
 
     // //sky
-    // LoadTexture2("sgi images/front.sgi", 9);
-    // LoadTexture2("sgi images/left.sgi", 12);
-    // LoadTexture2("sgi images/right.sgi", 11);
-    // LoadTexture2("sgi images/back.sgi", 10);
-    // LoadTexture2("sgi images/up.sgi", 28);
-    // LoadTexture2("sgi images/nightsky.sgi", 29);
+    // LoadTexture("sgi images/front.sgi", 9);
+    // LoadTexture("sgi images/left.sgi", 12);
+    // LoadTexture("sgi images/right.sgi", 11);
+    // LoadTexture("sgi images/back.sgi", 10);
+    // LoadTexture("sgi images/up.sgi", 28);
+    // LoadTexture("sgi images/nightsky.sgi", 29);
 
+    LoadTexture("sgi images/whiteground.sgi", 9);
+    LoadTexture("sgi images/whiteground.sgi", 12);
+    LoadTexture("sgi images/whiteground.sgi", 11);
+    LoadTexture("sgi images/whiteground.sgi", 10);
+    LoadTexture("sgi images/whiteground.sgi", 28);
+    LoadTexture("sgi images/whiteground.sgi", 29);
 
-    LoadTexture2("sgi images/whiteground.sgi", 9);
-    LoadTexture2("sgi images/whiteground.sgi", 12);
-    LoadTexture2("sgi images/whiteground.sgi", 11);
-    LoadTexture2("sgi images/whiteground.sgi", 10);
-    LoadTexture2("sgi images/whiteground.sgi", 28);
-    LoadTexture2("sgi images/whiteground.sgi", 29);
+    LoadTexture("sgi images/skydrop.sgi", 13);
 
-    LoadTexture2("sgi images/skydrop.sgi", 13);
+    LoadTexture("sgi images/skydroplogo.sgi", 14);
 
-    LoadTexture2("sgi images/skydroplogo.sgi", 14);
+    // LoadTexture("sgi images/grass.sgi", 15);
+    // LoadTexture("sgi images/whiteground.sgi", 15);
+    LoadTexture("sgi images/sand.sgi", 15);
 
-    // LoadTexture2("sgi images/grass.sgi", 15);
-    // LoadTexture2("sgi images/whiteground.sgi", 15);
-    LoadTexture2("sgi images/sand.sgi", 15);
+    // LoadTexture("sgi images/blackred.sgi", 16);
+    LoadTexture("sgi images/blue_gradient.sgi", 16);
 
-    // LoadTexture2("sgi images/blackred.sgi", 16);
-    LoadTexture2("sgi images/blue_gradient.sgi", 16);
+    LoadTexture("sgi images/pinkblue.sgi", 17);
 
-    LoadTexture2("sgi images/pinkblue.sgi", 17);
+    LoadTexture("sgi images/baskin-robin-ad.sgi", 18);
 
-    LoadTexture2("sgi images/baskin-robin-ad.sgi", 18);
+    LoadTexture("sgi images/de5b9e.sgi", 19);
 
-    LoadTexture2("sgi images/de5b9e.sgi", 19);
+    LoadTexture("sgi images/pinkorange.sgi", 20);
 
-    LoadTexture2("sgi images/pinkorange.sgi", 20);
+    LoadTexture("sgi images/ff6d0d.sgi", 21);
 
-    LoadTexture2("sgi images/ff6d0d.sgi", 21);
+    LoadTexture("sgi images/dd.sgi", 22);
 
-    LoadTexture2("sgi images/dd.sgi", 22);
+    // LoadTexture("sgi images/pizzahutad.sgi", 23);
+    LoadTexture("sgi images/abhinandan.sgi", 23);
 
-    // LoadTexture2("sgi images/pizzahutad.sgi", 23);
-    LoadTexture2("sgi images/abhinandan.sgi", 23);
+    LoadTexture("sgi images/bush.sgi", 24);
 
-    LoadTexture2("sgi images/bush.sgi", 24);
+    LoadTexture("sgi images/bushflower.sgi", 25);
 
-    LoadTexture2("sgi images/bushflower.sgi", 25);
+    LoadTexture("sgi images/brickwall.sgi", 26);
 
-    LoadTexture2("sgi images/brickwall.sgi", 26);
+    LoadTexture("sgi images/redwhite.sgi", 27);
 
-    LoadTexture2("sgi images/redwhite.sgi", 27);
+    LoadTexture("sgi images/treebark.sgi", 30);
 
+    LoadTexture("sgi images/bush.sgi", 31);
 
-    
+    // LoadTexture("sgi images/purplewall.sgi", 32);
+    LoadTexture("sgi images/iitindore.sgi", 32);
 
-    LoadTexture2("sgi images/treebark.sgi", 30);
+    LoadTexture("sgi images/tiles.sgi", 33);
 
-    LoadTexture2("sgi images/bush.sgi", 31);
-
-    // LoadTexture2("sgi images/purplewall.sgi", 32);
-    LoadTexture2("sgi images/iitindore.sgi", 32);
-
-        LoadTexture2("sgi images/tiles.sgi", 33);
-
-    LoadTexture2("sgi images/water.sgi", 34);
+    LoadTexture("sgi images/water.sgi", 34);
 
     glutReshapeFunc(fullScreen);
     glutKeyboardFunc(myKeyboardFunc);
