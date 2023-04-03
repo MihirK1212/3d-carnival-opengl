@@ -6,13 +6,15 @@
 
 #include "src/constants.h"
 
-
 typedef struct _TK_RGBImageRec {
    GLint sizeX, sizeY;
    GLint components;
    unsigned char *data;
 } TK_RGBImageRec;
 
+
+
+/******************************************************************************/
 
 typedef struct _rawImageRec {
     unsigned short imagic;
@@ -30,6 +32,7 @@ typedef struct _rawImageRec {
     GLint *rowSize;
 } rawImageRec;
 
+/******************************************************************************/
 
 static void ConvertShort(unsigned short *array, long length)
 {
@@ -237,7 +240,10 @@ static void FreeImage( TK_RGBImageRec *image )
    free(image);
 }
 
-void LoadTexture2(const char *filename, GLint num) {
+
+
+void LoadTexture2(const char *filename, GLint num)
+{
     TK_RGBImageRec *texture1;
 
     texture1 = tkRGBImageLoad(filename);

@@ -1,8 +1,7 @@
 #include "../constants.h"
 
-#include "../shapes/shapes.h"
-#include "../../bmpLoader.h"
 #include "background.h"
+#include "../shapes/shapes.h"
 
 void drawPool();
 void bush();

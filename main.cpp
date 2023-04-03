@@ -19,23 +19,11 @@ using namespace std;
 #include "src/features/rides.h"
 #include "src/features/objects.h"
 #include "src/features/human.h"
-
+#include "src/constants.h"
 
 const int nt = 60;
 const int ntheta = 20;
 const double PI = 3.14159265389;
-
-class point1
-{
-public:
-    point1()
-    {
-        x = 0;
-        y = 0;
-    }
-    int x;
-    int y;
-} clkpt[2];
 
 void setNormal(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, GLfloat x3, GLfloat y3, GLfloat z3)
 {
@@ -451,81 +439,6 @@ void trees()
     }
 }
 
-void human() 
-{
-    int body_x = human_x , body_y = human_y, body_z = human_z;
-
-    //mainbody
-    glPushMatrix();
-    glTranslatef(body_x, body_y, body_z);
-    glRotatef(-(90-angle_x),0,1,0);
-    glScalef(1.5, 5, 1);
-    drawHuman();
-    glPopMatrix();
-
-    //hand1
-    glPushMatrix();
-    glTranslatef(body_x, body_y, body_z); //translate to actual position of the human
-    glRotatef(-(90-angle_x),0,1,0); //rotate w.r.t y axis to simulate orientation of human
-    glTranslatef(1.5,5,1); //translate relative to the main body of the human
-    glRotatef(hand_angle_1,1,0,0); //rotate w.r.t x axis to simulate hand movement
-    glScalef(0.5, 0.5, 1.5); //scaling
-    glTranslatef(-3,-3,-3); //take top right corner of box to origin
-    drawHuman();
-    glPopMatrix();
-
-    //hand2
-    glPushMatrix();
-    glTranslatef(body_x, body_y, body_z);
-    glRotatef(-(90-angle_x),0,1,0);
-    glTranslatef(4,5,1);
-    glRotatef(hand_angle_2,1,0,0);
-    glScalef(0.5, 0.5, 1.5);
-    glTranslatef(-3,-3,-3);
-    drawHuman();
-    glPopMatrix();
-
-    //leg1
-    glPushMatrix();
-    glTranslatef(body_x, body_y, body_z);
-    glRotatef(-(90-angle_x),0,1,0);
-    glTranslatef(1.5,0,2);
-    glRotatef(leg_angle_1,1,0,0);
-    glScalef(0.5, 2, 0.5);
-    glTranslatef(-3,-3,-3);
-    drawHuman();
-    glPopMatrix();
-
-    //leg2
-    glPushMatrix();
-    glTranslatef(body_x, body_y, body_z);
-    glRotatef(-(90-angle_x),0,1,0);
-    glTranslatef(4,0,2);
-    glRotatef(leg_angle_2,1,0,0);
-    glScalef(0.5, 2, 0.5);
-    glTranslatef(-3,-3,-3);
-    drawHuman();
-    glPopMatrix();
-
-    //balloon body
-    matCurve(1, 0, 0);
-    glPushMatrix();
-    glTranslatef(body_x, body_y, body_z);
-    glRotatef(-(90-angle_x),0,1,0);
-    glTranslatef(3, 15, -2);
-    balloon();
-    glPopMatrix();
-
-    //balloon rope
-    glPushMatrix();
-    glTranslatef(body_x, body_y, body_z);
-    glRotatef(-(90-angle_x),0,1,0);
-    glTranslatef(2, 4, -2);
-    glScalef(1,1.5,1);
-    balloonLine();
-    glPopMatrix();
-}
-
 void display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -537,8 +450,6 @@ void display(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(eyeX, eyeY, eyeZ, refX, refY, refZ, 0, 1, 0);
-
-    // glViewport(0, 0, 800, 600);
 
     glEnable(GL_LIGHTING);
 
@@ -1202,9 +1113,7 @@ int main(int argc, char **argv)
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
-    // glEnable(GL_LIGHTING);
-    // glEnable(GL_BLEND);
-    // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     light();
 
     cout << "To move Eye point:" << endl;

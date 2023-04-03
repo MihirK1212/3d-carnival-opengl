@@ -121,7 +121,7 @@ static void getNormal3p(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat 
     glNormal3f(Nx, Ny, Nz);
 }
 
-void matCurve(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambfactor = 1.0, GLfloat specfactor = 1.0, GLfloat shine = 50)
+void matCurve(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambfactor, GLfloat specfactor, GLfloat shine)
 {
     glColor3f(1, 1, 1);
     GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
@@ -137,7 +137,7 @@ void matCurve(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambfactor = 1.0,
     glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
 }
 
-void drawCube(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX = 0, GLfloat ambY = 0, GLfloat ambZ = 0, GLfloat shine = 50)
+void drawCube(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX , GLfloat ambY , GLfloat ambZ , GLfloat shine )
 {
     GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
@@ -166,7 +166,7 @@ void drawCube(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX = 0, GLfloa
     glEnd();
 }
 
-void drawSphere(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine = 90)
+void drawSphere(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
 {
     GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
@@ -183,7 +183,7 @@ void drawSphere(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat 
 }
 
 
-void drawTorus(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLdouble innerRadius, GLdouble outerRadius, GLint nsides, GLint rings, GLfloat shine = 90)
+void drawTorus(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLdouble innerRadius, GLdouble outerRadius, GLint nsides, GLint rings, GLfloat shine)
 {
     GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
@@ -200,9 +200,9 @@ void drawTorus(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat a
     glutSolidTorus(innerRadius, outerRadius, nsides, rings);
 }
 
-void drawCylinder(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine = 90)
+void drawCylinder(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
 {
-    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat no_mat[] =   {0.0, 0.0, 0.0, 1.0};
     GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
     GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
     GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
@@ -219,7 +219,7 @@ void drawCylinder(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloa
     gluCylinder(quadratic, 1.5, 1.5, 19, 32, 32);
 }
 
-void drawTrapezoid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine = 50)
+void drawTrapezoid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
 {
     GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};

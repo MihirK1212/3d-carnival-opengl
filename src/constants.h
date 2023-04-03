@@ -17,7 +17,7 @@
 #include <math.h>
 using namespace std;
 
-GLUquadric *quad;
+static GLUquadric *quad;
 
 static double Txval = 0, Tyval = 0, Tzval = 0;
 static double windowHeight = 1000, windowWidth = 1000;

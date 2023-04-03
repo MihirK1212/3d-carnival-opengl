@@ -1,7 +1,10 @@
+#ifndef RIDES_H
+#define RIDES_H
+
 #include "../constants.h"
-#include "../shapes/shapes.h"
-#include "../../bmpLoader.h"
+
 #include "background.h"
+#include "../shapes/shapes.h"
 
 void ferrisWheelSeat();
 void wheel();
@@ -22,3 +25,5 @@ void skyDropSeat();
 void skyDropTexture();
 void skyDropLogo();
 void skyDrop();
+
+#endif /* RIDES_H */
