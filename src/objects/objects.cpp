@@ -476,12 +476,6 @@ void Objects::cafeteria()
     dunkinDonuts();
     glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(13, 0, 5);
-    glScalef(2.9, 1, 2.4);
-    ground2();
-    glPopMatrix();
-
     cafeteriaFence();
 
     glPushMatrix();

@@ -1,7 +1,8 @@
 #ifndef RIDES_H
 #define RIDES_H
 
-#include "background.h"
+#include "../../libs.h"
+
 #include "../shapes/shapes.h"
 #include "../../bmpLoader.h"
 
@@ -29,6 +30,8 @@ struct Rides {
         skyDropPos = 0.0;
     }
 
+    void rideGround();
+
     void ferrisWheelSeat();
     void wheel();
     void bulbsOnFerrisWheel();
@@ -55,4 +58,4 @@ struct Rides {
 
 
 
-#endif /* RIDES_H */
+#endif 

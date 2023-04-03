@@ -1,11 +1,7 @@
 #ifndef BMPLOADER_H
 #define BMPLOADER_H
 
-#include<GL/gl.h>
-#include<GL/glut.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "libs.h"
 
 
 extern unsigned int ID2[40];

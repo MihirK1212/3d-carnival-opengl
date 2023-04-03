@@ -1,11 +1,12 @@
 #ifndef HUMAN_H
 #define HUMAN_H
 
-#include "../constants.h"
+#include "../../libs.h"
+
 #include "../shapes/shapes.h"
+#include "../objects/objects.h"
 
 double radian(double angle);
-
 
 struct Human {
 

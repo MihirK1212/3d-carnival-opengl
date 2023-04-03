@@ -9,6 +9,26 @@ static GLfloat colors[4][6] =
         {1, 1, 0, 0.5, 0.5, 0} // yellow
 };
 
+void Rides::rideGround()
+{
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, ID2[2]); // 2
+    glPushMatrix();
+    materialProperty();
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(10, -19.8, 10);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(10, -19.8, -10);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(-10, -19.8, -10);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex3f(-10, -19.8, 10);
+    glEnd();
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+}
+
 void Rides::ferrisWheelSeat()
 {
     // seat
@@ -417,7 +437,7 @@ void Rides::ferrisWheel()
     glPushMatrix();
     glTranslatef(2, 0, 0);
     glScalef(2, 1, 1.5);
-    ground2();
+    rideGround();
     glPopMatrix();
 }
 
@@ -448,7 +468,7 @@ void Rides::orbiter()
 
     glPushMatrix();
     glScalef(2, 1, 2);
-    ground2();
+    rideGround();
     glPopMatrix();
     //the base
     glPushMatrix();
@@ -784,7 +804,7 @@ void Rides::pirateBoat()
     glPushMatrix();
     glTranslatef(1, 0, 0);
     glScalef(1.3, 1, 1.3);
-    ground2();
+    rideGround();
     glPopMatrix();
     // base
     // base stand
@@ -934,7 +954,7 @@ void Rides::complexOrbiter()
     glPushMatrix();
     // glTranslatef(1, 0, 0);
     glScalef(2, 1, 2);
-    ground2();
+    rideGround();
     glPopMatrix();
     /* //the base
      glPushMatrix();
@@ -1159,7 +1179,7 @@ void Rides::skyDrop()
 
     glPushMatrix();
     glTranslatef(3, 20, 0);
-    ground2();
+    rideGround();
     glPopMatrix();
 }
 

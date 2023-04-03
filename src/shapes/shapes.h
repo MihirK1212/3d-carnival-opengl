@@ -1,7 +1,7 @@
 #ifndef SHAPES_H
 #define SHAPES_H
 
-#include "../constants.h"
+#include "../../libs.h"
 
 void materialProperty();
 
@@ -19,4 +19,4 @@ void drawTrapezoid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLflo
 void drawpyramid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine);
 void drawBox();
 
-#endif /* SHAPES_H */
+#endif 

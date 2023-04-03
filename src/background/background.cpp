@@ -52,26 +52,6 @@ void ground()
     glDisable(GL_TEXTURE_2D);
 }
 
-void ground2()
-{
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, ID2[2]); // 2
-    glPushMatrix();
-    materialProperty();
-    glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(10, -19.8, 10);
-    glTexCoord2f(1.0f, 0.0f);
-    glVertex3f(10, -19.8, -10);
-    glTexCoord2f(1.0f, 1.0f);
-    glVertex3f(-10, -19.8, -10);
-    glTexCoord2f(0.0f, 1.0f);
-    glVertex3f(-10, -19.8, 10);
-    glEnd();
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-}
-
 void sky(float x, float y, float z, float width, float height, float length)
 {
     materialProperty();

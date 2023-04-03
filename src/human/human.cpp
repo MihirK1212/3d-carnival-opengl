@@ -67,23 +67,25 @@ void Human::drawHuman()
     drawCubeBodyPart();
     glPopMatrix();
 
-    // //balloon body
-    // matCurve(1, 0, 0);
-    // glPushMatrix();
-    // glTranslatef(body_x, body_y, body_z);
-    // glRotatef(-(90-angle_x),0,1,0);
-    // glTranslatef(3, 15, -2);
-    // balloon();
-    // glPopMatrix();
+    Objects obj;
 
-    // //balloon rope
-    // glPushMatrix();
-    // glTranslatef(body_x, body_y, body_z);
-    // glRotatef(-(90-angle_x),0,1,0);
-    // glTranslatef(2, 4, -2);
-    // glScalef(1,1.5,1);
-    // balloonLine();
-    // glPopMatrix();
+    //balloon body
+    matCurve(1, 0, 0);
+    glPushMatrix();
+    glTranslatef(body_x, body_y, body_z);
+    glRotatef(-(90-angle_x),0,1,0);
+    glTranslatef(3, 15, -2);
+    obj.balloon();
+    glPopMatrix();
+
+    //balloon rope
+    glPushMatrix();
+    glTranslatef(body_x, body_y, body_z);
+    glRotatef(-(90-angle_x),0,1,0);
+    glTranslatef(2, 4, -2);
+    glScalef(1,1.5,1);
+    obj.balloonLine();
+    glPopMatrix();
 }
 
 void Human::move(int key, int x, int y)

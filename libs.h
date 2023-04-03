@@ -1,6 +1,7 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#pragma once
 
+#ifndef LIBS_H
+#define LIBS_H
 
 #define GL_SILENCE_DEPRECATION
 #include <GL/gl.h>
@@ -15,6 +16,7 @@
 #include <vector>
 #include <GL/glext.h>
 #include <math.h>
+#include <string.h>
 using namespace std;
 
-#endif /* CONSTANTS_H */
+#endif

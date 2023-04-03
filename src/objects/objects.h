@@ -1,7 +1,10 @@
-#include "../constants.h"
+#ifndef OBJECTS_H
+#define OBJECTS_H
 
-#include "background.h"
+#include "../../libs.h"
+
 #include "../shapes/shapes.h"
+#include "../../bmpLoader.h"
 
 
 const int nt = 60;
@@ -73,4 +76,6 @@ struct Objects {
 
     void animateFlag();
 };
+
+#endif
 

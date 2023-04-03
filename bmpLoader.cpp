@@ -1,4 +1,3 @@
-#include "src/constants.h"
 #include "bmpLoader.h"
 
 unsigned int ID2[40];
