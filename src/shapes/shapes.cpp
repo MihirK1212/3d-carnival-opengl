@@ -1,17 +1,4 @@
-#define GL_SILENCE_DEPRECATION
-#include <GL/gl.h>
-#ifdef __APPLE_CC__
-#include <GL/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-#include <stdlib.h>
-#include <stdio.h>
-#include <iostream>
-#include <vector>
-#include <GL/glext.h>
-#include <math.h>
-using namespace std;
+#include "shapes.h"
 
 static GLfloat v_cube[8][3] =
     {
@@ -232,6 +219,34 @@ void drawCylinder(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloa
     gluCylinder(quadratic, 1.5, 1.5, 19, 32, 32);
 }
 
+void drawTrapezoid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine = 50)
+{
+    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
+    GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
+    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat mat_shininess[] = {shine};
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+
+    glBegin(GL_QUADS);
+    for (GLint i = 0; i < 6; i++)
+    {
+        getNormal3p(v_trapezoid[TquadIndices[i][0]][0], v_trapezoid[TquadIndices[i][0]][1], v_trapezoid[TquadIndices[i][0]][2],
+                    v_trapezoid[TquadIndices[i][1]][0], v_trapezoid[TquadIndices[i][1]][1], v_trapezoid[TquadIndices[i][1]][2],
+                    v_trapezoid[TquadIndices[i][2]][0], v_trapezoid[TquadIndices[i][2]][1], v_trapezoid[TquadIndices[i][2]][2]);
+
+        glVertex3fv(&v_trapezoid[TquadIndices[i][0]][0]);
+        glVertex3fv(&v_trapezoid[TquadIndices[i][1]][0]);
+        glVertex3fv(&v_trapezoid[TquadIndices[i][2]][0]);
+        glVertex3fv(&v_trapezoid[TquadIndices[i][3]][0]);
+    }
+    glEnd();
+}
 
 void drawpyramid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
 {
@@ -273,34 +288,6 @@ void drawpyramid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat
     glEnd();
 }
 
-void drawTrapezoid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine = 50)
-{
-    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
-    GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
-    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat mat_shininess[] = {shine};
-
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
-
-    glBegin(GL_QUADS);
-    for (GLint i = 0; i < 6; i++)
-    {
-        getNormal3p(v_trapezoid[TquadIndices[i][0]][0], v_trapezoid[TquadIndices[i][0]][1], v_trapezoid[TquadIndices[i][0]][2],
-                    v_trapezoid[TquadIndices[i][1]][0], v_trapezoid[TquadIndices[i][1]][1], v_trapezoid[TquadIndices[i][1]][2],
-                    v_trapezoid[TquadIndices[i][2]][0], v_trapezoid[TquadIndices[i][2]][1], v_trapezoid[TquadIndices[i][2]][2]);
-
-        glVertex3fv(&v_trapezoid[TquadIndices[i][0]][0]);
-        glVertex3fv(&v_trapezoid[TquadIndices[i][1]][0]);
-        glVertex3fv(&v_trapezoid[TquadIndices[i][2]][0]);
-        glVertex3fv(&v_trapezoid[TquadIndices[i][3]][0]);
-    }
-    glEnd();
-}
 
 void drawBox()
 {
