@@ -40,6 +40,7 @@ struct Objects {
     void tree();
     void chair();
     void table();
+    void DrawUmbrella();
     void diningSet();
     
     void icecreamParlor();

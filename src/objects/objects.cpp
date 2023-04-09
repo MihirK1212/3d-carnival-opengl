@@ -242,11 +242,31 @@ void Objects::table()
     glPopMatrix();
 }
 
+void Objects::DrawUmbrella(void)
+{
+    GLUquadricObj *qobj;
+    qobj = gluNewQuadric();
+    gluQuadricDrawStyle(qobj, GLU_FILL);
+
+    glColor4ub(255, 20, 20, 255);
+
+    // moving the umbrella 20 units above the table
+    glTranslatef(0, 12.5, 0);
+
+    glRotatef(90, 1.0f, 0.0f, 0.0f);
+    glRotatef(0, 0.0f, 1.0f, 0.0f);
+    gluCylinder(qobj, 0, 6, 6, 10, 1);      // Canopy
+    gluCylinder(qobj, 0.2, 0.5, 45, 10, 1); // Pole
+
+    gluDeleteQuadric(qobj);
+}
+
 void Objects::diningSet()
 {
     glPushMatrix();
     glTranslatef(0, -16, 0);
     table();
+    DrawUmbrella();
     glPopMatrix();
 
     for (int i = 0; i <= 360; i += 90)
