@@ -1,7 +1,6 @@
 #include "libs.h"
 #include "index.h"
 
-
 Human human;
 Rides rides;
 Objects objects;
@@ -154,195 +153,195 @@ void myKeyboardFunc(unsigned char key, int x, int y)
 {
     switch (key)
     {
-        case 'w': // move eye point upwards along Y axis
-            eyeY += 1.0;
+    case 'w': // move eye point upwards along Y axis
+        eyeY += 1.0;
+        break;
+    case 's': // move eye point downwards along Y axis
+        eyeY -= 1.0;
+        break;
+    case 'a': // move eye point left along X axis
+        eyeX -= 1.0;
+        break;
+    case 'd': // move eye point right along X axis
+        eyeX += 1.0;
+        break;
+    case 'o': // zoom out
+        eyeZ += 1;
+        break;
+    case 'i': // zoom in
+        eyeZ -= 1;
+        break;
+    case 'q': // back to default eye point and ref point
+        eyeX = 0.0;
+        eyeY = 2.0;
+        eyeZ = 30.0;
+        refX = 0.0;
+        refY = 0.0;
+        refZ = 0.0;
+        break;
+    case 'j': // move ref point upwards along Y axis
+        refY += 1.0;
+        break;
+    case 'n': // move ref point downwards along Y axis
+        refY -= 1.0;
+        break;
+    case 'b': // move ref point left along X axis
+        refX -= 1.0;
+        break;
+    case 'm': // move eye point right along X axis
+        refX += 1.0;
+        break;
+    case 'k': // move ref point away from screen/ along z axis
+        refZ += 1;
+        break;
+    case 'l': // move ref point towards screen/ along z axis
+        refZ -= 1;
+        break;
+    case '1':
+        if (orbiterFlag == false)
+        {
+            orbiterFlag = true;
             break;
-        case 's': // move eye point downwards along Y axis
-            eyeY -= 1.0;
+        }
+        else if (orbiterFlag == true)
+        {
+            orbiterFlag = false;
             break;
-        case 'a': // move eye point left along X axis
-            eyeX -= 1.0;
+        }
+    case '2':
+        if (fanSwitch == false)
+        {
+            fanSwitch = true;
             break;
-        case 'd': // move eye point right along X axis
-            eyeX += 1.0;
+        }
+        else
+        {
+            fanSwitch = false;
             break;
-        case 'o': // zoom out
-            eyeZ += 1;
+        }
+    case '3':
+        if (skyDropFlag == false)
+        {
+            skyDropFlag = true;
             break;
-        case 'i': // zoom in
-            eyeZ -= 1;
+        }
+        else if (skyDropFlag == true)
+        {
+            skyDropFlag = false;
             break;
-        case 'q': // back to default eye point and ref point
-            eyeX = 0.0;
-            eyeY = 2.0;
-            eyeZ = 30.0;
-            refX = 0.0;
-            refY = 0.0;
-            refZ = 0.0;
+        }
+    case '4':
+        if (cmOrbiterFlag == false)
+        {
+            cmOrbiterFlag = true;
             break;
-        case 'j': // move ref point upwards along Y axis
-            refY += 1.0;
+        }
+        else if (cmOrbiterFlag == true)
+        {
+            cmOrbiterFlag = false;
             break;
-        case 'n': // move ref point downwards along Y axis
-            refY -= 1.0;
+        }
+    case '5':
+        if (pirateBoatFlag == false)
+        {
+            pirateBoatFlag = true;
             break;
-        case 'b': // move ref point left along X axis
-            refX -= 1.0;
+        }
+        else if (pirateBoatFlag == true)
+        {
+            pirateBoatFlag = false;
             break;
-        case 'm': // move eye point right along X axis
-            refX += 1.0;
+        }
+    case '6':
+        if (objects.switchOne == false)
+        {
+            objects.switchOne = true;
+            glEnable(GL_LIGHT1);
             break;
-        case 'k': // move ref point away from screen/ along z axis
-            refZ += 1;
+        }
+        else if (objects.switchOne == true)
+        {
+            objects.switchOne = false;
+            glDisable(GL_LIGHT1);
             break;
-        case 'l': // move ref point towards screen/ along z axis
-            refZ -= 1;
+        }
+    case '7':
+        if (objects.switchTwo == false)
+        {
+            objects.switchTwo = true;
+            glEnable(GL_LIGHT2);
             break;
-        case '1':
-            if (orbiterFlag == false)
-            {
-                orbiterFlag = true;
-                break;
-            }
-            else if (orbiterFlag == true)
-            {
-                orbiterFlag = false;
-                break;
-            }
-        case '2':
-            if (fanSwitch == false)
-            {
-                fanSwitch = true;
-                break;
-            }
-            else
-            {
-                fanSwitch = false;
-                break;
-            }
-        case '3':
-            if (skyDropFlag == false)
-            {
-                skyDropFlag = true;
-                break;
-            }
-            else if (skyDropFlag == true)
-            {
-                skyDropFlag = false;
-                break;
-            }
-        case '4':
-            if (cmOrbiterFlag == false)
-            {
-                cmOrbiterFlag = true;
-                break;
-            }
-            else if (cmOrbiterFlag == true)
-            {
-                cmOrbiterFlag = false;
-                break;
-            }
-        case '5':
-            if (pirateBoatFlag == false)
-            {
-                pirateBoatFlag = true;
-                break;
-            }
-            else if (pirateBoatFlag == true)
-            {
-                pirateBoatFlag = false;
-                break;
-            }
-        case '6':
-            if (objects.switchOne == false)
-            {
-                objects.switchOne = true;
-                glEnable(GL_LIGHT1);
-                break;
-            }
-            else if (objects.switchOne == true)
-            {
-                objects.switchOne = false;
-                glDisable(GL_LIGHT1);
-                break;
-            }
-        case '7':
-            if (objects.switchTwo == false)
-            {
-                objects.switchTwo = true;
-                glEnable(GL_LIGHT2);
-                break;
-            }
-            else if (objects.switchTwo == true)
-            {
-                objects.switchTwo = false;
-                glDisable(GL_LIGHT2);
-                break;
-            }
-        case '8':
-            if (objects.switchThree == false)
-            {
-                objects.switchThree = true;
-                glEnable(GL_LIGHT3);
-                break;
-            }
-            else if (objects.switchThree == true)
-            {
-                objects.switchThree = false;
-                glDisable(GL_LIGHT3);
-                break;
-            }
-        case '9':
-            if (objects.switchFour == false)
-            {
-                objects.switchFour = true;
-                glEnable(GL_LIGHT4);
-                break;
-            }
-            else if (objects.switchFour == true)
-            {
-                objects.switchFour = false;
-                glDisable(GL_LIGHT4);
-                break;
-            }
-        case 'z':
-            if (objects.controlPointsFlag == false)
-            {
-                objects.controlPointsFlag = true;
-                break;
-            }
-            else if (objects.controlPointsFlag == true)
-            {
-                objects.controlPointsFlag = false;
-                break;
-            }
-        case 'g':
-            if (door1 == false)
-            {
-                door1 = true;
-                break;
-            }
-            else
-            {
-                door1 = false;
-                break;
-            }
+        }
+        else if (objects.switchTwo == true)
+        {
+            objects.switchTwo = false;
+            glDisable(GL_LIGHT2);
+            break;
+        }
+    case '8':
+        if (objects.switchThree == false)
+        {
+            objects.switchThree = true;
+            glEnable(GL_LIGHT3);
+            break;
+        }
+        else if (objects.switchThree == true)
+        {
+            objects.switchThree = false;
+            glDisable(GL_LIGHT3);
+            break;
+        }
+    case '9':
+        if (objects.switchFour == false)
+        {
+            objects.switchFour = true;
+            glEnable(GL_LIGHT4);
+            break;
+        }
+        else if (objects.switchFour == true)
+        {
+            objects.switchFour = false;
+            glDisable(GL_LIGHT4);
+            break;
+        }
+    case 'z':
+        if (objects.controlPointsFlag == false)
+        {
+            objects.controlPointsFlag = true;
+            break;
+        }
+        else if (objects.controlPointsFlag == true)
+        {
+            objects.controlPointsFlag = false;
+            break;
+        }
+    case 'g':
+        if (door1 == false)
+        {
+            door1 = true;
+            break;
+        }
+        else
+        {
+            door1 = false;
+            break;
+        }
 
-        case '0':
-            if (day == false)
-            {
-                day = true;
-                glEnable(GL_LIGHT0);
-                break;
-            }
-            else if (day == true)
-            {
-                day = false;
-                glDisable(GL_LIGHT0);
-                break;
-            }
-        case 27:
-            exit(1);
+    case '0':
+        if (day == false)
+        {
+            day = true;
+            glEnable(GL_LIGHT0);
+            break;
+        }
+        else if (day == true)
+        {
+            day = false;
+            glDisable(GL_LIGHT0);
+            break;
+        }
+    case 27:
+        exit(1);
     }
 
     glutPostRedisplay();
@@ -378,69 +377,66 @@ int main(int argc, char **argv)
 {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(800, 600);
-    glutCreateWindow("CS 352 Amusement Park");
-
+    glutCreateWindow("Amusement Park");
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
 
     light();
 
-    cout << "To move Eye point:" << endl;
-    cout << "w: up" << endl;
-    cout << "s: down" << endl;
-    cout << "a: left" << endl;
-    cout << "d: right" << endl;
-    cout << "i: zoom in" << endl;
-    cout << "o: zoom out" << endl;
-    cout << "      " << endl;
-    cout << "To move Camera point:" << endl;
-    cout << "j: up" << endl;
-    cout << "n: down" << endl;
-    cout << "b: left" << endl;
-    cout << "m: right" << endl;
-    cout << "l: move nearer" << endl;
-    cout << "k: move far" << endl;
-    cout << "      " << endl;
-    cout << "Press q to move to default position" << endl;
-    cout << "      " << endl;
-    cout << "To control Rides: " << endl;
-    cout << "1: Orbiter" << endl;
-    cout << "2: Ferris Wheel" << endl;
-    cout << "3: Sky Drop" << endl;
-    cout << "4: Complex Orbiter" << endl;
-    cout << "5: Pirate Boat" << endl;
-    cout << "      " << endl;
-    cout << "To control lights: " << endl;
-    cout << "6: Spotlight 1" << endl;
-    cout << "7: Spotlight 2" << endl;
-    cout << "8: Spotlight 3" << endl;
-    cout << "9: Spotlight 4" << endl;
-    cout << "      " << endl;
-    cout << "Other controls: " << endl;
-    cout << "0: Day/Night" << endl;
-    cout << "Z: To show control points" << endl;
+    cout << "To move Eye point:" << "\n";
+    cout << "w: up" << "\n";
+    cout << "s: down" << "\n";
+    cout << "a: left" << "\n";
+    cout << "d: right" << "\n";
+    cout << "i: zoom in" << "\n";
+    cout << "o: zoom out" << "\n";
+    cout << "      " << "\n";
+
+    cout << "To move Camera point:" << "\n";
+    cout << "j: up" << "\n";
+    cout << "n: down" << "\n";
+    cout << "b: left" << "\n";
+    cout << "m: right" << "\n";
+    cout << "l: move nearer" << "\n";
+    cout << "k: move far" << "\n";
+    cout << "      " << "\n";
+
+    cout << "Press q to move to default position" << "\n";
+    cout << "      " << "\n";
+
+    cout << "To control Rides: " << "\n";
+    cout << "1: Orbiter" << "\n";
+    cout << "2: Ferris Wheel" << "\n";
+    cout << "3: Sky Drop" << "\n";
+    cout << "4: Complex Orbiter" << "\n";
+    cout << "5: Pirate Boat" << "\n";
+    cout << "      " << "\n";
+
+    cout << "To control lights: " << "\n";
+    cout << "6: Spotlight 1" << "\n";
+    cout << "7: Spotlight 2" << "\n";
+    cout << "8: Spotlight 3" << "\n";
+    cout << "9: Spotlight 4" << "\n";
+    cout << "      " << "\n";
+
+    cout << "Other controls: " << "\n";
+    cout << "0: Day/Night" << "\n";
+    cout << "Z: To show control points" << "\n";
 
     LoadTexture("sgi images/whiteground.sgi", 2);
-
     LoadTexture("sgi images/whiteground.sgi", 3);
-
     LoadTexture("sgi images/pirate-copy.sgi", 4);
-
-    // LoadTexture("sgi images/red-metal.sgi", 5);
-    LoadTexture("sgi images/blue_gradient.sgi", 5);
-
+    LoadTexture("sgi images/red-metal.sgi", 5);
+    // LoadTexture("sgi images/blue_gradient.sgi", 5);
     LoadTexture("sgi images/baskinrobbinslogo.sgi", 6);
-
-    // LoadTexture("sgi images/pizzahut.sgi", 7);
-    LoadTexture("sgi images/iitindore.sgi", 7);
-
+    LoadTexture("sgi images/pizzahut.sgi", 7);
+    // LoadTexture("sgi images/iitindore.sgi", 7);
     LoadTexture("sgi images/dunkindonuts.sgi", 8);
 
-    // //sky
+    // sky
     // LoadTexture("sgi images/front.sgi", 9);
     // LoadTexture("sgi images/left.sgi", 12);
     // LoadTexture("sgi images/right.sgi", 11);
@@ -448,15 +444,15 @@ int main(int argc, char **argv)
     // LoadTexture("sgi images/up.sgi", 28);
     // LoadTexture("sgi images/nightsky.sgi", 29);
 
-    LoadTexture("sgi images/whiteground.sgi", 9);
-    LoadTexture("sgi images/whiteground.sgi", 12);
-    LoadTexture("sgi images/whiteground.sgi", 11);
-    LoadTexture("sgi images/whiteground.sgi", 10);
-    LoadTexture("sgi images/whiteground.sgi", 28);
-    LoadTexture("sgi images/whiteground.sgi", 29);
+    // sky
+    LoadTexture("sgi images/scorchsky.sgi", 9);
+    LoadTexture("sgi images/scorchsky.sgi", 12);
+    LoadTexture("sgi images/scorchsky.sgi", 11);
+    LoadTexture("sgi images/scorchsky.sgi", 10);
+    LoadTexture("sgi images/scorchsky.sgi", 28);
+    LoadTexture("sgi images/scorchsky.sgi", 29);
 
     LoadTexture("sgi images/skydrop.sgi", 13);
-
     LoadTexture("sgi images/skydroplogo.sgi", 14);
 
     // LoadTexture("sgi images/grass.sgi", 15);
@@ -465,39 +461,27 @@ int main(int argc, char **argv)
 
     // LoadTexture("sgi images/blackred.sgi", 16);
     LoadTexture("sgi images/blue_gradient.sgi", 16);
-
     LoadTexture("sgi images/pinkblue.sgi", 17);
-
     LoadTexture("sgi images/baskin-robin-ad.sgi", 18);
-
     LoadTexture("sgi images/de5b9e.sgi", 19);
-
     LoadTexture("sgi images/pinkorange.sgi", 20);
 
     LoadTexture("sgi images/ff6d0d.sgi", 21);
 
     LoadTexture("sgi images/dd.sgi", 22);
 
-    // LoadTexture("sgi images/pizzahutad.sgi", 23);
-    LoadTexture("sgi images/abhinandan.sgi", 23);
-
+    LoadTexture("sgi images/pizzahutad.sgi", 23);
+    // LoadTexture("sgi images/abhinandan.sgi", 23);
     LoadTexture("sgi images/bush.sgi", 24);
-
     LoadTexture("sgi images/bushflower.sgi", 25);
-
     LoadTexture("sgi images/brickwall.sgi", 26);
-
     LoadTexture("sgi images/redwhite.sgi", 27);
-
     LoadTexture("sgi images/treebark.sgi", 30);
-
     LoadTexture("sgi images/bush.sgi", 31);
 
-    // LoadTexture("sgi images/purplewall.sgi", 32);
-    LoadTexture("sgi images/iitindore.sgi", 32);
-
+    LoadTexture("sgi images/purplewall.sgi", 32);
+    // LoadTexture("sgi images/iitindore.sgi", 32);
     LoadTexture("sgi images/tiles.sgi", 33);
-
     LoadTexture("sgi images/water.sgi", 34);
 
     glutReshapeFunc(fullScreen);

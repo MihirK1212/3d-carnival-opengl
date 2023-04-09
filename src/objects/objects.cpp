@@ -5,13 +5,13 @@ void Objects::drawPool()
 
     // glColor3f(0.2,0.2,0.2);
 
-    int tx = -175, ty = 5, tz = 10;
+    int tx = -115, ty = 5, tz = 15;
 
     // right side
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[32]);
     glPushMatrix();
-    glTranslatef(tx,ty,tz);
+    glTranslatef(tx, ty, tz);
     materialProperty();
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);
@@ -30,7 +30,7 @@ void Objects::drawPool()
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[32]);
     glPushMatrix();
-    glTranslatef(tx,ty,tz);
+    glTranslatef(tx, ty, tz);
     materialProperty();
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);
@@ -49,7 +49,7 @@ void Objects::drawPool()
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[32]);
     glPushMatrix();
-    glTranslatef(tx,ty,tz);
+    glTranslatef(tx, ty, tz);
     materialProperty();
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);
@@ -64,12 +64,11 @@ void Objects::drawPool()
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
-
     // back side
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[32]);
     glPushMatrix();
-    glTranslatef(tx,ty,tz);
+    glTranslatef(tx, ty, tz);
     materialProperty();
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);
@@ -89,7 +88,7 @@ void Objects::drawPool()
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[32]);
     glPushMatrix();
-    glTranslatef(tx,ty,tz);
+    glTranslatef(tx, ty, tz);
     materialProperty();
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);
@@ -104,12 +103,11 @@ void Objects::drawPool()
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 
-
     // water
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[33]);
     glPushMatrix();
-    glTranslatef(tx,ty,tz);
+    glTranslatef(tx, ty, tz);
     materialProperty();
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);
@@ -123,7 +121,6 @@ void Objects::drawPool()
     glEnd();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
-
 }
 
 void Objects::bush()
@@ -156,62 +153,61 @@ void Objects::tree()
     glDisable(GL_TEXTURE_2D);
 }
 
-
 void Objects::chair()
 {
     // seat part
     glPushMatrix();
     glScalef(0.5, 0.05, 0.5);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat left back
     glPushMatrix();
     glTranslatef(0, -1.5, 0);
     glScalef(0.05, 1.4, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat right back
     glPushMatrix();
     glTranslatef(1.35, -1.5, 0);
     glScalef(0.05, 1.4, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat horizontal up back
     glPushMatrix();
     glTranslatef(0, 2, 0);
     glScalef(0.5, 0.05, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat horizontal up back
     glPushMatrix();
     glTranslatef(0, 1.5, 0);
     glScalef(0.5, 0.05, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat horizontal up back
     glPushMatrix();
     glTranslatef(0, 1, 0);
     glScalef(0.5, 0.05, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat left front leg
     glPushMatrix();
     glTranslatef(0, -1.5, 1.3);
     glScalef(0.05, .55, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat right front leg
     glPushMatrix();
     glTranslatef(1.35, -1.5, 1.3);
     glScalef(0.05, .55, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0.4, 0.1, 0.2);
+    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 }
 
@@ -229,20 +225,20 @@ void Objects::table()
     // drawSphere(0.8, 0.4, 0.00, 0.4, 0.2, 0);
     glTranslatef(-2.5, 0, -2);
     glScalef(1.6, 0.3, 1.6);
-    drawCube(0.8, 0.4, 0.00, 0.4, 0.2, 0);
+    drawCube(0.8, 0.4, 0.00, 0.3, 0.5, 0.5);
     glPopMatrix();
 
     // stand
     glPushMatrix();
     glScalef(0.1, -1, -0.1);
-    drawCube(0, 0, 0, 0, 0, 0.5);
+    drawCube(0, 0, 0, 0.3, 0.5, 0.5);
     glPopMatrix();
 
     // stand bottom
     glPushMatrix();
     glTranslatef(0, -2.8, 0);
     glScalef(1, 0.2, 1);
-    drawSphere(1, 0.549, 0.00, 0.5, 0.2745, 0);
+    drawSphere(1, 0.549, 0.00, 0.3, 0.5, 0.5);
     glPopMatrix();
 }
 
@@ -253,16 +249,15 @@ void Objects::diningSet()
     table();
     glPopMatrix();
 
-    for (int i = 0; i <= 360; i += 72)
+    for (int i = 0; i <= 360; i += 90)
     {
         glPushMatrix();
         glRotatef(i, 0, 1, 0);
-        glTranslatef(0, -17, -4);
+        glTranslatef(-0.75, -17, -4);
         chair();
         glPopMatrix();
     }
 }
-
 
 void Objects::icecreamParlor()
 {
@@ -326,6 +321,7 @@ void Objects::pizzaHut()
     quad1();
     glPopMatrix();
 
+    glBindTexture(GL_TEXTURE_2D, ID2[15]);
     glPushMatrix();
     glTranslatef(0, 11, -2);
     glRotatef(90, 1, 0, 0);
@@ -346,11 +342,13 @@ void Objects::pizzaHut()
     quad2();
     glPopMatrix();
 
+    glBindTexture(GL_TEXTURE_2D, ID2[4]);
     glPushMatrix();
     glTranslatef(10, 0, -2);
     quad2();
     glPopMatrix();
 
+    glBindTexture(GL_TEXTURE_2D, ID2[4]);
     glPushMatrix();
     glTranslatef(0, 3, -2);
     glRotatef(90, 1, 0, 0);
@@ -448,7 +446,6 @@ void Objects::cafeteria()
         for (float j = 2; j <= 26; j += 12)
         {
             glPushMatrix();
-            glTranslatef(40,0,-60);
             glTranslatef(i, 10, j);
             glScalef(1, 1.5, 1);
             diningSet();
@@ -457,10 +454,10 @@ void Objects::cafeteria()
     }
 
     glPushMatrix();
-    glTranslatef(85,0,-40);
+    // glTranslatef(85, 0, -40);
     glTranslatef(5, -18, -10);
     glScalef(1.5, 2, 1);
-    glRotatef(-90,0,1,0);
+    // glRotatef(-90, 0, 1, 0);
     pizzaHut();
     glPopMatrix();
 
@@ -570,7 +567,6 @@ void Objects::streetLampbody()
     glPopMatrix();
 }
 
-
 void Objects::streetLight1()
 {
 
@@ -598,7 +594,7 @@ void Objects::streetLight1()
     }
     glutSolidSphere(1.0, 16, 16);
     glPopMatrix();
-    
+
     streetLampbody();
 }
 
@@ -710,7 +706,6 @@ void Objects::bench2()
     drawBox();
     glDisable(GL_TEXTURE_2D);
 }
-
 
 void Objects::setNormal(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, GLfloat x3, GLfloat y3, GLfloat z3)
 {
@@ -1041,9 +1036,9 @@ void Objects::flagpole(int seed)
 
     srand(seed);
 
-    float r1 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-    float r2 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-    float r3 = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+    float r1 = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+    float r2 = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+    float r3 = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
 
     matCurve(r1, r2, r3);
     drawFlag();
@@ -1051,7 +1046,7 @@ void Objects::flagpole(int seed)
 
 void Objects::trees()
 {
-    
+
     for (float i = -40; i <= 55; i += 15)
     {
         glPushMatrix();
@@ -1069,8 +1064,8 @@ void Objects::trees()
     }
 }
 
-
-void Objects::animateFlag() {
+void Objects::animateFlag()
+{
     if (yflag == true)
     {
         yf += 0.1;
