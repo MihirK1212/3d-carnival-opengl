@@ -73,7 +73,7 @@ struct Objects {
     void cart();
     void balloonCart();
     void flagpole(int seed);
-    void trees();
+    void flags();
 
     void animateFlag();
 };

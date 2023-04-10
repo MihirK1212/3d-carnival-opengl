@@ -481,17 +481,17 @@ void Objects::cafeteria()
     pizzaHut();
     glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-12, -18, -10);
-    glScalef(1.5, 2, 1);
-    icecreamParlor();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-12, -18, -10);
+    // glScalef(1.5, 2, 1);
+    // icecreamParlor();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(22, -18, -10);
-    glScalef(1.5, 2, 1);
-    dunkinDonuts();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(22, -18, -10);
+    // glScalef(1.5, 2, 1);
+    // dunkinDonuts();
+    // glPopMatrix();
 
     cafeteriaFence();
 
@@ -521,43 +521,49 @@ void Objects::wall()
 
 void Objects::walls()
 {
-    for (float i = 20; i <= 100; i += 10)
+    //first part in front
+    for (float i = -120; i <= -10; i += 10)
     {
         glPushMatrix();
-        glTranslatef(i, -20, 60);
+        glTranslatef(i, -20, 80);
         wall();
         glPopMatrix();
     }
 
-    for (float i = -80; i <= -10; i += 10)
+    //second part in front
+    for (float i = 20; i <= 120; i += 10)
     {
         glPushMatrix();
-        glTranslatef(i, -20, 60);
+        glTranslatef(i, -20, 80);
         wall();
         glPopMatrix();
     }
 
-    for (float i = -80; i <= 100; i += 10)
+    
+    //back part
+    for (float i = -120; i <= 120; i += 10)
     {
         glPushMatrix();
-        glTranslatef(i, -20, -70);
+        glTranslatef(i, -20, -100);
         wall();
         glPopMatrix();
     }
 
-    for (float i = -57; i <= 63; i += 10)
+    //left side
+    for (float i = -87; i <= 87; i += 10)
     {
         glPushMatrix();
-        glTranslatef(-83, -20, i);
+        glTranslatef(-123, -20, i);
         glRotatef(90, 0, 1, 0);
         wall();
         glPopMatrix();
     }
 
-    for (float i = -57; i <= 63; i += 10)
+    //right side
+    for (float i = -87; i <= 87; i += 10)
     {
         glPushMatrix();
-        glTranslatef(107, -20, i);
+        glTranslatef(127, -20, i);
         glRotatef(90, 0, 1, 0);
         wall();
         glPopMatrix();
@@ -1064,21 +1070,21 @@ void Objects::flagpole(int seed)
     drawFlag();
 }
 
-void Objects::trees()
+void Objects::flags()
 {
-
-    for (float i = -40; i <= 55; i += 15)
+    
+    for (float i = -60; i <= 80; i += 15)
     {
         glPushMatrix();
-        glTranslatef(-70, -2, i);
+        glTranslatef(-115, -2, i);
         flagpole(i);
         glPopMatrix();
     }
 
-    for (float i = -40; i <= 55; i += 15)
+    for (float i = -60; i <= 80; i += 15)
     {
         glPushMatrix();
-        glTranslatef(100, -2, i);
+        glTranslatef(120, -2, i);
         flagpole(i);
         glPopMatrix();
     }

@@ -14,6 +14,7 @@ void display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(60, 1, 1, 300);
@@ -36,41 +37,50 @@ void display(void)
     spotLight4();
     ground();
     objects.walls();
-    objects.trees();
-    human.drawHuman();
+    objects.flags();
     objects.drawPool();
 
-    for (float i = -70; i <= -10; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        objects.bench1();
-        glPopMatrix();
-    }
+    glPushMatrix();
+    human.drawHuman();
+    glPopMatrix();
 
-    for (float i = -60; i <= -20; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        objects.bench2();
-        glPopMatrix();
-    }
+    // for (float i = -70; i <= -10; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     objects.bench1();
+    //     glPopMatrix();
+    // }
 
-    for (float i = 30; i <= 100; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        objects.bench1();
-        glPopMatrix();
-    }
+    // for (float i = -60; i <= -20; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     objects.bench2();
+    //     glPopMatrix();
+    // }
 
-    for (float i = 40; i <= 90; i += 20)
-    {
-        glPushMatrix();
-        glTranslatef(i, -20, 55);
-        objects.bench2();
-        glPopMatrix();
-    }
+    // for (float i = 30; i <= 100; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     objects.bench1();
+    //     glPopMatrix();
+    // }
+
+    // for (float i = 40; i <= 90; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     objects.bench2();
+    //     glPopMatrix();
+    // }
+
+
+    glPointSize(5);
+    glBegin(GL_POINTS);
+    glVertex3f(0,0,0);
+    glEnd();
 
     glPushMatrix();
     glTranslatef(-25, 0, 0);
@@ -98,50 +108,66 @@ void display(void)
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(65, 0, -30);
-    rides.ferrisWheel();
+    glTranslatef(-60, -5, 10);
+    rides.rollerCoaster();
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(15, 0, 10);
-    glTranslatef(-60, 0, -50);
+    glTranslatef(-60,0,10);
+    rides.rideFence();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-60, 0, -40);
     rides.orbiter();
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(-50, 0, -30);
-    rides.complexOrbiter();
+    glTranslatef(-60, 0, -40);
+    rides.rideFence();
     glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-50, 0, 10);
-    rides.pirateBoat();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(65, 0, -30);
+    // rides.ferrisWheel();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-20, -20, -40);
-    rides.skyDrop();
-    glPopMatrix();
+    
 
-    glPushMatrix();
-    glTranslatef(-30, 0, 40);
-    objects.balloonCart();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-50, 0, -30);
+    // rides.complexOrbiter();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(-60, 0, 40);
-    objects.balloonCart();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-50, 0, 10);
+    // rides.pirateBoat();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(45, 0, 48);
-    objects.balloonCart();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-20, -20, -40);
+    // rides.skyDrop();
+    // glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(80, 0, 48);
-    objects.balloonCart();
-    glPopMatrix();
+    // glPushMatrix();
+    // glTranslatef(-30, 0, 40);
+    // objects.balloonCart();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(-60, 0, 40);
+    // objects.balloonCart();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(45, 0, 48);
+    // objects.balloonCart();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(80, 0, 48);
+    // objects.balloonCart();
+    // glPopMatrix();
 
     glDisable(GL_LIGHTING);
 
@@ -488,6 +514,7 @@ int main(int argc, char **argv)
     glutKeyboardFunc(myKeyboardFunc);
     glutSpecialFunc(specialKeyboardFunc);
     glEnable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glutDisplayFunc(display);
     glutIdleFunc(animate);

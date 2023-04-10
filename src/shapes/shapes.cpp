@@ -248,6 +248,7 @@ void drawCylinder(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloa
     gluCylinder(quadratic, 1.5, 1.5, 19, 32, 32);
 }
 
+
 void drawTrapezoid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
 {
     GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
