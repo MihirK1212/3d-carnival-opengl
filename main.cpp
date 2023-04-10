@@ -76,12 +76,6 @@ void display(void)
     //     glPopMatrix();
     // }
 
-
-    glPointSize(5);
-    glBegin(GL_POINTS);
-    glVertex3f(0,0,0);
-    glEnd();
-
     glPushMatrix();
     glTranslatef(-25, 0, 0);
     objects.streetLight1();
@@ -132,7 +126,6 @@ void display(void)
     // rides.ferrisWheel();
     // glPopMatrix();
 
-    
 
     // glPushMatrix();
     // glTranslatef(-50, 0, -30);
@@ -458,8 +451,8 @@ int main(int argc, char **argv)
     LoadTexture("sgi images/red-metal.sgi", 5);
     // LoadTexture("sgi images/blue_gradient.sgi", 5);
     LoadTexture("sgi images/baskinrobbinslogo.sgi", 6);
-    LoadTexture("sgi images/pizzahut.sgi", 7);
-    // LoadTexture("sgi images/iitindore.sgi", 7);
+    // LoadTexture("sgi images/pizzahut.sgi", 7);
+    LoadTexture("sgi images/iitindore.sgi", 7);
     LoadTexture("sgi images/dunkindonuts.sgi", 8);
 
     // sky
@@ -484,6 +477,7 @@ int main(int argc, char **argv)
     // LoadTexture("sgi images/grass.sgi", 15);
     // LoadTexture("sgi images/whiteground.sgi", 15);
     LoadTexture("sgi images/sand.sgi", 15);
+    // LoadTexture("sgi images/grass_alt.sgi", 15);
 
     // LoadTexture("sgi images/blackred.sgi", 16);
     LoadTexture("sgi images/blue_gradient.sgi", 16);
@@ -496,8 +490,8 @@ int main(int argc, char **argv)
 
     LoadTexture("sgi images/dd.sgi", 22);
 
-    LoadTexture("sgi images/pizzahutad.sgi", 23);
-    // LoadTexture("sgi images/abhinandan.sgi", 23);
+    // LoadTexture("sgi images/pizzahutad.sgi", 23);
+    LoadTexture("sgi images/abhinandan.sgi", 23);
     LoadTexture("sgi images/bush.sgi", 24);
     LoadTexture("sgi images/bushflower.sgi", 25);
     LoadTexture("sgi images/brickwall.sgi", 26);
@@ -505,8 +499,8 @@ int main(int argc, char **argv)
     LoadTexture("sgi images/treebark.sgi", 30);
     LoadTexture("sgi images/bush.sgi", 31);
 
-    LoadTexture("sgi images/purplewall.sgi", 32);
-    // LoadTexture("sgi images/iitindore.sgi", 32);
+    // LoadTexture("sgi images/purplewall.sgi", 32);
+    LoadTexture("sgi images/iitindore.sgi", 32);
     LoadTexture("sgi images/tiles.sgi", 33);
     LoadTexture("sgi images/water.sgi", 34);
 

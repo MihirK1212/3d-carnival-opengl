@@ -870,14 +870,14 @@ void track() {
     //left bound
     glPushMatrix();
     glScalef(0.1,0.1,0.1);
-    drawCylinder(0.5, 0.5, 0.5, 0.25, 0.25, 0.25);
+    drawCylinder(0.9, 0.9, 0.9, 0.25, 0.25, 0.25);
     glPopMatrix();
 
     //right bound
     glPushMatrix();
     glTranslatef(2,0,0);
     glScalef(0.1,0.1,0.1);
-    drawCylinder(0.5, 0.5, 0.5, 0.25, 0.25, 0.25);
+    drawCylinder(0.9, 0.9, 0.9, 0.25, 0.25, 0.25);
     glPopMatrix();
 
     double z = 0;
@@ -887,7 +887,7 @@ void track() {
         glTranslatef(0,0,z);
         glRotatef(90,0,1,0);
         glScalef(0.1,0.1,0.1);
-        drawCylinder(0.5, 0.5, 0.5, 0.25, 0.25, 0.25);
+        drawCylinder(0.9, 0.9, 0.9, 0.25, 0.25, 0.25);
         glPopMatrix();
         z++;
     }
@@ -942,7 +942,8 @@ void coasterPole(double theta) {
         glTranslatef(pos[0],pos[1],pos[2]);
         glRotatef(90, 1, 0, 0);
         glScalef(0.5, 0.5, abs(pos[1]+20)/19);
-        drawCylinder(0.545, 0.271, 0.075,  0.2725,0.1355,0.0375);
+        // drawCylinder(0.545, 0.271, 0.075,  0.2725,0.1355,0.0375);
+        drawCylinder(0.6, 0.3, 0.4,  0.2725,0.1355,0.0375);
         // GLUquadricObj *quadratic;
         // quadratic = gluNewQuadric();
         // gluCylinder(quadratic, 1.5, 1.5, 19, 32, 32);
