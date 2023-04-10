@@ -8,12 +8,14 @@ Objects objects;
 GLboolean fanSwitch = false, door1 = false, orbiterFlag = false, pirateBoatFlag = false, pirateBoatCheck = false, cmOrbiterFlag = false, skyDropFlag = false, upFlag = true, downFlag1 = true, downFlag2 = false, downFlag3 = false, day = true;
 static double eyeX = -10, eyeY = 5.0, eyeZ = 100, refX = 0, refY = 0, refZ = 0;
 
+double mouse_x = -1, mouse_y = -1;
+double mouse_x_prev = -1, mouse_y_prev = -1;
+
 static double windowHeight = 1000, windowWidth = 1000;
 
 void display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -104,14 +106,14 @@ void display(void)
     /*****/
     glPushMatrix();
     glTranslatef(-70, -5, 40);
-    glTranslatef(0,8,0);
-    glScalef(1.5,1.5,1.5);
+    glTranslatef(0, 8, 0);
+    glScalef(1.5, 1.5, 1.5);
     rides.rollerCoaster();
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(-70,15,40);
-    glScalef(1.5,1.5,1.5);
+    glTranslatef(-70, 15, 40);
+    glScalef(1.5, 1.5, 1.5);
     rides.rideFence();
     glPopMatrix();
     /*****/
@@ -119,14 +121,14 @@ void display(void)
     /****/
     glPushMatrix();
     glTranslatef(-70, 0, -30);
-    glTranslatef(0,10,0);
-    glScalef(1.5,1.5,1.5);
+    glTranslatef(0, 10, 0);
+    glScalef(1.5, 1.5, 1.5);
     rides.orbiter();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-70, 15, -30);
-    glScalef(1.5,1.5,1.5);
+    glScalef(1.5, 1.5, 1.5);
     rides.rideFence();
     glPopMatrix();
     /***/
@@ -135,7 +137,6 @@ void display(void)
     // glTranslatef(65, 0, -30);
     // rides.ferrisWheel();
     // glPopMatrix();
-
 
     // glPushMatrix();
     // glTranslatef(-50, 0, -30);
@@ -178,53 +179,88 @@ void display(void)
     glutSwapBuffers();
 }
 
+float computePinchDistance(int x1, int y1, int x2, int y2) {
+    float dx = x2 - x1;
+    float dy = y2 - y1;
+    return sqrt(dx*dx + dy*dy);
+}
+
+
+void mouseMove(int x, int y)
+{
+    mouse_x = (double)x;
+    mouse_y = (double)y;
+
+    if (mouse_x_prev == -1)
+        mouse_x_prev = mouse_x;
+    if (mouse_y_prev == -1)
+        mouse_y_prev = mouse_y;
+
+    // float pinchDistance = computePinchDistance(mouse_x, mouse_y, mouse_x_prev, mouse_y_prev);
+
+    // if (pinchDistance > 0) {
+    //     // Zoom in by increasing the scale factor
+    //     eyeZ -= 1;
+    // } else if (pinchDistance < 0) {
+    //     // Zoom out by decreasing the scale factor
+    //     eyeZ += 1;
+    // }
+
+
+    double delta_x = mouse_x - mouse_x_prev;
+    double delta_y = mouse_y - mouse_y_prev;
+
+    eyeX += (-delta_x);
+    eyeY += (-delta_y);
+
+    mouse_x_prev = mouse_x;
+    mouse_y_prev = mouse_y;
+}
+
+void mouseButton(int button, int state, int x, int y)
+{
+    if (button == GLUT_LEFT_BUTTON)
+    {
+        if (state == GLUT_UP)
+        {
+            mouse_x_prev = -1;
+            mouse_y_prev = -1;
+        }
+    }
+    if(button == 3 || button == 4) 
+    {
+        if (state == GLUT_UP) return; // Disregard redundant GLUT_UP events
+
+        if(button == 3) {
+            //scroll up, i.e move fingers down hence zoom out
+            eyeZ += 1;
+        }
+        else {
+            //scroll in, i.e move fingers up hence zoom in
+            eyeZ -= 1;
+        }
+
+        // printf("Scroll %s At %d %d\n", (button == 3) ? "Up" : "Down", x, y);
+    }
+}
+
 void myKeyboardFunc(unsigned char key, int x, int y)
 {
     switch (key)
     {
-    case 'w': // move eye point upwards along Y axis
-        eyeY += 1.0;
-        break;
-    case 's': // move eye point downwards along Y axis
-        eyeY -= 1.0;
-        break;
-    case 'a': // move eye point left along X axis
-        eyeX -= 1.0;
-        break;
-    case 'd': // move eye point right along X axis
-        eyeX += 1.0;
-        break;
-    case 'o': // zoom out
-        eyeZ += 1;
-        break;
-    case 'i': // zoom in
-        eyeZ -= 1;
-        break;
-    case 'q': // back to default eye point and ref point
-        eyeX = 0.0;
-        eyeY = 2.0;
-        eyeZ = 30.0;
-        refX = 0.0;
-        refY = 0.0;
-        refZ = 0.0;
-        break;
-    case 'j': // move ref point upwards along Y axis
-        refY += 1.0;
-        break;
-    case 'n': // move ref point downwards along Y axis
-        refY -= 1.0;
-        break;
-    case 'b': // move ref point left along X axis
+    case 'a': // move ref point left along X axis
         refX -= 1.0;
         break;
-    case 'm': // move eye point right along X axis
+    case 'd': // move eye point right along X axis
         refX += 1.0;
         break;
-    case 'k': // move ref point away from screen/ along z axis
-        refZ += 1;
-        break;
-    case 'l': // move ref point towards screen/ along z axis
-        refZ -= 1;
+    case 'r':
+        eyeX = -10;
+        eyeY = 5.0;
+        eyeZ = 100;
+        refX = 0;
+        refY = 0;
+        refZ = 0;
         break;
     case '1':
         if (orbiterFlag == false)
@@ -415,45 +451,79 @@ int main(int argc, char **argv)
 
     light();
 
-    cout << "To move Eye point:" << "\n";
-    cout << "w: up" << "\n";
-    cout << "s: down" << "\n";
-    cout << "a: left" << "\n";
-    cout << "d: right" << "\n";
-    cout << "i: zoom in" << "\n";
-    cout << "o: zoom out" << "\n";
-    cout << "      " << "\n";
+    cout << "To move Eye point:"
+         << "\n";
+    cout << "w: up"
+         << "\n";
+    cout << "s: down"
+         << "\n";
+    cout << "a: left"
+         << "\n";
+    cout << "d: right"
+         << "\n";
+    cout << "i: zoom in"
+         << "\n";
+    cout << "o: zoom out"
+         << "\n";
+    cout << "      "
+         << "\n";
 
-    cout << "To move Camera point:" << "\n";
-    cout << "j: up" << "\n";
-    cout << "n: down" << "\n";
-    cout << "b: left" << "\n";
-    cout << "m: right" << "\n";
-    cout << "l: move nearer" << "\n";
-    cout << "k: move far" << "\n";
-    cout << "      " << "\n";
+    cout << "To move Camera point:"
+         << "\n";
+    cout << "j: up"
+         << "\n";
+    cout << "n: down"
+         << "\n";
+    cout << "b: left"
+         << "\n";
+    cout << "m: right"
+         << "\n";
+    cout << "l: move nearer"
+         << "\n";
+    cout << "k: move far"
+         << "\n";
+    cout << "      "
+         << "\n";
 
-    cout << "Press q to move to default position" << "\n";
-    cout << "      " << "\n";
+    cout << "Press q to move to default position"
+         << "\n";
+    cout << "      "
+         << "\n";
 
-    cout << "To control Rides: " << "\n";
-    cout << "1: Orbiter" << "\n";
-    cout << "2: Ferris Wheel" << "\n";
-    cout << "3: Sky Drop" << "\n";
-    cout << "4: Complex Orbiter" << "\n";
-    cout << "5: Pirate Boat" << "\n";
-    cout << "      " << "\n";
+    cout << "To control Rides: "
+         << "\n";
+    cout << "1: Orbiter"
+         << "\n";
+    cout << "2: Ferris Wheel"
+         << "\n";
+    cout << "3: Sky Drop"
+         << "\n";
+    cout << "4: Complex Orbiter"
+         << "\n";
+    cout << "5: Pirate Boat"
+         << "\n";
+    cout << "      "
+         << "\n";
 
-    cout << "To control lights: " << "\n";
-    cout << "6: Spotlight 1" << "\n";
-    cout << "7: Spotlight 2" << "\n";
-    cout << "8: Spotlight 3" << "\n";
-    cout << "9: Spotlight 4" << "\n";
-    cout << "      " << "\n";
+    cout << "To control lights: "
+         << "\n";
+    cout << "6: Spotlight 1"
+         << "\n";
+    cout << "7: Spotlight 2"
+         << "\n";
+    cout << "8: Spotlight 3"
+         << "\n";
+    cout << "9: Spotlight 4"
+         << "\n";
+    cout << "      "
+         << "\n";
 
-    cout << "Other controls: " << "\n";
-    cout << "0: Day/Night" << "\n";
-    cout << "Z: To show control points" << "\n";
+    cout << "Other controls: "
+         << "\n";
+    cout << "0: Day/Night"
+         << "\n";
+    cout << "Z: To show control points"
+         << "\n";
 
     LoadTexture("sgi images/whiteground.sgi", 2);
     LoadTexture("sgi images/whiteground.sgi", 3);
@@ -523,6 +593,8 @@ int main(int argc, char **argv)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glutDisplayFunc(display);
     glutIdleFunc(animate);
+    glutMotionFunc(mouseMove);
+    glutMouseFunc(mouseButton);
     glutMainLoop();
 
     return 0;
