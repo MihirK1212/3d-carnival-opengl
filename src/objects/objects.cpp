@@ -474,7 +474,7 @@ void Objects::cafeteria()
     }
 
     glPushMatrix();
-    glTranslatef(5, -18, -20);
+    glTranslatef(5, -18, -25);
     glScalef(1.5, 2, 1);
     pizzaHut();
     glPopMatrix();
