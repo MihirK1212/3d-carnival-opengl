@@ -17,6 +17,11 @@ struct Rides {
     GLfloat cmOrbiterAlpha;
     GLfloat cmOrbiterTheta; 
     GLfloat skyDropPos;
+    
+    GLfloat ride_x;
+    bool ride_right;
+
+    int ride_theta;
 
     Rides() {
         alpha = 0.0; 
@@ -28,6 +33,8 @@ struct Rides {
         cmOrbiterAlpha = 0.0;
         cmOrbiterTheta = 0.0;
         skyDropPos = 0.0;
+
+        ride_theta = 0;
     }
 
     void rideGround();
@@ -37,8 +44,13 @@ struct Rides {
     void bulbsOnFerrisWheel();
     void ferrisWheel();
 
+    void rideFence();
+
     void rings();
     void orbiter();
+
+    void coasterRide();
+    void rollerCoaster();
 
     void boatBody();
     void pirateBoat();
