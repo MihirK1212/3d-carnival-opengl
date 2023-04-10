@@ -957,8 +957,7 @@ void Rides::rollerCoaster() {
     glPushMatrix();
 
         glRotatef(180,0,1,0);
-
-
+        
         glPushMatrix();
         glTranslatef(0,5,0);
         glScalef(2, 1, 2);

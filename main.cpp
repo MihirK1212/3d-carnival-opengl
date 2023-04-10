@@ -101,25 +101,35 @@ void display(void)
     objects.cafeteria();
     glPopMatrix();
 
+    /*****/
     glPushMatrix();
-    glTranslatef(-60, -5, 10);
+    glTranslatef(-70, -5, 40);
+    glTranslatef(0,8,0);
+    glScalef(1.5,1.5,1.5);
     rides.rollerCoaster();
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(-60,0,10);
+    glTranslatef(-70,15,40);
+    glScalef(1.5,1.5,1.5);
     rides.rideFence();
     glPopMatrix();
+    /*****/
 
+    /****/
     glPushMatrix();
-    glTranslatef(-60, 0, -40);
+    glTranslatef(-70, 0, -30);
+    glTranslatef(0,10,0);
+    glScalef(1.5,1.5,1.5);
     rides.orbiter();
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(-60, 0, -40);
+    glTranslatef(-70, 15, -30);
+    glScalef(1.5,1.5,1.5);
     rides.rideFence();
     glPopMatrix();
+    /***/
 
     // glPushMatrix();
     // glTranslatef(65, 0, -30);
@@ -448,8 +458,8 @@ int main(int argc, char **argv)
     LoadTexture("sgi images/whiteground.sgi", 2);
     LoadTexture("sgi images/whiteground.sgi", 3);
     LoadTexture("sgi images/pirate-copy.sgi", 4);
-    LoadTexture("sgi images/red-metal.sgi", 5);
-    // LoadTexture("sgi images/blue_gradient.sgi", 5);
+    // LoadTexture("sgi images/red-metal.sgi", 5);
+    LoadTexture("sgi images/blue_gradient.sgi", 5);
     LoadTexture("sgi images/baskinrobbinslogo.sgi", 6);
     // LoadTexture("sgi images/pizzahut.sgi", 7);
     LoadTexture("sgi images/iitindore.sgi", 7);
@@ -476,8 +486,9 @@ int main(int argc, char **argv)
 
     // LoadTexture("sgi images/grass.sgi", 15);
     // LoadTexture("sgi images/whiteground.sgi", 15);
-    LoadTexture("sgi images/sand.sgi", 15);
+    // LoadTexture("sgi images/sand.sgi", 15);
     // LoadTexture("sgi images/grass_alt.sgi", 15);
+    LoadTexture("sgi images/sand_alt.sgi", 15);
 
     // LoadTexture("sgi images/blackred.sgi", 16);
     LoadTexture("sgi images/blue_gradient.sgi", 16);
