@@ -196,16 +196,6 @@ void mouseMove(int x, int y)
     if (mouse_y_prev == -1)
         mouse_y_prev = mouse_y;
 
-    // float pinchDistance = computePinchDistance(mouse_x, mouse_y, mouse_x_prev, mouse_y_prev);
-
-    // if (pinchDistance > 0) {
-    //     // Zoom in by increasing the scale factor
-    //     eyeZ -= 1;
-    // } else if (pinchDistance < 0) {
-    //     // Zoom out by decreasing the scale factor
-    //     eyeZ += 1;
-    // }
-
 
     double delta_x = mouse_x - mouse_x_prev;
     double delta_y = mouse_y - mouse_y_prev;
