@@ -18,13 +18,16 @@ struct Human {
     
     double leg_angle_1; 
     double leg_angle_2;
-    double leg_flag; 
+    double leg_flag; //left leg or right leg is moving
     double leg_coming_back; 
     
     double hand_angle_1; 
     double hand_angle_2;
 
-    Human() {
+    bool sittingRollerCoaster;
+
+    Human(bool sittingRollerCoaster = false) {
+
         human_x = 10;
         human_y = -15;
         human_z = 50; 
@@ -38,6 +41,8 @@ struct Human {
         
         hand_angle_1 = 0; 
         hand_angle_2 = 0;
+
+        this->sittingRollerCoaster = sittingRollerCoaster;
     }
 
     void drawCubeBodyPart();

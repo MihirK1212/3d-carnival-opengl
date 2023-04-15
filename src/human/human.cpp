@@ -17,75 +17,92 @@ void Human::drawHuman()
 
     // mainbody
     glPushMatrix();
-    glTranslatef(body_x, body_y, body_z);
-    glRotatef(-(90 - angle_x), 0, 1, 0);
     glScalef(1.5, 5, 1);
     drawCubeBodyPart();
     glPopMatrix();
 
-    // hand1
-    glPushMatrix();
-    glTranslatef(body_x, body_y, body_z); // translate to actual position of the human
-    glRotatef(-(90 - angle_x), 0, 1, 0);  // rotate w.r.t y axis to simulate orientation of human
-    glTranslatef(1.5, 5, 1);              // translate relative to the main body of the human
-    glRotatef(hand_angle_1, 1, 0, 0);     // rotate w.r.t x axis to simulate hand movement
-    glScalef(0.5, 0.5, 1.5);              // scaling
-    glTranslatef(-3, -3, -3);             // take top right corner of box to origin
-    drawCubeBodyPart();
-    glPopMatrix();
+    
+    if(sittingRollerCoaster) {
 
-    // hand2
-    glPushMatrix();
-    glTranslatef(body_x, body_y, body_z);
-    glRotatef(-(90 - angle_x), 0, 1, 0);
-    glTranslatef(4, 5, 1);
-    glRotatef(hand_angle_2, 1, 0, 0);
-    glScalef(0.5, 0.5, 1.5);
-    glTranslatef(-3, -3, -3);
-    drawCubeBodyPart();
-    glPopMatrix();
+        // hand1
+        glPushMatrix();
+        glTranslatef(1, 8, 1);                 // translate relative to the main body of the human
+        // glRotatef(60, 1, 0, 0);        // rotate w.r.t x axis to simulate hand movement
+        glRotatef(-60,0,0,1);
+        glRotatef(90,0,1,0);
+        glScalef(0.5, 0.8, 1.5);                 // scaling
+        glTranslatef(-3, -3, -3);                // take top right corner of box to origin
+        drawCubeBodyPart();
+        glPopMatrix();
 
-    // leg1
-    glPushMatrix();
-    glTranslatef(body_x, body_y, body_z);
-    glRotatef(-(90 - angle_x), 0, 1, 0);
-    glTranslatef(1.5, 0, 2);
-    glRotatef(leg_angle_1, 1, 0, 0);
-    glScalef(0.5, 2, 0.5);
-    glTranslatef(-3, -3, -3);
-    drawCubeBodyPart();
-    glPopMatrix();
+        // hand2
+        glPushMatrix();
+        glTranslatef(3.5, 8, 2);
+        // glRotatef(60, 1, 0, 0);
+        glRotatef(60,0,0,1);
+        glRotatef(-90,0,1,0);
+        glScalef(0.5, 0.8, 1.5);
+        glTranslatef(-3, -3, -3);
+        drawCubeBodyPart();
+        glPopMatrix();
 
-    // leg2
-    glPushMatrix();
-    glTranslatef(body_x, body_y, body_z);
-    glRotatef(-(90 - angle_x), 0, 1, 0);
-    glTranslatef(4, 0, 2);
-    glRotatef(leg_angle_2, 1, 0, 0);
-    glScalef(0.5, 2, 0.5);
-    glTranslatef(-3, -3, -3);
-    drawCubeBodyPart();
-    glPopMatrix();
+    }
 
-    Objects obj;
+    else {
 
-    //balloon body
-    matCurve(1, 0, 0);
-    glPushMatrix();
-    glTranslatef(body_x, body_y, body_z);
-    glRotatef(-(90-angle_x),0,1,0);
-    glTranslatef(3, 15, -2);
-    obj.balloon();
-    glPopMatrix();
+        // hand1
+        glPushMatrix();
+        glTranslatef(0, 5, 1);                 // translate relative to the main body of the human
+        glRotatef(hand_angle_1, 1, 0, 0);        // rotate w.r.t x axis to simulate hand movement
+        glScalef(0.5, 0.5, 1.5);                 // scaling
+        glTranslatef(-3, -3, -3);                // take top right corner of box to origin
+        drawCubeBodyPart();
+        glPopMatrix();
 
-    //balloon rope
-    glPushMatrix();
-    glTranslatef(body_x, body_y, body_z);
-    glRotatef(-(90-angle_x),0,1,0);
-    glTranslatef(2, 4, -2);
-    glScalef(1,1.5,1);
-    obj.balloonLine();
-    glPopMatrix();
+        // hand2
+        glPushMatrix();
+        glTranslatef(6, 5, 1);
+        glRotatef(hand_angle_2, 1, 0, 0);
+        glScalef(0.5, 0.5, 1.5);
+        glTranslatef(-3, -3, -3);
+        drawCubeBodyPart();
+        glPopMatrix();
+
+        // leg1
+        glPushMatrix();
+        glTranslatef(1.5, 0, 2);
+        glRotatef(leg_angle_1, 1, 0, 0);
+        glScalef(0.5, 2, 0.5);
+        glTranslatef(-3, -3, -3);
+        drawCubeBodyPart();
+        glPopMatrix();
+
+        // leg2
+        glPushMatrix();
+        glTranslatef(4, 0, 2);
+        glRotatef(leg_angle_2, 1, 0, 0);
+        glScalef(0.5, 2, 0.5);
+        glTranslatef(-3, -3, -3);
+        drawCubeBodyPart();
+        glPopMatrix();
+
+
+        Objects obj;
+
+        //balloon body
+        matCurve(1, 0, 0);
+        glPushMatrix();
+        glTranslatef(3, 15, -2);
+        obj.balloon();
+        glPopMatrix();
+
+        //balloon rope
+        glPushMatrix();
+        glTranslatef(2, 4, -2);
+        glScalef(1,1.5,1);
+        obj.balloonLine();
+        glPopMatrix();
+    }    
 }
 
 void Human::move(int key, int x, int y)

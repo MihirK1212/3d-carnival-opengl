@@ -5,6 +5,7 @@
 
 #include "../shapes/shapes.h"
 #include "../../bmpLoader.h"
+#include "../human/human.h"
 
 struct Rides {
 
@@ -50,7 +51,12 @@ struct Rides {
     void orbiter();
 
     void coasterRide();
-    void rollerCoaster();
+    void track();
+    void coasterSegment(double theta);
+    void pole(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine, GLfloat height);
+    void coasterPole(double theta);
+    vector<double> getRollerCoasterViewRef();
+    void rollerCoaster(Human* human);
 
     void boatBody();
     void pirateBoat();

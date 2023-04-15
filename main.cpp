@@ -1,17 +1,78 @@
 #include "libs.h"
 #include "index.h"
 
-Human human;
-Rides rides;
-Objects objects;
+double degToRad(double angle)
+{
+    double pi = 3.14159265359;
+    return (angle * (pi / 180));
+}
 
 GLboolean fanSwitch = false, door1 = false, orbiterFlag = false, pirateBoatFlag = false, pirateBoatCheck = false, cmOrbiterFlag = false, skyDropFlag = false, upFlag = true, downFlag1 = true, downFlag2 = false, downFlag3 = false, day = true;
-static double eyeX = -10, eyeY = 5.0, eyeZ = 100, refX = 0, refY = 0, refZ = 0;
 
 double mouse_x = -1, mouse_y = -1;
 double mouse_x_prev = -1, mouse_y_prev = -1;
 
 static double windowHeight = 1000, windowWidth = 1000;
+
+Human* human = new Human();
+Rides* rides = new Rides();
+Objects* objects = new Objects();
+
+struct Camera {
+    
+    double eyeX, eyeY, eyeZ; //looking from
+    double refX, refY, refZ; //looking at
+    int currView;
+
+    Camera() {
+        eyeX = -10;
+        eyeY = 5.0;
+        eyeZ = 100;
+        refX = 0;
+        refY = 0;
+        refZ = 0;  
+    }
+
+    void setView(int view) {
+
+        currView = view;
+
+        if(view == 0) {
+            //world view
+            eyeX = -10;
+            eyeY = 5.0;
+            eyeZ = 100;
+            refX = 0;
+            refY = 0;
+            refZ = 0;  
+        }
+
+        else if(view == 1) {
+            //human view
+            eyeX = human->human_x - 15*cos(degToRad(human->angle_x));
+            eyeY = -5;
+            eyeZ = human->human_z + 15*sin(degToRad(human->angle_x));
+            refX = human->human_x + 15*cos(degToRad(human->angle_x));
+            refY = -10;
+            refZ = human->human_z - 15*sin(degToRad(human->angle_x));
+        }
+        else if(view == 2) {
+
+            // ride view
+            vector<double> viewRef = rides->getRollerCoasterViewRef();
+
+            eyeX = viewRef[0];
+            eyeY = viewRef[1];
+            eyeZ = viewRef[2];
+            refX = viewRef[3];
+            refY = viewRef[4];
+            refZ = viewRef[5];
+
+        }
+    }
+};
+
+Camera* camera = new Camera();
 
 void display(void)
 {
@@ -20,15 +81,15 @@ void display(void)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(60, 1, 1, 300);
-
+    
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(eyeX, eyeY, eyeZ, refX, refY, refZ, 0, 1, 0);
+    gluLookAt(camera->eyeX, camera->eyeY, camera->eyeZ, camera->refX, camera->refY, camera->refZ, 0, 1, 0);
 
     glEnable(GL_LIGHTING);
 
     glPushMatrix();
-    sky(eyeX + (0.05 * refX), eyeY + (0.05 * refY), eyeZ + (0.05 * refZ), 250, 250, 250);
+    sky(camera->eyeX + (0.05 * camera->refX), camera->eyeY + (0.05 * camera->refY), camera->eyeZ + (0.05 * camera->refZ), 250, 250, 250);
     glPopMatrix();
 
     glEnable(GL_DEPTH_TEST);
@@ -38,83 +99,63 @@ void display(void)
     spotLight3();
     spotLight4();
     ground();
-    objects.walls();
-    objects.flags();
-    objects.drawPool();
 
-    glPushMatrix();
-    human.drawHuman();
-    glPopMatrix();
-
-    // for (float i = -70; i <= -10; i += 20)
-    // {
-    //     glPushMatrix();
-    //     glTranslatef(i, -20, 55);
-    //     objects.bench1();
-    //     glPopMatrix();
-    // }
-
-    // for (float i = -60; i <= -20; i += 20)
-    // {
-    //     glPushMatrix();
-    //     glTranslatef(i, -20, 55);
-    //     objects.bench2();
-    //     glPopMatrix();
-    // }
-
-    // for (float i = 30; i <= 100; i += 20)
-    // {
-    //     glPushMatrix();
-    //     glTranslatef(i, -20, 55);
-    //     objects.bench1();
-    //     glPopMatrix();
-    // }
-
-    // for (float i = 40; i <= 90; i += 20)
-    // {
-    //     glPushMatrix();
-    //     glTranslatef(i, -20, 55);
-    //     objects.bench2();
-    //     glPopMatrix();
-    // }
+    objects->walls();
+    objects->flags();
+    objects->drawPool();
 
     glPushMatrix();
     glTranslatef(-25, 0, 0);
-    objects.streetLight1();
+    objects->streetLight1();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(50, 0, 0);
-    objects.streetLight2();
+    objects->streetLight2();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(50, 0, 30);
-    objects.streetLight3();
+    objects->streetLight3();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-25, 0, 30);
-    objects.streetLight4();
+    objects->streetLight4();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, 0, 10);
-    objects.cafeteria();
+    objects->cafeteria();
     glPopMatrix();
+
+    Human* coasterHuman = NULL;
+
+    if(!human->sittingRollerCoaster) {
+        glPushMatrix();
+        glTranslatef(human->human_x, human->human_y, human->human_z);
+        glScalef(0.3,0.3,0.3);
+        glRotatef(-(90-human->angle_x), 0, 1, 0); // rotate w.r.t y axis to simulate orientation of human
+        human->drawHuman();
+        glPopMatrix();
+    }
+    else {
+        coasterHuman = human;
+        camera->setView(2);
+    }
 
     /*****/
     glPushMatrix();
     glTranslatef(-70, -5, 40);
     glTranslatef(0, 8, 0);
     glScalef(1.5, 1.5, 1.5);
-    rides.rollerCoaster();
+    rides->rollerCoaster(coasterHuman);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-70, 15, 40);
     glScalef(1.5, 1.5, 1.5);
-    rides.rideFence();
+    rides->rideFence();
     glPopMatrix();
     /*****/
 
@@ -123,66 +164,104 @@ void display(void)
     glTranslatef(-70, 0, -30);
     glTranslatef(0, 10, 0);
     glScalef(1.5, 1.5, 1.5);
-    rides.orbiter();
+    rides->orbiter();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-70, 15, -30);
     glScalef(1.5, 1.5, 1.5);
-    rides.rideFence();
+    rides->rideFence();
     glPopMatrix();
     /***/
-
-    // glPushMatrix();
-    // glTranslatef(65, 0, -30);
-    // rides.ferrisWheel();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(-50, 0, -30);
-    // rides.complexOrbiter();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(-50, 0, 10);
-    // rides.pirateBoat();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(-20, -20, -40);
-    // rides.skyDrop();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(-30, 0, 40);
-    // objects.balloonCart();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(-60, 0, 40);
-    // objects.balloonCart();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(45, 0, 48);
-    // objects.balloonCart();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(80, 0, 48);
-    // objects.balloonCart();
-    // glPopMatrix();
 
     glDisable(GL_LIGHTING);
 
     glFlush();
     glutSwapBuffers();
-}
 
-float computePinchDistance(int x1, int y1, int x2, int y2) {
-    float dx = x2 - x1;
-    float dy = y2 - y1;
-    return sqrt(dx*dx + dy*dy);
+    // glPushMatrix();
+    // glTranslatef(human2.human_x, human2.human_y, human2.human_z);
+    // glScalef(0.3,0.3,0.3);
+    // human2.drawHuman();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glScalef(0.5,0.5,0.5);
+    // glTranslatef(0,-15,60);
+    // human3.drawHuman();
+    // glPopMatrix();
+
+    // for (float i = -70; i <= -10; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     objects->bench1();
+    //     glPopMatrix();
+    // }
+
+    // for (float i = -60; i <= -20; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     objects->bench2();
+    //     glPopMatrix();
+    // }
+
+    // for (float i = 30; i <= 100; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     objects->bench1();
+    //     glPopMatrix();
+    // }
+
+    // for (float i = 40; i <= 90; i += 20)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(i, -20, 55);
+    //     objects->bench2();
+    //     glPopMatrix();
+    // }
+
+    // glPushMatrix();
+    // glTranslatef(65, 0, -30);
+    // rides->ferrisWheel();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(-50, 0, -30);
+    // rides->complexOrbiter();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(-50, 0, 10);
+    // rides->pirateBoat();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(-20, -20, -40);
+    // rides->skyDrop();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(-30, 0, 40);
+    // objects->balloonCart();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(-60, 0, 40);
+    // objects->balloonCart();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(45, 0, 48);
+    // objects->balloonCart();
+    // glPopMatrix();
+
+    // glPushMatrix();
+    // glTranslatef(80, 0, 48);
+    // objects->balloonCart();
+    // glPopMatrix();
 }
 
 
@@ -200,8 +279,8 @@ void mouseMove(int x, int y)
     double delta_x = mouse_x - mouse_x_prev;
     double delta_y = mouse_y - mouse_y_prev;
 
-    eyeX += (-delta_x);
-    eyeY += (-delta_y);
+    camera->eyeX += (-delta_x);
+    camera->eyeY += (-delta_y);
 
     mouse_x_prev = mouse_x;
     mouse_y_prev = mouse_y;
@@ -219,18 +298,16 @@ void mouseButton(int button, int state, int x, int y)
     }
     if(button == 3 || button == 4) 
     {
-        if (state == GLUT_UP) return; // Disregard redundant GLUT_UP events
+        if (state == GLUT_UP) return;
 
         if(button == 3) {
             //scroll up, i.e move fingers down hence zoom out
-            eyeZ += 1;
+            camera->eyeZ += 1;
         }
         else {
-            //scroll in, i.e move fingers up hence zoom in
-            eyeZ -= 1;
+            //scroll down, i.e move fingers up hence zoom in
+            camera->eyeZ -= 1;
         }
-
-        // printf("Scroll %s At %d %d\n", (button == 3) ? "Up" : "Down", x, y);
     }
 }
 
@@ -238,19 +315,25 @@ void myKeyboardFunc(unsigned char key, int x, int y)
 {
     switch (key)
     {
-    case 'a': // move ref point left along X axis
-        refX -= 1.0;
+    case 'a':
+        camera->refX -= 1.0;
         break;
-    case 'd': // move eye point right along X axis
-        refX += 1.0;
+    case 'd':
+        camera->refX += 1.0;
+        break;
+    case 's':
+        human->sittingRollerCoaster = true;
+        camera->setView(2);
+        break;
+    case 'e':
+        human->sittingRollerCoaster = false;
+        camera->setView(1);
         break;
     case 'r':
-        eyeX = -10;
-        eyeY = 5.0;
-        eyeZ = 100;
-        refX = 0;
-        refY = 0;
-        refZ = 0;
+        camera->setView(0);
+        break;
+    case 'c':
+        camera->setView((camera->currView  + 1)%3);
         break;
     case '1':
         if (orbiterFlag == false)
@@ -308,66 +391,66 @@ void myKeyboardFunc(unsigned char key, int x, int y)
             break;
         }
     case '6':
-        if (objects.switchOne == false)
+        if (objects->switchOne == false)
         {
-            objects.switchOne = true;
+            objects->switchOne = true;
             glEnable(GL_LIGHT1);
             break;
         }
-        else if (objects.switchOne == true)
+        else if (objects->switchOne == true)
         {
-            objects.switchOne = false;
+            objects->switchOne = false;
             glDisable(GL_LIGHT1);
             break;
         }
     case '7':
-        if (objects.switchTwo == false)
+        if (objects->switchTwo == false)
         {
-            objects.switchTwo = true;
+            objects->switchTwo = true;
             glEnable(GL_LIGHT2);
             break;
         }
-        else if (objects.switchTwo == true)
+        else if (objects->switchTwo == true)
         {
-            objects.switchTwo = false;
+            objects->switchTwo = false;
             glDisable(GL_LIGHT2);
             break;
         }
     case '8':
-        if (objects.switchThree == false)
+        if (objects->switchThree == false)
         {
-            objects.switchThree = true;
+            objects->switchThree = true;
             glEnable(GL_LIGHT3);
             break;
         }
-        else if (objects.switchThree == true)
+        else if (objects->switchThree == true)
         {
-            objects.switchThree = false;
+            objects->switchThree = false;
             glDisable(GL_LIGHT3);
             break;
         }
     case '9':
-        if (objects.switchFour == false)
+        if (objects->switchFour == false)
         {
-            objects.switchFour = true;
+            objects->switchFour = true;
             glEnable(GL_LIGHT4);
             break;
         }
-        else if (objects.switchFour == true)
+        else if (objects->switchFour == true)
         {
-            objects.switchFour = false;
+            objects->switchFour = false;
             glDisable(GL_LIGHT4);
             break;
         }
     case 'z':
-        if (objects.controlPointsFlag == false)
+        if (objects->controlPointsFlag == false)
         {
-            objects.controlPointsFlag = true;
+            objects->controlPointsFlag = true;
             break;
         }
-        else if (objects.controlPointsFlag == true)
+        else if (objects->controlPointsFlag == true)
         {
-            objects.controlPointsFlag = false;
+            objects->controlPointsFlag = false;
             break;
         }
     case 'g':
@@ -404,14 +487,19 @@ void myKeyboardFunc(unsigned char key, int x, int y)
 
 void specialKeyboardFunc(int key, int x, int y)
 {
-    human.move(key, x, y);
+    human->move(key, x, y);
+    
+    if(camera->currView == 1){
+        camera->setView(1);
+    }
+
     glutPostRedisplay();
 }
 
 void animate()
 {
-    rides.animateRides(skyDropFlag, upFlag, downFlag1, downFlag2, downFlag3, cmOrbiterFlag, pirateBoatFlag, pirateBoatCheck, fanSwitch, orbiterFlag, door1);
-    objects.animateFlag();
+    rides->animateRides(skyDropFlag, upFlag, downFlag1, downFlag2, downFlag3, cmOrbiterFlag, pirateBoatFlag, pirateBoatCheck, fanSwitch, orbiterFlag, door1);
+    objects->animateFlag();
     glutPostRedisplay();
 }
 
