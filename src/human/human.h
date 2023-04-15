@@ -46,6 +46,8 @@ struct Human {
     }
 
     void drawCubeBodyPart();
+    void drawSphereBodyPart();
+    void drawCylinderBodyPart();
     void drawHuman();
     void move(int key, int x, int y);
 };

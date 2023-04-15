@@ -1068,7 +1068,7 @@ void Rides::rollerCoaster(Human* human) {
         vector<double> pos = get_pos(ride_theta);
         vector<double> angle = get_angle(ride_theta);
 
-        GLfloat radial_x = -0.4*cos(radian(ride_theta)), radial_z = -0.4*sin(radian(ride_theta));
+        GLfloat radial_x = -0.6*cos(radian(ride_theta)), radial_z = -0.6*sin(radian(ride_theta));
 
         if(human) {
             glPushMatrix();
