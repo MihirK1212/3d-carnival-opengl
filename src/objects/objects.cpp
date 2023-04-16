@@ -261,12 +261,25 @@ void Objects::DrawUmbrella(void)
     gluDeleteQuadric(qobj);
 }
 
+void Objects::teapot(void)
+{
+    glColor3f(1, 0.9725, 0.9059);
+    glPushMatrix();
+    // moving teapot 1 unit above table
+    glTranslatef(1,1,11);
+    glScaled(10, 10, 10);
+    glRotatef(90, -1, 0, 0);
+    glutSolidTeapot(0.1);
+    glPopMatrix();
+}
+
 void Objects::diningSet()
 {
     glPushMatrix();
     glTranslatef(0, -16, 0);
     table();
     DrawUmbrella();
+    teapot();
     glPopMatrix();
 
     for (int i = 0; i <= 360; i += 90)

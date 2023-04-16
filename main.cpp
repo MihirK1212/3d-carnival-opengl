@@ -12,6 +12,7 @@ double mouse_x = -1, mouse_y = -1;
 double mouse_x_prev = -1, mouse_y_prev = -1;
 
 static double windowHeight = 1000, windowWidth = 1000;
+float intensity = 0;
 
 void display(void)
 {
@@ -234,6 +235,18 @@ void mouseButton(int button, int state, int x, int y)
     }
 }
 
+void lighting(float X, float Y, float Z)
+{
+    GLfloat position[] = {X, Y, Z, 0.0}; // using directional source of light
+    GLfloat noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    GLfloat whiteDiffuse[] = {intensity, intensity, intensity, 1.0f};
+
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteDiffuse);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, noAmbient);
+}
+
 void myKeyboardFunc(unsigned char key, int x, int y)
 {
     switch (key)
@@ -386,13 +399,38 @@ void myKeyboardFunc(unsigned char key, int x, int y)
         if (day == false)
         {
             day = true;
-            glEnable(GL_LIGHT0);
+            // glEnable(GL_LIGHT0);
+            lighting(100, 100, 100);
             break;
         }
         else if (day == true)
         {
             day = false;
             glDisable(GL_LIGHT0);
+            break;
+        }
+        // increase intensity
+    case 'i':
+        if (intensity < 1.0)
+        {
+            intensity += 0.1;
+            break;
+        }
+        else
+        {
+            intensity = 1.0;
+            break;
+        }
+        // decrease intensity
+    case 'k':
+        if (intensity > 0.0)
+        {
+            intensity -= 0.1;
+            break;
+        }
+        else
+        {
+            intensity = 0.0;
             break;
         }
     case 27:

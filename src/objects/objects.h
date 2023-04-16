@@ -41,6 +41,7 @@ struct Objects {
     void chair();
     void table();
     void DrawUmbrella();
+    void teapot();
     void diningSet();
     
     void icecreamParlor();
