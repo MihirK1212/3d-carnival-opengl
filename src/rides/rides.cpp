@@ -9,6 +9,135 @@ static GLfloat colors[4][6] =
         {1, 1, 0, 0.5, 0.5, 0} // yellow
 };
 
+double radToDeg(double rad) {
+    return rad * 180.0 / M_PI;
+}
+
+int sgn(double x) {
+    return x>=0 ? 1:-1;
+}
+
+vector<double> matrix_mul(vector<vector<double>>&A, vector<double>&p)
+{
+    int m = A.size() , n = p.size();
+    vector<double> res;
+
+
+    for(int i=0; i<m; i++)
+    {
+        double sum = 0;
+
+        for(int j=0; j<n; j++)
+        {
+            sum+=A[i][j]*p[j];
+        }
+
+        sum+=A[i][n];
+
+        res.push_back(sum);
+    }
+
+    vector<double> ans;
+    ans.push_back(res[0]); ans.push_back(res[1]); ans.push_back(res[2]);
+
+    return ans;
+}
+
+vector<double> translate(vector<double>&v,double tx,double ty, double tz)
+{
+    vector<vector<double>> T = {{1,0,0,tx},{0,1,0,ty},{0,0,1,tz},{0,0,0,1}};
+    return matrix_mul(T, v);
+}
+
+vector<double> rotate(vector<double>&v,double theta)
+{
+    theta = radian(theta);
+    vector<vector<double>> T = {{cos(theta),0,sin(theta),0},{0,1,0,0},{-sin(theta),0,cos(theta),0},{0,0,0,1}};
+    return matrix_mul(T, v);
+}
+
+vector<double> scale(vector<double>&v,double sx,double sy, double sz)
+{
+    vector<vector<double>> T = {{sx,0,0,0},{0,sy,0,0},{0,0,sz,0},{0,0,0,1}};
+    return matrix_mul(T, v);
+}
+
+
+vector<double> get_pos(double theta) {
+
+    double pi = 3.14159265359;
+    theta = (theta * (pi / 180));
+
+    double x = 10*cos(theta); 
+    double z = 10*sin(theta);
+    double y = (x*x*x + z*z - 3*x + 4*z)/100;
+
+    return {x,y,z};
+}
+vector<double> get_tangent(double theta) {
+
+
+    double pi = 3.14159265359;
+    theta = (theta * (pi / 180));
+
+    double x = 10*cos(theta); 
+    double z = 10*sin(theta);
+    double y = (x*x*x + z*z - 3*x + 4*z)/100;
+
+    double dx = -10*sin(theta);
+    double dz =  10*cos(theta);
+    double dy = (3*x*x*dx + 2*z*dz - 3*dx + 4*dz)/100;
+
+    return {dx,dy,dz};
+}
+
+vector<double> get_angle(double theta) {
+
+    //returns rotation operations to align dx,dy,dz with z axis
+    //if we perform reverse of these rotations, then we can align an object which is along z axis with dx,dy,dz
+
+    vector<double> tangent = get_tangent(theta);
+
+    double pi = 3.14159265359;
+    theta = (theta * (pi / 180));
+
+    double x = 10*cos(theta); 
+    double z = 10*sin(theta);
+    double y = (x*x*x + z*z - 3*x + 4*z)/100;
+
+    double dx = tangent[0], dy = tangent[1], dz = tangent[2];
+
+    double norm = sqrt(dx*dx + dy*dy + dz*dz);
+
+    double cos_alpha = abs(dx/norm);
+    double cos_gamma = abs(dz/norm);
+
+    double term_x = sqrt(cos_alpha*cos_alpha + cos_gamma*cos_gamma);
+    double term_y = cos_gamma/term_x;
+
+    double theta_y =   radToDeg(acos(term_y)); //rotate abt y axis
+    double theta_x =   radToDeg(acos(term_x)); //rotate abt x axis
+
+    if(term_x == 0) {
+        theta_y = 0;
+        theta_x = 90;
+    }
+    else if(dx>=0 && dz>=0) {
+        theta_y = -theta_y; theta_x = sgn(dy)*theta_x; 
+    }
+    else if(dx>=0) {
+        theta_y = -(180 - theta_y); theta_x = sgn(dy)*theta_x; 
+    }
+    else if(dz>=0) {
+        theta_y = theta_y; theta_x = sgn(dy)*theta_x; 
+    }
+    else {
+        theta_y = 180 - theta_y; theta_x = sgn(dy)*theta_x; 
+    }
+
+    return {theta_x, theta_y};
+}
+
 void Rides::rideFence() {
     
     //fence in the front
@@ -197,8 +326,6 @@ void Rides::rideFence() {
     drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 }
-
-
 void Rides::rideGround()
 {
     glEnable(GL_TEXTURE_2D);
@@ -631,8 +758,6 @@ void Rides::ferrisWheel()
     glPopMatrix();
 }
 
-
-
 void Rides::rings()
 {
     for (float i = -3.5; i >= -17.5; i -= 1)
@@ -731,75 +856,6 @@ void Rides::orbiter()
     glPopMatrix();
 }
 
-
-double radToDeg(double rad) {
-    return rad * 180.0 / M_PI;
-}
-
-int sgn(double x) {
-    return x>=0 ? 1:-1;
-}
-
-vector<double> get_pos(double theta) {
-
-    double pi = 3.14159265359;
-    theta = (theta * (pi / 180));
-
-    double x = 10*cos(theta); 
-    double z = 10*sin(theta);
-    double y = (x*x*x + z*z - 3*x + 4*z)/100;
-
-    return {x,y,z};
-}
-
-vector<double> get_angle(double theta) {
-
-    double deg_theta = theta;
-
-    //returns rotation operations to align dx,dy,dz with z axis
-
-    double pi = 3.14159265359;
-    theta = (theta * (pi / 180));
-
-    double x = 10*cos(theta); 
-    double z = 10*sin(theta);
-    double y = (x*x*x + z*z - 3*x + 4*z)/100;
-
-    double dx = -10*sin(theta);
-    double dz =  10*cos(theta);
-    double dy = (3*x*x*dx + 2*z*dz - 3*dx + 4*dz)/100;
-
-    double norm = sqrt(dx*dx + dy*dy + dz*dz);
-
-    double cos_alpha = abs(dx/norm);
-    double cos_gamma = abs(dz/norm);
-
-    double term_x = sqrt(cos_alpha*cos_alpha + cos_gamma*cos_gamma);
-    double term_y = cos_gamma/term_x;
-
-    double theta_y =   radToDeg(acos(term_y)); //rotate abt y axis
-    double theta_x =   radToDeg(acos(term_x)); //rotate abt x axis
-
-    if(term_x == 0) {
-        theta_y = 0;
-        theta_x = 90;
-    }
-    else if(dx>=0 && dz>=0) {
-        theta_y = -theta_y; theta_x = sgn(dy)*theta_x; 
-    }
-    else if(dx>=0) {
-        theta_y = -(180 - theta_y); theta_x = sgn(dy)*theta_x; 
-    }
-    else if(dz>=0) {
-        theta_y = theta_y; theta_x = sgn(dy)*theta_x; 
-    }
-    else {
-        theta_y = 180 - theta_y; theta_x = sgn(dy)*theta_x; 
-    }
-
-    return {theta_x, theta_y};
-}
-
 void Rides::coasterRide()
 {
     glPushMatrix();
@@ -865,7 +921,7 @@ void Rides::coasterRide()
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 }
-void track() {
+void Rides::track() {
 
     //left bound
     glPushMatrix();
@@ -892,7 +948,7 @@ void track() {
         z++;
     }
 }
-void coasterSegment(double theta) {
+void Rides::coasterSegment(double theta) {
 
     vector<double> pos = get_pos(theta);
     vector<double> angle = get_angle(theta);
@@ -902,16 +958,12 @@ void coasterSegment(double theta) {
 
     glRotatef(-angle[1], 0, 1, 0);
     glRotatef(-angle[0], 1, 0, 0);
-    
-    // glScalef(0.4,0.4,0.08);
-    // drawCylinder(0.8, 0.8, 0.8, 0.25, 0.00, 0.00); //generates cylinder aligned with z axis, and one end at origin
-    
     glScalef(0.8, 0.8, 0.08);
     glTranslatef(-1,0,0);
     track();
     glPopMatrix();
 }
-void pole(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine, GLfloat height)
+void Rides::pole(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine, GLfloat height)
 {
     GLfloat no_mat[] =   {0.0, 0.0, 0.0, 1.0};
     GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
@@ -929,31 +981,51 @@ void pole(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, 
     quadratic = gluNewQuadric();
     gluCylinder(quadratic, 1.5, 1.5, height, 32, 32);
 }
-void coasterPole(double theta) {
+void Rides::coasterPole(double theta) {
 
     vector<double> pos = get_pos(theta);
-
-    // glEnable(GL_TEXTURE_2D);
-
-    // glBindTexture(GL_TEXTURE_2D, ID2[31]);
     
-
-        glPushMatrix();
-        glTranslatef(pos[0],pos[1],pos[2]);
-        glRotatef(90, 1, 0, 0);
-        glScalef(0.5, 0.5, abs(pos[1]+20)/19);
-        // drawCylinder(0.545, 0.271, 0.075,  0.2725,0.1355,0.0375);
-        drawCylinder(0.6, 0.3, 0.4,  0.2725,0.1355,0.0375);
-        // GLUquadricObj *quadratic;
-        // quadratic = gluNewQuadric();
-        // gluCylinder(quadratic, 1.5, 1.5, 19, 32, 32);
-        
-        glPopMatrix();
-
-    // glDisable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glTranslatef(pos[0],pos[1],pos[2]);
+    glRotatef(90, 1, 0, 0);
+    glScalef(0.5, 0.5, abs(pos[1]+20)/19);
+    drawCylinder(0.6, 0.3, 0.4,  0.2725,0.1355,0.0375);
+    glPopMatrix();
 }
-void Rides::rollerCoaster() {
+vector<double> Rides::getRollerCoasterViewRef() {
+    
+    vector<double> pos = get_pos(ride_theta);
+    vector<double> tangent = get_tangent(ride_theta);
 
+    double x = pos[0], y = pos[1], z = pos[2];
+    double dx = tangent[0], dy = tangent[1], dz = tangent[2];
+
+    double eyeX = x + 0.4*dx;
+    double eyeY = y + 0.4*dy;
+    double eyeZ = z + 0.4*dz;
+    double refX = x - 0.4*dx;
+    double refY = y - 0.4*dy;
+    double refZ = z - 0.4*dz;
+
+    vector<double> eye = {eyeX, eyeY, eyeZ};
+    vector<double> ref = {refX, refY, refZ};
+
+    eye = rotate(eye, 180);
+    eye = scale(eye, 1.5, 1.5, 1.5);
+    eye = translate(eye, -70, 3, 40);
+
+    ref = rotate(ref, 180);
+    ref = scale(ref, 1.5, 1.5, 1.5);
+    ref = translate(ref, -70, 3, 40);
+
+    eye[1]+=7;
+    ref[1]-=2;
+
+    return {eye[0], eye[1], eye[2], ref[0], ref[1], ref[2]};
+}
+void Rides::rollerCoaster(Human* human) {
+
+    
     glPushMatrix();
 
         glRotatef(180,0,1,0);
@@ -993,13 +1065,26 @@ void Rides::rollerCoaster() {
             theta+=1;
         }
 
-
         vector<double> pos = get_pos(ride_theta);
         vector<double> angle = get_angle(ride_theta);
+
+        GLfloat radial_x = -0.6*cos(radian(ride_theta)), radial_z = -0.6*sin(radian(ride_theta));
+
+        if(human) {
+            glPushMatrix();
+            glTranslatef(pos[0],pos[1],pos[2]);
+            glTranslatef(radial_x, 0 , radial_z);
+            glRotatef(-angle[1], 0, 1, 0);
+            glRotatef(-angle[0], 1, 0, 0);
+            glScalef(0.2,0.2,0.2);
+            human->drawHuman();
+            glPopMatrix();
+        }
+
         
+        //align the boat along the tangent to the track
         glPushMatrix();
         glTranslatef(pos[0],pos[1],pos[2]);
-
         glRotatef(-angle[1], 0, 1, 0);
         glRotatef(-angle[0], 1, 0, 0);
         glRotatef(90,0,1,0);
@@ -1010,7 +1095,6 @@ void Rides::rollerCoaster() {
     glPopMatrix();
 
 }
-
 
 
 void Rides::boatBody()
@@ -1574,6 +1658,7 @@ void Rides::animateRides(GLboolean skyDropFlag, GLboolean upFlag, GLboolean down
             theta -= 360.0 * floor(theta / 360.0);
 
         ride_theta = ((ride_theta - 1)%360 + 360)%360;
+        // ride_theta = (ride_theta + 1)%360;
     }
 
     if (orbiterFlag == true)

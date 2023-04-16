@@ -17,6 +17,7 @@
 #include <GL/glext.h>
 #include <math.h>
 #include <string.h>
+#include<unistd.h>    
 using namespace std;
 
 #endif
