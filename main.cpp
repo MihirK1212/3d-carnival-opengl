@@ -7,7 +7,7 @@ double degToRad(double angle)
     return (angle * (pi / 180));
 }
 
-GLboolean fanSwitch = false, door1 = false, orbiterFlag = false, pirateBoatFlag = false, pirateBoatCheck = false, cmOrbiterFlag = false, skyDropFlag = false, upFlag = true, downFlag1 = true, downFlag2 = false, downFlag3 = false, day = true;
+GLboolean  orbiterFlag = false, rideFlag = false, doorFlag = false,  day = true;
 
 double mouse_x = -1, mouse_y = -1;
 double mouse_x_prev = -1, mouse_y_prev = -1;
@@ -282,47 +282,14 @@ void myKeyboardFunc(unsigned char key, int x, int y)
             break;
         }
     case '2':
-        if (fanSwitch == false)
+        if (rideFlag == false)
         {
-            fanSwitch = true;
+            rideFlag = true;
             break;
         }
         else
         {
-            fanSwitch = false;
-            break;
-        }
-    case '3':
-        if (skyDropFlag == false)
-        {
-            skyDropFlag = true;
-            break;
-        }
-        else if (skyDropFlag == true)
-        {
-            skyDropFlag = false;
-            break;
-        }
-    case '4':
-        if (cmOrbiterFlag == false)
-        {
-            cmOrbiterFlag = true;
-            break;
-        }
-        else if (cmOrbiterFlag == true)
-        {
-            cmOrbiterFlag = false;
-            break;
-        }
-    case '5':
-        if (pirateBoatFlag == false)
-        {
-            pirateBoatFlag = true;
-            break;
-        }
-        else if (pirateBoatFlag == true)
-        {
-            pirateBoatFlag = false;
+            rideFlag = false;
             break;
         }
     case '6':
@@ -389,14 +356,14 @@ void myKeyboardFunc(unsigned char key, int x, int y)
             break;
         }
     case 'g':
-        if (door1 == false)
+        if (doorFlag == false)
         {
-            door1 = true;
+            doorFlag = true;
             break;
         }
         else
         {
-            door1 = false;
+            doorFlag = false;
             break;
         }
 
@@ -457,7 +424,7 @@ void specialKeyboardFunc(int key, int x, int y)
 
 void animate()
 {
-    rides->animateRides(skyDropFlag, upFlag, downFlag1, downFlag2, downFlag3, cmOrbiterFlag, pirateBoatFlag, pirateBoatCheck, fanSwitch, orbiterFlag, door1);
+    rides->animateRides(orbiterFlag, rideFlag, doorFlag);
     objects->animateFlag();
     glutPostRedisplay();
 }
@@ -496,7 +463,6 @@ int main(int argc, char **argv)
     LoadTexture("sgi images/iitindore.sgi", 7);
     LoadTexture("sgi images/dunkindonuts.sgi", 8);
 
-    // sky
     LoadTexture("sgi images/scorchsky.sgi", 9);
     LoadTexture("sgi images/scorchsky.sgi", 12);
     LoadTexture("sgi images/scorchsky.sgi", 11);
@@ -509,7 +475,6 @@ int main(int argc, char **argv)
     LoadTexture("sgi images/sand_alt.sgi", 15);
 
     LoadTexture("sgi images/blue_gradient.sgi", 16);
-    // change to blackred
     LoadTexture("sgi images/pinkblue.sgi", 17);
     LoadTexture("sgi images/baskin-robin-ad.sgi", 18);
     LoadTexture("sgi images/de5b9e.sgi", 19);

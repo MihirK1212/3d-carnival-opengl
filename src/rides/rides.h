@@ -11,13 +11,9 @@ struct Rides {
 
     GLfloat alpha;
     GLfloat theta;
+
     GLfloat orbiterAlpha;
     GLfloat orbiterTheta;
-    GLfloat testTheta; 
-    GLfloat pirateBoatTheta;
-    GLfloat cmOrbiterAlpha;
-    GLfloat cmOrbiterTheta; 
-    GLfloat skyDropPos;
     
     GLfloat ride_x;
     bool ride_right;
@@ -25,28 +21,20 @@ struct Rides {
     int ride_theta;
 
     Rides() {
+
         alpha = 0.0; 
         theta = 0.0;
+
         orbiterAlpha = -45.0;
         orbiterTheta = 0.0;
-        testTheta = -45.0;
-        pirateBoatTheta = 0.0;
-        cmOrbiterAlpha = 0.0;
-        cmOrbiterTheta = 0.0;
-        skyDropPos = 0.0;
 
         ride_theta = 0;
     }
 
     void rideGround();
-
-    void ferrisWheelSeat();
-    void wheel();
-    void bulbsOnFerrisWheel();
-    void ferrisWheel();
-
     void rideFence();
 
+    void orbiterSeat();
     void rings();
     void orbiter();
 
@@ -58,8 +46,7 @@ struct Rides {
     vector<double> getRollerCoasterViewRef();
     void rollerCoaster(Human* human);
 
-    void animateRides(GLboolean skyDropFlag, GLboolean upFlag, GLboolean downFlag1, GLboolean downFlag2, GLboolean downFlag3,
-                        GLboolean cmOrbiterFlag, GLboolean pirateBoatFlag, GLboolean pirateBoatCheck, GLboolean fanSwitch, GLboolean orbiterFlag, GLboolean door1);
+    void animateRides(GLboolean orbiterFlag, GLboolean rideFlag, GLboolean doorFlag);
 };
 
 

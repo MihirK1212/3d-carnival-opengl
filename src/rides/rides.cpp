@@ -346,7 +346,7 @@ void Rides::rideGround()
     glDisable(GL_TEXTURE_2D);
 }
 
-void Rides::ferrisWheelSeat()
+void Rides::orbiterSeat()
 {
     // seat
     glPushMatrix();
@@ -409,355 +409,6 @@ void Rides::ferrisWheelSeat()
 
     glDisable(GL_TEXTURE_2D);
 }
-void Rides::wheel()
-{
-    glPushMatrix();
-    glScalef(1, 1, 2);
-    drawSphere(1, 0, 0, 0.5, 0, 0);
-    glPopMatrix();
-
-    glPushMatrix();
-    drawTorus(1, 1, 0.3, 0.5, 0.5, 0.15, 0.5, 10.0, 32, 64); // 0.859,0.439,0.576, 0.4295,0.2195,0.288
-    glPopMatrix();
-
-    // the big lines
-    for (int i = 0; i < 180; i += 30)
-    {
-        glPushMatrix();
-        glRotatef(i, 0, 0, 1);
-        glScalef(6.6, 0.1, 0.5);
-        glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.867, 0.627, 0.867, 0.4335, 0.3135, 0.4335);
-        glPopMatrix();
-    }
-}
-void Rides::bulbsOnFerrisWheel()
-{
-    for (int i = 0; i <= 360; i += 45)
-    {
-        glPushMatrix();
-        glRotatef(i, 0, 0, 1);
-        glTranslatef(10, 0, 0);
-        glScalef(0.5, 0.5, 0.5);
-        drawSphere(1, 1, 1, 0.5, 0.5, 0.5);
-        glPopMatrix();
-    }
-
-    for (int i = 15; i <= 360; i += 45)
-    {
-        glPushMatrix();
-        glRotatef(i, 0, 0, 1);
-        glTranslatef(10, 0, 0);
-        glScalef(0.5, 0.5, 0.5);
-        drawSphere(1, 0, 0, 0.5, 0, 0);
-        glPopMatrix();
-    }
-
-    for (int i = 30; i <= 360; i += 45)
-    {
-        glPushMatrix();
-        glRotatef(i, 0, 0, 1);
-        glTranslatef(10, 0, 0);
-        glScalef(0.5, 0.5, 0.5);
-        drawSphere(0, 0, 1, 0, 0, 0.5);
-        glPopMatrix();
-    }
-}
-void Rides::ferrisWheel() 
-{
-    // right stand on the back
-    glPushMatrix();
-    glTranslatef(-.2, 0, -1);
-    glRotatef(-75, 0, 0, 1);
-    glScalef(7, 0.28, 0.1);
-    // glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.545, 0.000, 0.545, 0.2725, 0.0, 0.2725);
-    glPopMatrix();
-
-    // left stand on the back
-    glPushMatrix();
-    glTranslatef(-0.6, 0, -1);
-    glRotatef(-105, 0, 0, 1);
-    glScalef(7, 0.28, 0.1);
-    // glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.545, 0.000, 0.545, 0.2725, 0.0, 0.2725);
-    glPopMatrix();
-
-    // right stand on the front
-    glPushMatrix();
-    glTranslatef(-.2, 0, 6);
-    glRotatef(-75, 0, 0, 1);
-    glScalef(7, 0.28, 0.1);
-    drawCube(0.545, 0.000, 0.545, 0.2725, 0.0, 0.2725);
-    glPopMatrix();
-
-    // left stand on the front
-    glPushMatrix();
-    glTranslatef(-0.6, 0, 6);
-    glRotatef(-105, 0, 0, 1);
-    glScalef(7, 0.28, 0.1);
-    // glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.545, 0.000, 0.545, 0.2725, 0.0, 0.2725);
-    glPopMatrix();
-
-    // base stand
-    glPushMatrix();
-    glTranslatef(0, -19.5, 2.5);
-    // glRotatef(-105, 0, 0, 1);
-    glScalef(4, 0.5, 3);
-    glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
-    glPopMatrix();
-
-    // fence in the front
-    for (float j = -9; j <= 19; j += 2)
-    {
-        glPushMatrix();
-        glTranslatef(j, -19.5, 11);
-        glScalef(0.1, 2.5, 0.1);
-        glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-        glPopMatrix();
-
-        glPushMatrix();
-        glTranslatef(j, -16.1, 11);
-        glScalef(.4, .4, .4);
-        drawSphere(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
-        glPopMatrix();
-    }
-
-    /// the horizontal lines of the front fence
-    glPushMatrix();
-    glTranslatef(4, -17, 11);
-    glScalef(10, 0.05, 0.1);
-    glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(4, -18, 11);
-    glScalef(10, 0.05, 0.1);
-    glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(4, -19, 11);
-    glScalef(10, 0.05, 0.1);
-    glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    // gate
-    glPushMatrix();
-    glTranslatef(-15, -20, 11);
-    glRotatef(-alpha, 0, 1, 0);
-    for (float j = 0; j <= 4; j += 2)
-    {
-        glPushMatrix();
-        glTranslatef(j, 0, 0);
-        glScalef(0.1, 1.5, 0.1);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-        glPopMatrix();
-
-        glPushMatrix();
-        glTranslatef(j, 4.4, 0.2);
-        glScalef(.4, .4, .4);
-        drawSphere(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
-        glPopMatrix();
-    }
-
-    for (float j = 1; j <= 3; j += 1)
-    {
-        glPushMatrix();
-        glTranslatef(0, j, 0);
-        glScalef(1.5, 0.05, 0.1);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-        glPopMatrix();
-    }
-    glPopMatrix();
-
-    // fence in the back
-
-    for (float j = -15; j <= 19; j += 2)
-    {
-        glPushMatrix();
-        glTranslatef(j, -19.5, -5);
-        glScalef(0.1, 2.5, 0.1);
-        glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-        glPopMatrix();
-
-        glPushMatrix();
-        glTranslatef(j, -16.1, -5);
-        glScalef(.4, .4, .4);
-        drawSphere(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
-        glPopMatrix();
-    }
-
-    glPushMatrix();
-    glTranslatef(2, -17, -5);
-    glScalef(11.5, 0.05, 0.1);
-    glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(2, -18, -5);
-    glScalef(11.5, 0.05, 0.1);
-    glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(2, -19, -5);
-    glScalef(11.5, 0.05, 0.1);
-    glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    // fence in the left
-    for (float j = -3; j <= 9; j += 2)
-    {
-        glPushMatrix();
-        glTranslatef(-15, -19.5, j);
-        glScalef(0.1, 2.5, 0.1);
-        glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-        glPopMatrix();
-
-        glPushMatrix();
-        glTranslatef(-15, -16.1, j);
-        glScalef(.4, .4, .4);
-        drawSphere(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
-        glPopMatrix();
-    }
-
-    glPushMatrix();
-    glTranslatef(-15, -17, 3);
-    glScalef(.1, 0.05, 5.5);
-    glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(-15, -18, 3);
-    glScalef(.1, 0.05, 5.5);
-    glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(-15, -19, 3);
-    glScalef(.1, 0.05, 5.5);
-    glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    // fence in the right
-    for (float j = -3; j <= 9; j += 2)
-    {
-        glPushMatrix();
-        glTranslatef(19, -19.5, j);
-        glScalef(0.1, 2.5, 0.1);
-        glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-        glPopMatrix();
-
-        glPushMatrix();
-        glTranslatef(19, -16.1, j);
-        glScalef(.4, .4, .4);
-        drawSphere(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
-        glPopMatrix();
-    }
-
-    glPushMatrix();
-    glTranslatef(19, -17, 3);
-    glScalef(.1, 0.05, 5.5);
-    glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(19, -18, 3);
-    glScalef(.1, 0.05, 5.5);
-    glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(19, -19, 3);
-    glScalef(.1, 0.05, 5.5);
-    glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    // rotating part
-    glPushMatrix();
-    glRotatef(-theta, 0, 0, 1);
-    glScalef(1.5, 1.5, 1);
-    wheel();
-    glPushMatrix();
-    glTranslatef(0, 0, 5);
-    wheel();
-    glPopMatrix();
-
-    // bulbs
-    glPushMatrix();
-    glTranslatef(0, 0, 5.5);
-    bulbsOnFerrisWheel();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, 0, -0.5);
-    bulbsOnFerrisWheel();
-    glPopMatrix();
-
-    // the middle line between two spheres
-    glPushMatrix();
-    glScalef(0.1, 0.05, 1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
-    glPopMatrix();
-
-    // the smaller lines in between
-    for (int j = 0; j <= 360; j += 30)
-    {
-        glPushMatrix();
-        glRotatef(j, 0, 0, 1);
-        for (int i = 1; i <= 7; i++)
-        {
-            glPushMatrix();
-            glTranslatef(i, 0, 0);
-            glScalef(0.1, 0.05, 1.5);
-            drawCube(0.780, 0.082, 0.522, 0.39, 0.041, 0.261);
-            glPopMatrix();
-        }
-        glPopMatrix();
-    }
-
-    // the seats
-    for (int i = 0; i < 360; i += 30)
-    {
-        glPushMatrix();
-        glRotatef(i, 0, 0, 1);
-        glTranslatef(10, 0, 0.9);
-        glRotatef(-i, 0, 0, 1);
-        glRotatef(theta, 0, 0, 1);
-        glScalef(1, 1, 0.8);
-        ferrisWheelSeat();
-        glPopMatrix();
-    }
-
-    glPopMatrix();
-
-    // ground
-    glPushMatrix();
-    glTranslatef(2, 0, 0);
-    glScalef(2, 1, 1.5);
-    rideGround();
-    glPopMatrix();
-}
-
 void Rides::rings()
 {
     for (float i = -3.5; i >= -17.5; i -= 1)
@@ -839,7 +490,7 @@ void Rides::orbiter()
             glTranslatef(15, 0, -2);
             glRotatef(-0, 0, 1, 0);
             glRotatef(-orbiterAlpha, 0, 0, 1);
-            ferrisWheelSeat();
+            orbiterSeat();
             glPopMatrix();
 
             glPushMatrix();
@@ -1096,118 +747,16 @@ void Rides::rollerCoaster(Human* human) {
 
 }
 
-void Rides::animateRides(GLboolean skyDropFlag, GLboolean upFlag, GLboolean downFlag1, GLboolean downFlag2, GLboolean downFlag3,
-                        GLboolean cmOrbiterFlag, GLboolean pirateBoatFlag, GLboolean pirateBoatCheck, GLboolean fanSwitch, GLboolean orbiterFlag, GLboolean door1) {
+void Rides::animateRides(GLboolean orbiterFlag, GLboolean rideFlag, GLboolean doorFlag) {
     
-      if (skyDropFlag == true)
-    {
-        if (upFlag == true)
-        {
-            skyDropPos += 0.5;
-            if (skyDropPos >= 80)
-            {
-                upFlag = false;
-            }
-        }
-        else
-        {
-            if (downFlag1 == true && downFlag2 == false && downFlag3 == false)
-            {
-                skyDropPos -= 2;
-                if (skyDropPos <= 5)
-                {
-                    upFlag = true;
-                    downFlag1 = false;
-                    downFlag2 = true;
-                    downFlag3 = false;
-                }
-            }
-            else if (downFlag1 == false && downFlag2 == true && downFlag3 == false)
-            {
-                skyDropPos -= 3;
-                if (skyDropPos <= 45)
-                {
-                    upFlag = true;
-                    downFlag1 = false;
-                    downFlag2 = false;
-                    downFlag3 = true;
-                }
-            }
-            else if (downFlag1 == false && downFlag2 == false && downFlag3 == true)
-            {
-                skyDropPos -= 4;
-                if (skyDropPos <= 15)
-                {
-                    upFlag = true;
-                    downFlag1 = true;
-                    downFlag2 = false;
-                    downFlag3 = false;
-                }
-            }
-        }
-    }
-    else
-    {
-        skyDropPos -= 2;
-        if (skyDropPos <= 2)
-        {
-            skyDropPos = 2;
-        }
-    }
-
-    if (cmOrbiterFlag == true)
-    {
-        cmOrbiterTheta += 10;
-        cmOrbiterAlpha += 1;
-    }
-
-    if (pirateBoatFlag == true)
-    {
-        if (pirateBoatCheck == true)
-        {
-            pirateBoatTheta += 2;
-            if (pirateBoatTheta == 60)
-            {
-                pirateBoatCheck = false;
-            }
-        }
-        else
-        {
-            pirateBoatTheta -= 2;
-            if (pirateBoatTheta == -70)
-            {
-                pirateBoatCheck = true;
-            }
-        }
-    }
-    else
-    {
-        if (pirateBoatTheta < 0)
-        {
-            pirateBoatTheta += 1;
-            if (pirateBoatTheta == 0)
-            {
-                pirateBoatTheta = 0;
-            }
-        }
-        else if (pirateBoatTheta > 0)
-        {
-            pirateBoatTheta -= 1;
-            if (pirateBoatTheta == 0)
-            {
-                pirateBoatTheta = 0;
-            }
-        }
-    }
-
-    if (fanSwitch == true)
+     
+    if (rideFlag == true)
     {
         theta += 2;
         if (theta > 360.0)
             theta -= 360.0 * floor(theta / 360.0);
 
         ride_theta = ((ride_theta - 1)%360 + 360)%360;
-        // ride_theta = (ride_theta + 1)%360;
     }
 
     if (orbiterFlag == true)
@@ -1231,13 +780,13 @@ void Rides::animateRides(GLboolean skyDropFlag, GLboolean upFlag, GLboolean down
             orbiterTheta = 0;
     }
 
-    if (door1 == true)
+    if (doorFlag == true)
     {
         alpha += 10;
         if (alpha > 90)
             alpha = 90;
     }
-    else if (door1 == false)
+    else if (doorFlag == false)
     {
         alpha -= 10;
         if (alpha < 0)
