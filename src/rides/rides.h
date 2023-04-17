@@ -58,18 +58,6 @@ struct Rides {
     vector<double> getRollerCoasterViewRef();
     void rollerCoaster(Human* human);
 
-    void boatBody();
-    void pirateBoat();
-
-    void complexOrbiterUnit();
-    void complexOrbiter();
-
-    void skyDropStructure();
-    void skyDropSeat();
-    void skyDropTexture();
-    void skyDropLogo();
-    void skyDrop();
-
     void animateRides(GLboolean skyDropFlag, GLboolean upFlag, GLboolean downFlag1, GLboolean downFlag2, GLboolean downFlag3,
                         GLboolean cmOrbiterFlag, GLboolean pirateBoatFlag, GLboolean pirateBoatCheck, GLboolean fanSwitch, GLboolean orbiterFlag, GLboolean door1);
 };

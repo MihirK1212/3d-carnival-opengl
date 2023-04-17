@@ -46,6 +46,7 @@ struct Objects {
     
     void icecreamParlor();
     void pizzaHut();
+    void scaryHouse();
     void dunkinDonuts();
     void cafeteriaFence();
     void cafeteria();

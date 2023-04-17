@@ -397,7 +397,52 @@ void Objects::pizzaHut()
 
     glDisable(GL_TEXTURE_2D);
 }
+void Objects::scaryHouse()
+{
+    materialProperty();
+    glEnable(GL_TEXTURE_2D);
 
+    // Front
+    glBindTexture(GL_TEXTURE_2D, ID2[34]);
+    glPushMatrix();
+    glScalef(1, 2, 1);
+    quad1();
+    glPopMatrix();
+
+    // Top
+    glBindTexture(GL_TEXTURE_2D, ID2[35]);
+    glPushMatrix();
+    glTranslatef(0, 11, -2);
+    glRotatef(90, 1, 0, 0);
+    glScalef(1, 1.25, 1);
+    quad1();
+    glPopMatrix();
+
+    // Back
+    glBindTexture(GL_TEXTURE_2D, ID2[35]);
+    glPushMatrix();
+    glTranslatef(0, 0, -5);
+    glScalef(1, 2, 1);
+    quad1();
+    glPopMatrix();
+
+    // Left
+    glBindTexture(GL_TEXTURE_2D, ID2[35]);
+    glPushMatrix();
+    glTranslatef(0, 0, -2);
+    quad2();
+    glPopMatrix();
+
+    // Right
+    glBindTexture(GL_TEXTURE_2D, ID2[35]);
+    glPushMatrix();
+    glTranslatef(10, 0, -2);
+    quad2();
+    glPopMatrix();
+
+
+    glDisable(GL_TEXTURE_2D);
+}
 void Objects::dunkinDonuts()
 {
     materialProperty();
@@ -492,17 +537,17 @@ void Objects::cafeteria()
     pizzaHut();
     glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(-12, -18, -10);
-    // glScalef(1.5, 2, 1);
-    // icecreamParlor();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-12, -18, -25);
+    glScalef(1.5, 2, 1);
+    icecreamParlor();
+    glPopMatrix();
 
-    // glPushMatrix();
-    // glTranslatef(22, -18, -10);
-    // glScalef(1.5, 2, 1);
-    // dunkinDonuts();
-    // glPopMatrix();
+    glPushMatrix();
+    glTranslatef(22, -18, -25);
+    glScalef(1.5, 2, 1);
+    dunkinDonuts();
+    glPopMatrix();
 
     cafeteriaFence();
 

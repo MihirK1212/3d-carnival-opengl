@@ -130,6 +130,12 @@ void display(void)
     objects->cafeteria();
     glPopMatrix();
 
+    glPushMatrix();
+    glTranslatef(5,-18,-60);
+    glScalef(3,4,4);
+    objects->scaryHouse();
+    glPopMatrix();
+
     Human* coasterHuman = NULL;
 
     if(!human->sittingRollerCoaster) {
@@ -179,90 +185,6 @@ void display(void)
 
     glFlush();
     glutSwapBuffers();
-
-    // glPushMatrix();
-    // glTranslatef(human2.human_x, human2.human_y, human2.human_z);
-    // glScalef(0.3,0.3,0.3);
-    // human2.drawHuman();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glScalef(0.5,0.5,0.5);
-    // glTranslatef(0,-15,60);
-    // human3.drawHuman();
-    // glPopMatrix();
-
-    // for (float i = -70; i <= -10; i += 20)
-    // {
-    //     glPushMatrix();
-    //     glTranslatef(i, -20, 55);
-    //     objects->bench1();
-    //     glPopMatrix();
-    // }
-
-    // for (float i = -60; i <= -20; i += 20)
-    // {
-    //     glPushMatrix();
-    //     glTranslatef(i, -20, 55);
-    //     objects->bench2();
-    //     glPopMatrix();
-    // }
-
-    // for (float i = 30; i <= 100; i += 20)
-    // {
-    //     glPushMatrix();
-    //     glTranslatef(i, -20, 55);
-    //     objects->bench1();
-    //     glPopMatrix();
-    // }
-
-    // for (float i = 40; i <= 90; i += 20)
-    // {
-    //     glPushMatrix();
-    //     glTranslatef(i, -20, 55);
-    //     objects->bench2();
-    //     glPopMatrix();
-    // }
-
-    // glPushMatrix();
-    // glTranslatef(65, 0, -30);
-    // rides->ferrisWheel();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(-50, 0, -30);
-    // rides->complexOrbiter();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(-50, 0, 10);
-    // rides->pirateBoat();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(-20, -20, -40);
-    // rides->skyDrop();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(-30, 0, 40);
-    // objects->balloonCart();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(-60, 0, 40);
-    // objects->balloonCart();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(45, 0, 48);
-    // objects->balloonCart();
-    // glPopMatrix();
-
-    // glPushMatrix();
-    // glTranslatef(80, 0, 48);
-    // objects->balloonCart();
-    // glPopMatrix();
 }
 
 
@@ -482,7 +404,6 @@ void myKeyboardFunc(unsigned char key, int x, int y)
         if (day == false)
         {
             day = true;
-            // glEnable(GL_LIGHT0);
             lighting(100, 100, 100);
             break;
         }
@@ -567,97 +488,13 @@ int main(int argc, char **argv)
 
     light();
 
-    cout << "To move Eye point:"
-         << "\n";
-    cout << "w: up"
-         << "\n";
-    cout << "s: down"
-         << "\n";
-    cout << "a: left"
-         << "\n";
-    cout << "d: right"
-         << "\n";
-    cout << "i: zoom in"
-         << "\n";
-    cout << "o: zoom out"
-         << "\n";
-    cout << "      "
-         << "\n";
-
-    cout << "To move Camera point:"
-         << "\n";
-    cout << "j: up"
-         << "\n";
-    cout << "n: down"
-         << "\n";
-    cout << "b: left"
-         << "\n";
-    cout << "m: right"
-         << "\n";
-    cout << "l: move nearer"
-         << "\n";
-    cout << "k: move far"
-         << "\n";
-    cout << "      "
-         << "\n";
-
-    cout << "Press q to move to default position"
-         << "\n";
-    cout << "      "
-         << "\n";
-
-    cout << "To control Rides: "
-         << "\n";
-    cout << "1: Orbiter"
-         << "\n";
-    cout << "2: Ferris Wheel"
-         << "\n";
-    cout << "3: Sky Drop"
-         << "\n";
-    cout << "4: Complex Orbiter"
-         << "\n";
-    cout << "5: Pirate Boat"
-         << "\n";
-    cout << "      "
-         << "\n";
-
-    cout << "To control lights: "
-         << "\n";
-    cout << "6: Spotlight 1"
-         << "\n";
-    cout << "7: Spotlight 2"
-         << "\n";
-    cout << "8: Spotlight 3"
-         << "\n";
-    cout << "9: Spotlight 4"
-         << "\n";
-    cout << "      "
-         << "\n";
-
-    cout << "Other controls: "
-         << "\n";
-    cout << "0: Day/Night"
-         << "\n";
-    cout << "Z: To show control points"
-         << "\n";
-
     LoadTexture("sgi images/whiteground.sgi", 2);
     LoadTexture("sgi images/whiteground.sgi", 3);
     LoadTexture("sgi images/pirate-copy.sgi", 4);
-    // LoadTexture("sgi images/red-metal.sgi", 5);
     LoadTexture("sgi images/blue_gradient.sgi", 5);
     LoadTexture("sgi images/baskinrobbinslogo.sgi", 6);
-    // LoadTexture("sgi images/pizzahut.sgi", 7);
     LoadTexture("sgi images/iitindore.sgi", 7);
     LoadTexture("sgi images/dunkindonuts.sgi", 8);
-
-    // sky
-    // LoadTexture("sgi images/front.sgi", 9);
-    // LoadTexture("sgi images/left.sgi", 12);
-    // LoadTexture("sgi images/right.sgi", 11);
-    // LoadTexture("sgi images/back.sgi", 10);
-    // LoadTexture("sgi images/up.sgi", 28);
-    // LoadTexture("sgi images/nightsky.sgi", 29);
 
     // sky
     LoadTexture("sgi images/scorchsky.sgi", 9);
@@ -669,15 +506,10 @@ int main(int argc, char **argv)
 
     LoadTexture("sgi images/skydrop.sgi", 13);
     LoadTexture("sgi images/skydroplogo.sgi", 14);
-
-    // LoadTexture("sgi images/grass.sgi", 15);
-    // LoadTexture("sgi images/whiteground.sgi", 15);
-    // LoadTexture("sgi images/sand.sgi", 15);
-    // LoadTexture("sgi images/grass_alt.sgi", 15);
     LoadTexture("sgi images/sand_alt.sgi", 15);
 
-    // LoadTexture("sgi images/blackred.sgi", 16);
     LoadTexture("sgi images/blue_gradient.sgi", 16);
+    // change to blackred
     LoadTexture("sgi images/pinkblue.sgi", 17);
     LoadTexture("sgi images/baskin-robin-ad.sgi", 18);
     LoadTexture("sgi images/de5b9e.sgi", 19);
@@ -687,7 +519,6 @@ int main(int argc, char **argv)
 
     LoadTexture("sgi images/dd.sgi", 22);
 
-    // LoadTexture("sgi images/pizzahutad.sgi", 23);
     LoadTexture("sgi images/abhinandan.sgi", 23);
     LoadTexture("sgi images/bush.sgi", 24);
     LoadTexture("sgi images/bushflower.sgi", 25);
@@ -696,10 +527,13 @@ int main(int argc, char **argv)
     LoadTexture("sgi images/treebark.sgi", 30);
     LoadTexture("sgi images/bush.sgi", 31);
 
-    // LoadTexture("sgi images/purplewall.sgi", 32);
     LoadTexture("sgi images/iitindore.sgi", 32);
     LoadTexture("sgi images/tiles.sgi", 33);
     LoadTexture("sgi images/water.sgi", 34);
+
+    LoadTexture("sgi images/scary.sgi", 35);
+    LoadTexture("sgi images/brick_wall.sgi", 35);
+
 
     glutReshapeFunc(fullScreen);
     glutKeyboardFunc(myKeyboardFunc);
