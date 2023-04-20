@@ -15,10 +15,9 @@ struct Rides {
     GLfloat orbiterAlpha;
     GLfloat orbiterTheta;
     
-    GLfloat ride_x;
-    bool ride_right;
+    int rideTheta;
 
-    int ride_theta;
+    int carouselTheta;
 
     Rides() {
 
@@ -28,7 +27,9 @@ struct Rides {
         orbiterAlpha = -45.0;
         orbiterTheta = 0.0;
 
-        ride_theta = 0;
+        rideTheta = 0;
+
+        carouselTheta = 0;
     }
 
     void rideGround();
@@ -46,7 +47,9 @@ struct Rides {
     vector<double> getRollerCoasterViewRef();
     void rollerCoaster(Human* human);
 
-    void animateRides(GLboolean orbiterFlag, GLboolean rideFlag, GLboolean doorFlag);
+    void carousel();
+
+    void animateRides(GLboolean orbiterFlag, GLboolean rideFlag, GLboolean carouselFlag, GLboolean doorFlag);
 };
 
 

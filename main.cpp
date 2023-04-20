@@ -7,7 +7,7 @@ double degToRad(double angle)
     return (angle * (pi / 180));
 }
 
-GLboolean  orbiterFlag = false, rideFlag = false, doorFlag = false,  day = true;
+GLboolean  orbiterFlag = false, rideFlag = false, carouselFlag = false, doorFlag = false,  day = true;
 
 double mouse_x = -1, mouse_y = -1;
 double mouse_x_prev = -1, mouse_y_prev = -1;
@@ -151,7 +151,7 @@ void display(void)
         camera->setView(2);
     }
 
-    /*****/
+    /****/
     glPushMatrix();
     glTranslatef(-70, -5, 40);
     glTranslatef(0, 8, 0);
@@ -164,7 +164,7 @@ void display(void)
     glScalef(1.5, 1.5, 1.5);
     rides->rideFence();
     glPopMatrix();
-    /*****/
+    /****/
 
     /****/
     glPushMatrix();
@@ -179,7 +179,14 @@ void display(void)
     glScalef(1.5, 1.5, 1.5);
     rides->rideFence();
     glPopMatrix();
-    /***/
+    /****/
+
+    /****/
+    glPushMatrix();
+    glTranslatef(70,10,-60);
+    rides->carousel();
+    glPopMatrix();
+    /****/
 
     glDisable(GL_LIGHTING);
 
@@ -290,6 +297,17 @@ void myKeyboardFunc(unsigned char key, int x, int y)
         else
         {
             rideFlag = false;
+            break;
+        }
+    case '3': 
+        if (carouselFlag == false) 
+        {
+            carouselFlag = true;
+            break;
+        }
+        else 
+        {
+            carouselFlag = true;
             break;
         }
     case '6':
@@ -424,7 +442,7 @@ void specialKeyboardFunc(int key, int x, int y)
 
 void animate()
 {
-    rides->animateRides(orbiterFlag, rideFlag, doorFlag);
+    rides->animateRides(orbiterFlag, rideFlag, carouselFlag, doorFlag);
     objects->animateFlag();
     glutPostRedisplay();
 }

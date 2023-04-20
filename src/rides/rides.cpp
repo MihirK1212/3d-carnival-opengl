@@ -345,6 +345,24 @@ void Rides::rideGround()
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 }
+void Rides::pole(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine, GLfloat height)
+{
+    GLfloat no_mat[] =   {0.0, 0.0, 0.0, 1.0};
+    GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
+    GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
+    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat mat_shininess[] = {shine};
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+
+    GLUquadricObj *quadratic;
+    quadratic = gluNewQuadric();
+    gluCylinder(quadratic, 1.5, 1.5, height, 32, 32);
+}
 
 void Rides::orbiterSeat()
 {
@@ -614,24 +632,6 @@ void Rides::coasterSegment(double theta) {
     track();
     glPopMatrix();
 }
-void Rides::pole(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine, GLfloat height)
-{
-    GLfloat no_mat[] =   {0.0, 0.0, 0.0, 1.0};
-    GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
-    GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
-    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat mat_shininess[] = {shine};
-
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
-
-    GLUquadricObj *quadratic;
-    quadratic = gluNewQuadric();
-    gluCylinder(quadratic, 1.5, 1.5, height, 32, 32);
-}
 void Rides::coasterPole(double theta) {
 
     vector<double> pos = get_pos(theta);
@@ -645,8 +645,8 @@ void Rides::coasterPole(double theta) {
 }
 vector<double> Rides::getRollerCoasterViewRef() {
     
-    vector<double> pos = get_pos(ride_theta);
-    vector<double> tangent = get_tangent(ride_theta);
+    vector<double> pos = get_pos(rideTheta);
+    vector<double> tangent = get_tangent(rideTheta);
 
     double x = pos[0], y = pos[1], z = pos[2];
     double dx = tangent[0], dy = tangent[1], dz = tangent[2];
@@ -716,10 +716,10 @@ void Rides::rollerCoaster(Human* human) {
             theta+=1;
         }
 
-        vector<double> pos = get_pos(ride_theta);
-        vector<double> angle = get_angle(ride_theta);
+        vector<double> pos = get_pos(rideTheta);
+        vector<double> angle = get_angle(rideTheta);
 
-        GLfloat radial_x = -0.6*cos(radian(ride_theta)), radial_z = -0.6*sin(radian(ride_theta));
+        GLfloat radial_x = -0.6*cos(radian(rideTheta)), radial_z = -0.6*sin(radian(rideTheta));
 
         if(human) {
             glPushMatrix();
@@ -747,7 +747,189 @@ void Rides::rollerCoaster(Human* human) {
 
 }
 
-void Rides::animateRides(GLboolean orbiterFlag, GLboolean rideFlag, GLboolean doorFlag) {
+
+double HEAD_HEIGHT = 1.5;
+double LEG_LENGTH = 1.0;
+double NECK_LENGTH = 2.0;
+double NECK_ANGLE = 55;
+double SHOULDER_WIDTH = 3.0;
+double SHOULDER_RADIUS = 1.0;
+double LEG_ANGLE = 0;
+void neck() {
+    GLUquadricObj* quad = gluNewQuadric();
+    gluCylinder(quad, 0.5, 0.5, NECK_LENGTH, 10, 5);
+    gluDeleteQuadric(quad);
+}
+void face() {
+    GLUquadricObj* quad = gluNewQuadric();
+    gluCylinder(quad, 0.5, 0.2, 1.5, 10, 5);
+    gluDeleteQuadric(quad);
+}
+void lower_leg() {
+    GLUquadricObj* quad = gluNewQuadric();
+    gluCylinder(quad, 0.3, 0.2, LEG_LENGTH, 4, 4);
+    gluDeleteQuadric(quad);
+}
+void upper_leg() {
+    GLUquadricObj* quad = gluNewQuadric();
+    gluCylinder(quad, 0.3, 0.3, LEG_LENGTH, 4, 4);
+    gluDeleteQuadric(quad);
+}
+void shoulders() {
+    GLUquadricObj* quad = gluNewQuadric();
+    gluCylinder(quad,SHOULDER_RADIUS, SHOULDER_RADIUS, 3, 10, 4);
+    gluDeleteQuadric(quad);
+}
+void drawHorse() {
+
+  // torso
+  glPushMatrix();
+    glTranslatef(0., 0., -SHOULDER_WIDTH / 2);
+    shoulders();
+  glPopMatrix();
+
+  // front torso cover
+  glPushMatrix();
+    glTranslatef(0, 0, SHOULDER_WIDTH/2);
+    glRotatef(180, 0.0, 1.0, 0.);
+    glRotatef(180, 1.0, .0, 0.);
+    glutSolidCone(SHOULDER_RADIUS, 0.6 ,15, 15);
+  glPopMatrix();
+
+  // neck
+  glPushMatrix();
+    glTranslatef(0., 0., SHOULDER_WIDTH / 2);
+    glRotatef(-NECK_ANGLE, 1., 0., 0.);
+    neck();
+  glPopMatrix();
+
+  // face
+  glPushMatrix();
+    // coz we know h, and angle, we can find the y axis
+    glTranslatef(0., NECK_LENGTH*sin(-NECK_ANGLE)-0.3, (SHOULDER_WIDTH/2)+NECK_LENGTH*cos(NECK_ANGLE)+1);
+    glRotatef(20, 1., 0., 0.);
+    face();
+  glPopMatrix();
+
+  //sphere
+  glPushMatrix();
+    glTranslatef(0., NECK_LENGTH*sin(-NECK_ANGLE)-0.35, (SHOULDER_WIDTH/2)+NECK_LENGTH*cos(NECK_ANGLE)+1.1);
+    glutSolidSphere(0.475,15,15);
+  glPopMatrix();
+
+  // back
+  glPushMatrix();
+    glTranslatef(0, 0, -SHOULDER_WIDTH/2);
+    glRotatef(180, 0.0, 1.0, 0.);
+    glutSolidCone(SHOULDER_RADIUS, 0.5 ,15, 15);
+  glPopMatrix();
+
+  // tail
+  glPushMatrix();
+    glTranslatef(0, 0, -SHOULDER_WIDTH/2-0.3);
+    glRotatef(120, 1.0, 0.0, 0.);
+    glutSolidCone(0.2, 2 ,15, 15);
+  glPopMatrix();
+
+  // front left leg
+  glPushMatrix();
+    glTranslatef(SHOULDER_RADIUS/2, -0.7, (SHOULDER_WIDTH / 2.)); // -0.3 to bring it closer to the body
+    glRotatef((double) LEG_ANGLE/-1, 1., 0., 0.);
+    glRotatef(90, 1., 0., 0.);
+    upper_leg();
+    glTranslatef(0., 0., LEG_LENGTH); // now end of leg
+    glRotatef((double) LEG_ANGLE, 1., 0., 0.);
+    glRotatef(45, 1., 0., 0.);
+    lower_leg();
+  glPopMatrix();
+
+  // front right leg
+  glPushMatrix();
+    glTranslatef(-SHOULDER_RADIUS/2, -0.7, (SHOULDER_WIDTH / 2.)-0.3);
+    glRotatef(90, 1., 0., 0.);
+    upper_leg();
+    glTranslatef(0., 0., LEG_LENGTH);
+    glRotatef((double) LEG_ANGLE, 1., 0., 0.);
+    glRotatef(-45, 1., 0., 0.);
+    lower_leg();
+  glPopMatrix();
+
+  // back left leg
+  glPushMatrix();
+    glTranslatef(SHOULDER_RADIUS/2, -0.7, (-SHOULDER_WIDTH / 2.)+0.3);
+    glRotatef(90, 1., 0., 0.);
+    upper_leg();
+    glTranslatef(0., 0., LEG_LENGTH);
+    glRotatef((double) LEG_ANGLE, 1., 0., 0.);
+    glRotatef(-45, 1., 0., 0.);
+    lower_leg();
+  glPopMatrix();
+
+  // back right leg
+  glPushMatrix();
+    glTranslatef(-SHOULDER_RADIUS/2, -0.7, (-SHOULDER_WIDTH / 2.)+0.3);
+    glRotatef((double) LEG_ANGLE/-1, 1., 0., 0.);
+
+    glRotatef(90, 1., 0., 0.);
+    upper_leg();
+    glTranslatef(0., 0., LEG_LENGTH);
+    glRotatef((double) LEG_ANGLE, 1., 0., 0.);
+    glRotatef(45, 1., 0., 0.);
+    lower_leg();
+  glPopMatrix();
+}
+
+
+void Rides::carousel() {
+    
+    GLUquadricObj *qobj;
+    qobj = gluNewQuadric();
+    gluQuadricDrawStyle(qobj, GLU_FILL);
+
+
+    glPushMatrix();
+    glScalef(2,1.2,2);
+    glRotatef(90, 1.0f, 0.0f, 0.0f);
+    glRotatef(0, 0.0f, 1.0f, 0.0f);
+    gluCylinder(qobj, 0, 6, 6, 10, 1);  
+    glPopMatrix();
+
+    glPushMatrix();
+
+        glRotatef(carouselTheta,0, 1, 0);
+
+        for(int theta = 0; theta<360; theta+=40) {
+            glPushMatrix();
+            glTranslatef(11*cos(radian(theta)),-7,11*sin(radian(theta)));
+            glScalef(0.58,1,0.5);
+            glRotatef(90,1,0,0);
+            drawCylinder(0.6, 0.3, 0.4,  0.2725,0.1355,0.0375);
+            glPopMatrix();
+
+            glPushMatrix();
+            glTranslatef(0,2*sin(radian(theta)),0);
+            glTranslatef(11*cos(radian(theta)),-15,11*sin(radian(theta)));
+            glRotatef(-theta, 0, 1, 0);
+            drawHorse();
+            glPopMatrix();
+        }
+
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0,-19,0);
+    glScalef(8,0.4,8);
+    glRotatef(90,1,0,0);
+    drawCylinder(0.6, 0.3, 0.4,  0.2725,0.1355,0.0375);
+    glPopMatrix();
+
+
+
+
+    gluDeleteQuadric(qobj);
+}
+
+void Rides::animateRides(GLboolean orbiterFlag, GLboolean rideFlag, GLboolean carouselFlag, GLboolean doorFlag) {
     
      
     if (rideFlag == true)
@@ -756,7 +938,7 @@ void Rides::animateRides(GLboolean orbiterFlag, GLboolean rideFlag, GLboolean do
         if (theta > 360.0)
             theta -= 360.0 * floor(theta / 360.0);
 
-        ride_theta = ((ride_theta - 1)%360 + 360)%360;
+        rideTheta = ((rideTheta - 1)%360 + 360)%360;
     }
 
     if (orbiterFlag == true)
@@ -778,6 +960,11 @@ void Rides::animateRides(GLboolean orbiterFlag, GLboolean rideFlag, GLboolean do
         orbiterTheta += 3;
         if (orbiterAlpha == -45)
             orbiterTheta = 0;
+    }
+
+    if (carouselFlag == true)
+    {
+        carouselTheta = ((carouselTheta - 1)%360 + 360)%360;
     }
 
     if (doorFlag == true)
