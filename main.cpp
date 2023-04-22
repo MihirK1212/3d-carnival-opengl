@@ -253,6 +253,42 @@ void lighting(float X, float Y, float Z)
     glLightfv(GL_LIGHT0, GL_AMBIENT, noAmbient);
 }
 
+void lighting3(float X, float Y, float Z)
+{
+    GLfloat position[] = {X, Y, Z, 0.0}; // using directional source of light
+    GLfloat noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    GLfloat whiteDiffuse[] = {intensity, intensity, intensity, 1.0f};
+
+    glEnable(GL_LIGHT5);
+    glLightfv(GL_LIGHT5, GL_POSITION, position);
+    glLightfv(GL_LIGHT5, GL_DIFFUSE, whiteDiffuse);
+    glLightfv(GL_LIGHT5, GL_AMBIENT, noAmbient);
+}
+
+void lighting2(float X, float Y, float Z)
+{
+    GLfloat position[] = {X, Y, Z, 0.0}; // using directional source of light
+    GLfloat noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    GLfloat whiteDiffuse[] = {intensity, intensity, intensity, 1.0f};
+
+    glEnable(GL_LIGHT6);
+    glLightfv(GL_LIGHT6, GL_POSITION, position);
+    glLightfv(GL_LIGHT6, GL_DIFFUSE, whiteDiffuse);
+    glLightfv(GL_LIGHT6, GL_AMBIENT, noAmbient);
+}
+
+void lighting1(float X, float Y, float Z)
+{
+    GLfloat position[] = {X, Y, Z, 0.0}; // using directional source of light
+    GLfloat noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    GLfloat whiteDiffuse[] = {intensity, intensity, intensity, 1.0f};
+
+    glEnable(GL_LIGHT7);
+    glLightfv(GL_LIGHT7, GL_POSITION, position);
+    glLightfv(GL_LIGHT7, GL_DIFFUSE, whiteDiffuse);
+    glLightfv(GL_LIGHT7, GL_AMBIENT, noAmbient);
+}
+
 void myKeyboardFunc(unsigned char key, int x, int y)
 {
     switch (key)
@@ -390,6 +426,9 @@ void myKeyboardFunc(unsigned char key, int x, int y)
         {
             day = true;
             lighting(100, 100, 100);
+            lighting1(-100, 100, 100);
+            lighting2(100, -100, 100);
+            lighting3(-100, -100, 100);
             break;
         }
         else if (day == true)
@@ -403,6 +442,10 @@ void myKeyboardFunc(unsigned char key, int x, int y)
         if (intensity < 1.0)
         {
             intensity += 0.1;
+            lighting(100, 100, 100);
+            lighting1(-100, 100, 100);
+            lighting2(100, -100, 100);
+            lighting3(-100, -100, 100);
             break;
         }
         else
@@ -415,6 +458,10 @@ void myKeyboardFunc(unsigned char key, int x, int y)
         if (intensity > 0.0)
         {
             intensity -= 0.1;
+            lighting1(100, 100, 100);
+            lighting2(-100, 100, 100);
+            lighting3(100, -100, 100);
+            lighting(-100, -100, 100);
             break;
         }
         else
