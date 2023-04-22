@@ -156,56 +156,56 @@ void Objects::chair()
     // seat part
     glPushMatrix();
     glScalef(0.5, 0.05, 0.5);
-    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
+    cubicalShape(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat left back
     glPushMatrix();
     glTranslatef(0, -1.5, 0);
     glScalef(0.05, 1.4, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
+    cubicalShape(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat right back
     glPushMatrix();
     glTranslatef(1.35, -1.5, 0);
     glScalef(0.05, 1.4, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
+    cubicalShape(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat horizontal up back
     glPushMatrix();
     glTranslatef(0, 2, 0);
     glScalef(0.5, 0.05, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
+    cubicalShape(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat horizontal up back
     glPushMatrix();
     glTranslatef(0, 1.5, 0);
     glScalef(0.5, 0.05, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
+    cubicalShape(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat horizontal up back
     glPushMatrix();
     glTranslatef(0, 1, 0);
     glScalef(0.5, 0.05, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
+    cubicalShape(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat left front leg
     glPushMatrix();
     glTranslatef(0, -1.5, 1.3);
     glScalef(0.05, .55, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
+    cubicalShape(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 
     // seat right front leg
     glPushMatrix();
     glTranslatef(1.35, -1.5, 1.3);
     glScalef(0.05, .55, 0.05);
-    drawCube(0.8, 0.2, 0.4, 0, 0.6, 0.6);
+    cubicalShape(0.8, 0.2, 0.4, 0, 0.6, 0.6);
     glPopMatrix();
 }
 
@@ -216,20 +216,20 @@ void Objects::table()
     glPushMatrix();
     glTranslatef(-2.5, 0, -2);
     glScalef(1.6, 0.3, 1.6);
-    drawCube(0.8, 0.4, 0.00, 0.3, 0.5, 0.5);
+    cubicalShape(0.8, 0.4, 0.00, 0.3, 0.5, 0.5);
     glPopMatrix();
 
     // stand
     glPushMatrix();
     glScalef(0.1, -1, -0.1);
-    drawCube(0, 0, 0, 0.3, 0.5, 0.5);
+    cubicalShape(0, 0, 0, 0.3, 0.5, 0.5);
     glPopMatrix();
 
     // stand bottom
     glPushMatrix();
     glTranslatef(0, -2.8, 0);
     glScalef(1, 0.2, 1);
-    drawSphere(1, 0.549, 0.00, 0.3, 0.5, 0.5);
+    sphericalShape(1, 0.549, 0.00, 0.3, 0.5, 0.5);
     glPopMatrix();
 }
 
@@ -289,46 +289,46 @@ void Objects::desertShop()
 
     glBindTexture(GL_TEXTURE_2D, ID2[16]);
     glPushMatrix();
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, 11, -2);
     glRotatef(90, 1, 0, 0);
     glScalef(1, 1.5, 1);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[17]);
     glPushMatrix();
     glTranslatef(0, 0, -5);
     glScalef(1, 2, 1);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[18]);
 
     glPushMatrix();
     glTranslatef(0, 0, -2);
-    quad2();
+    quadricShape2();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(10, 0, -2);
-    quad2();
+    quadricShape2();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, 3, -2);
     glRotatef(90, 1, 0, 0);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[5]);
     glPushMatrix();
     glTranslatef(0, 6, 1);
     glScalef(1, 0.5, 1);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glDisable(GL_TEXTURE_2D);
@@ -341,7 +341,7 @@ void Objects::pizzaShop()
 
     glBindTexture(GL_TEXTURE_2D, ID2[15]);
     glPushMatrix();
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[15]);
@@ -349,40 +349,40 @@ void Objects::pizzaShop()
     glTranslatef(0, 11, -2);
     glRotatef(90, 1, 0, 0);
     glScalef(1, 1.5, 1);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[22]);
     glPushMatrix();
     glTranslatef(0, 0, -5);
     glScalef(1, 2, 1);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[4]);
     glPushMatrix();
     glTranslatef(0, 0, -2);
-    quad2();
+    quadricShape2();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[4]);
     glPushMatrix();
     glTranslatef(10, 0, -2);
-    quad2();
+    quadricShape2();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[4]);
     glPushMatrix();
     glTranslatef(0, 3, -2);
     glRotatef(90, 1, 0, 0);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[6]);
     glPushMatrix();
     glTranslatef(0, 6, 1);
     glScalef(1, 0.5, 1);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glDisable(GL_TEXTURE_2D);
@@ -396,7 +396,7 @@ void Objects::scaryHouse()
     glBindTexture(GL_TEXTURE_2D, ID2[34]);
     glPushMatrix();
     glScalef(1, 2, 1);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     // Top
@@ -405,7 +405,7 @@ void Objects::scaryHouse()
     glTranslatef(0, 11, -2);
     glRotatef(90, 1, 0, 0);
     glScalef(1, 1.25, 1);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     // Back
@@ -413,21 +413,21 @@ void Objects::scaryHouse()
     glPushMatrix();
     glTranslatef(0, 0, -5);
     glScalef(1, 2, 1);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     // Left
     glBindTexture(GL_TEXTURE_2D, ID2[35]);
     glPushMatrix();
     glTranslatef(0, 0, -2);
-    quad2();
+    quadricShape2();
     glPopMatrix();
 
     // Right
     glBindTexture(GL_TEXTURE_2D, ID2[35]);
     glPushMatrix();
     glTranslatef(10, 0, -2);
-    quad2();
+    quadricShape2();
     glPopMatrix();
 
 
@@ -440,45 +440,45 @@ void Objects::donutsShop()
 
     glBindTexture(GL_TEXTURE_2D, ID2[19]);
     glPushMatrix();
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, 11, -2);
     glRotatef(90, 1, 0, 0);
     glScalef(1, 1.5, 1);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[21]);
     glPushMatrix();
     glTranslatef(0, 0, -5);
     glScalef(1, 2, 1);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[20]);
     glPushMatrix();
     glTranslatef(0, 0, -2);
-    quad2();
+    quadricShape2();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(10, 0, -2);
-    quad2();
+    quadricShape2();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, 3, -2);
     glRotatef(90, 1, 0, 0);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[7]);
     glPushMatrix();
     glTranslatef(0, 6, 1);
     glScalef(1, 0.5, 1);
-    quad1();
+    quadricShape1();
     glPopMatrix();
 
     glDisable(GL_TEXTURE_2D);
@@ -501,7 +501,7 @@ void Objects::cafeteriaFence()
     glPushMatrix();
     glTranslatef(-17, -20, -16.5);
     glScalef(1, 0.5, 15);
-    drawBox();
+    boxShape();
     glPopMatrix();
 
     glDisable(GL_TEXTURE_2D);
@@ -622,20 +622,20 @@ void Objects::streetLampbody()
     glTranslatef(0, 0, 0);
     glRotatef(90, 1, 0, 0);
     glScalef(0.2, 0.2, 0.2);
-    drawTorus(0.1, 0.1, 0.1, 0.05, 0.05, 0.05, 2, 5, 32, 64);
+    toroidShape(0.1, 0.1, 0.1, 0.05, 0.05, 0.05, 2, 5, 32, 64);
     glPopMatrix();
 
     glPushMatrix();
     glRotatef(90, 1, 0, 0);
     glScalef(0.5, 0.5, 1);
-    drawCylinder(0.1, 0.1, 0.1, 0.05, 0.05, 0.05);
+    cylindricalShape(0.1, 0.1, 0.1, 0.05, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, -19, 0);
     glRotatef(90, 1, 0, 0);
     glScalef(0.2, 0.2, 0.2);
-    drawTorus(0.1, 0.1, 0.1, 0.05, 0.05, 0.05, 2, 5, 32, 64);
+    toroidShape(0.1, 0.1, 0.1, 0.05, 0.05, 0.05, 2, 5, 32, 64);
     glPopMatrix();
 }
 
@@ -952,7 +952,7 @@ void Objects::balloon()
 
 void Objects::balloonLine()
 {
-    matCurve(0, 0, 0);
+    materialCurve(0, 0, 0);
     glBegin(GL_LINES);
     glVertex2f(1, 10);
     glVertex2f(1, 1);
@@ -965,13 +965,13 @@ void Objects::flagpole(int seed)
     glTranslatef(0, 5.5, 0);
     glRotatef(90, 1, 0, 0);
     glScalef(0.2, 0.2, 1.5);
-    drawCylinder(1, 0, 0, 0.5, 0, 0);
+    cylindricalShape(1, 0, 0, 0.5, 0, 0);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, 5.5, 0);
     glScalef(0.5, 0.5, 0.5);
-    drawSphere(.502, 0, 0, 0.26, 0, 0);
+    sphericalShape(.502, 0, 0, 0.26, 0, 0);
     glPopMatrix();
 
     srand(seed);
@@ -980,7 +980,7 @@ void Objects::flagpole(int seed)
     float r2 = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
     float r3 = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
 
-    matCurve(r1, r2, r3);
+    materialCurve(r1, r2, r3);
     drawFlag();
 }
 

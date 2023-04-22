@@ -154,13 +154,13 @@ void Rides::rideFence() {
         glTranslatef(j, -19.5, 17);
         glScalef(0.1, 2.5, 0.1);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(j, -16.1, 17);
         glScalef(.4, .4, .4);
-        drawSphere(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
+        sphericalShape(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
         glPopMatrix();
     }
 
@@ -169,21 +169,21 @@ void Rides::rideFence() {
     glTranslatef(2.5, -17, 17);
     glScalef(9, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(2.5, -18, 17);
     glScalef(9, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(2.5, -19, 17);
     glScalef(9, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     // gate
@@ -195,13 +195,13 @@ void Rides::rideFence() {
         glPushMatrix();
         glTranslatef(j, 0, 0);
         glScalef(0.1, 1.5, 0.1);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(j, 4.4, 0.2);
         glScalef(.4, .4, .4);
-        drawSphere(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
+        sphericalShape(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
         glPopMatrix();
     }
 
@@ -210,7 +210,7 @@ void Rides::rideFence() {
         glPushMatrix();
         glTranslatef(0, j, 0);
         glScalef(1.5, 0.05, 0.1);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
     }
     glPopMatrix();
@@ -223,13 +223,13 @@ void Rides::rideFence() {
         glTranslatef(j, -19.5, -17);
         glScalef(0.1, 2.5, 0.1);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(j, -16.1, -17);
         glScalef(.4, .4, .4);
-        drawSphere(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
+        sphericalShape(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
         glPopMatrix();
     }
 
@@ -238,21 +238,21 @@ void Rides::rideFence() {
     glTranslatef(0, -17, -17);
     glScalef(10.5, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, -18, -17);
     glScalef(10.5, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, -19, -17);
     glScalef(10.5, 0.05, 0.1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     //fence in the right
@@ -262,13 +262,13 @@ void Rides::rideFence() {
         glTranslatef(16, -19.5, j);
         glScalef(0.1, 2.5, 0.1);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(16, -16.1, j);
         glScalef(.4, .4, .4);
-        drawSphere(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
+        sphericalShape(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
         glPopMatrix();
     }
 
@@ -277,21 +277,21 @@ void Rides::rideFence() {
     glTranslatef(16, -17, 0);
     glScalef(.1, 0.05, 11.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(16, -18, 0);
     glScalef(.1, 0.05, 11.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(16, -19, 0);
     glScalef(.1, 0.05, 11.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     //fence in the left
@@ -301,13 +301,13 @@ void Rides::rideFence() {
         glTranslatef(-16, -19.5, j);
         glScalef(0.1, 2.5, 0.1);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+        cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(-16, -16.1, j);
         glScalef(.4, .4, .4);
-        drawSphere(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
+        sphericalShape(0.855, 0.439, 0.839, 0.4275, 0.2195, 0.4195);
         glPopMatrix();
     }
 
@@ -316,21 +316,21 @@ void Rides::rideFence() {
     glTranslatef(-16, -17, 0);
     glScalef(.1, 0.05, 11.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-16, -18, 0);
     glScalef(.1, 0.05, 11.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-16, -19, 0);
     glScalef(.1, 0.05, 11.5);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
+    cubicalShape(0.2, 0.1, 0.1, 0.1, 0.05, 0.05);
     glPopMatrix();
 }
 void Rides::rideGround()
@@ -376,13 +376,13 @@ void Rides::aroundTheWorldSeat()
     glPushMatrix();
     glTranslatef(0, -0.5, 0);
     glScalef(0.5, 0.2, 1.5);
-    drawCube(0.804, 0.361, 0.361, 0.403, 0.1805, 0.1805);
+    cubicalShape(0.804, 0.361, 0.361, 0.403, 0.1805, 0.1805);
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(1.3, 0.7, 0);
     glScalef(0.02, 0.02, 1.5);
-    drawCube(0, 0, 0, 0, 0, 0.0);
+    cubicalShape(0, 0, 0, 0, 0, 0.0);
     glPopMatrix();
 
     glEnable(GL_TEXTURE_2D);
@@ -392,35 +392,35 @@ void Rides::aroundTheWorldSeat()
     glTranslatef(1.48, -0.5, 0);
     glRotatef(-45, 0, 0, 1);
     glScalef(0.15, 0.02, 1.5);
-    drawBox();
+    boxShape();
     glPopMatrix();
 
     glPushMatrix();
     glScalef(0.2, 0.5, 1.5);
-    drawBox();
+    boxShape();
     glPopMatrix();
 
     glPushMatrix();
     glScalef(0.5, 0.5, 0.02);
-    drawBox();
+    boxShape();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(1.8, -0.8, 0);
     glScalef(0.16, 0.02, 1.5);
-    drawBox();
+    boxShape();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(2.25, -0.8, 0);
     glScalef(0.02, 0.1, 1.5);
-    drawBox();
+    boxShape();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0, 0, 4.445);
     glScalef(0.5, 0.5, 0.02);
-    drawBox();
+    boxShape();
     glPopMatrix();
 
     glDisable(GL_TEXTURE_2D);
@@ -433,7 +433,7 @@ void Rides::aroundTheWordLoops()
         glTranslatef(0, i, 0);
         glRotatef(90, 1, 0, 0);
         glScalef(0.2, 0.2, 0.2);
-        drawTorus(1, 1, 1, 0.5, 0.5, 0.5, 1.5, 7.5, 32, 64);
+        toroidShape(1, 1, 1, 0.5, 0.5, 0.5, 1.5, 7.5, 32, 64);
         glPopMatrix();
     }
 
@@ -443,7 +443,7 @@ void Rides::aroundTheWordLoops()
         glTranslatef(0, i, 0);
         glRotatef(90, 1, 0, 0);
         glScalef(0.2, 0.2, 0.2);
-        drawTorus(1, 0, 0, 0.5, 0, 0, 1.5, 7.5, 32, 64);
+        toroidShape(1, 0, 0, 0.5, 0, 0, 1.5, 7.5, 32, 64);
         glPopMatrix();
     }    
 }
@@ -458,7 +458,7 @@ void Rides::aroundTheWorld()
     glTranslatef(0, -19.5, 0);
     glScalef(10,0.5,10);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.7, 0.7, 0.7,  0.1,0.1,0.6);
+    cubicalShape(0.7, 0.7, 0.7,  0.1,0.1,0.6);
     glPopMatrix(); 
 
     // the 1st torus at the bottom
@@ -468,7 +468,7 @@ void Rides::aroundTheWorld()
     glTranslatef(0, -18, 0);
     glRotatef(90, 1, 0, 0);
     glScalef(0.2, 0.2, 0.2);
-    drawTorus(1, 1, 1, 0.5, 0.5, 0.5, 2, 8, 32, 64);
+    toroidShape(1, 1, 1, 0.5, 0.5, 0.5, 2, 8, 32, 64);
     glPopMatrix();
 
     // the 2nd torus at the bottom
@@ -476,14 +476,14 @@ void Rides::aroundTheWorld()
     glTranslatef(0, -18.5, 0);
     glRotatef(90, 1, 0, 0);
     glScalef(0.2, 0.2, 0.2);
-    drawTorus(1, 0, 0, 0.5, 0, 0, 2, 10, 32, 64);
+    toroidShape(1, 0, 0, 0.5, 0, 0, 2, 10, 32, 64);
     glPopMatrix();
 
     // the sphere
     glPushMatrix();
     glTranslatef(0, -1, 0);
     glScalef(2.5, 2.5, 2.5);
-    drawSphere(1, 0, 0, 0.5, 0, 0);
+    sphericalShape(1, 0, 0, 0.5, 0, 0);
     glPopMatrix();
 
     
@@ -512,7 +512,7 @@ void Rides::aroundTheWorld()
             glPushMatrix();
             glRotatef(orbiterAlpha, 0, 0, 1);
             glScalef(5.1, 0.2, 0.2);
-            drawCube(0, 0, 1, 0, 0, 0.5);
+            cubicalShape(0, 0, 1, 0, 0, 0.5);
             glPopMatrix();
 
             glPopMatrix();
@@ -529,7 +529,7 @@ void Rides::coasterRide()
     glTranslatef(-1.3, 0, 0);
     glScalef(3.7, 0.1, 1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
+    cubicalShape(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
     glPopMatrix();
 
     glPushMatrix();
@@ -537,7 +537,7 @@ void Rides::coasterRide()
     glScalef(5.5, 1, 0.1);
     glRotatef(180, 0, 0, 1);
     glTranslatef(-1.25, -1.5, -1.25);
-    drawTrapezoid(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
+    trapezoidalShape(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
     glPopMatrix();
 
     glPushMatrix();
@@ -545,7 +545,7 @@ void Rides::coasterRide()
     glScalef(5.5, 1, 0.1);
     glRotatef(180, 0, 0, 1);
     glTranslatef(-1.25, -1.5, -1.25);
-    drawTrapezoid(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
+    trapezoidalShape(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
     glPopMatrix();
 
     glPushMatrix();
@@ -553,7 +553,7 @@ void Rides::coasterRide()
     glRotatef(-42, 0, 0, 1);
     glScalef(0.1, 1.3, 1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
+    cubicalShape(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
     glPopMatrix();
 
     glPushMatrix();
@@ -561,7 +561,7 @@ void Rides::coasterRide()
     glRotatef(42, 0, 0, 1);
     glScalef(0.1, 1.3, 1);
     glTranslatef(-1.5, -1.5, -1.5);
-    drawCube(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
+    cubicalShape(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
     glPopMatrix();
 
     for (float i = -6; i <= 2; i += 2)
@@ -569,7 +569,7 @@ void Rides::coasterRide()
         glPushMatrix();
         glTranslatef(i, 0, -1.5);
         glScalef(0.1, 1, 1);
-        drawCube(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
+        cubicalShape(0.412, 0.412, 0.412, 0.0, 0.0, 0.0);
         glPopMatrix();
     }
 
@@ -578,13 +578,13 @@ void Rides::coasterRide()
     glPushMatrix();
     glTranslatef(-6.9, 0, 1.7);
     glScalef(3.7, 1, 0.01);
-    drawBox();
+    boxShape();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-6.9, 0, -1.7);
     glScalef(3.7, 1, 0.01);
-    drawBox();
+    boxShape();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 }
@@ -593,14 +593,14 @@ void Rides::track() {
     //left bound
     glPushMatrix();
     glScalef(0.1,0.1,0.1);
-    drawCylinder(0.9, 0.9, 0.9, 0.25, 0.25, 0.25);
+    cylindricalShape(0.9, 0.9, 0.9, 0.25, 0.25, 0.25);
     glPopMatrix();
 
     //right bound
     glPushMatrix();
     glTranslatef(2,0,0);
     glScalef(0.1,0.1,0.1);
-    drawCylinder(0.9, 0.9, 0.9, 0.25, 0.25, 0.25);
+    cylindricalShape(0.9, 0.9, 0.9, 0.25, 0.25, 0.25);
     glPopMatrix();
 
     double z = 0;
@@ -610,7 +610,7 @@ void Rides::track() {
         glTranslatef(0,0,z);
         glRotatef(90,0,1,0);
         glScalef(0.1,0.1,0.1);
-        drawCylinder(0.9, 0.9, 0.9, 0.25, 0.25, 0.25);
+        cylindricalShape(0.9, 0.9, 0.9, 0.25, 0.25, 0.25);
         glPopMatrix();
         z++;
     }
@@ -638,7 +638,7 @@ void Rides::coasterPole(double theta) {
     glTranslatef(pos[0],pos[1],pos[2]);
     glRotatef(90, 1, 0, 0);
     glScalef(0.5, 0.5, abs(pos[1]+20)/19);
-    drawCylinder(0.6, 0.3, 0.4,  0.2725,0.1355,0.0375);
+    cylindricalShape(0.6, 0.3, 0.4,  0.2725,0.1355,0.0375);
     glPopMatrix();
 }
 vector<double> Rides::getRollerCoasterViewRef() {
@@ -690,7 +690,7 @@ void Rides::rollerCoaster(Human* human) {
         glTranslatef(0, -19.5, 0);
         glScalef(10,0.5,10);
         glTranslatef(-1.5, -1.5, -1.5);
-        drawCube(0.7, 0.7, 0.7,  0.1,0.1,0.6);
+        cubicalShape(0.7, 0.7, 0.7,  0.1,0.1,0.6);
         glPopMatrix(); 
 
         double poleTheta = 0;
@@ -885,7 +885,7 @@ void Rides::carousel() {
             glTranslatef(11*cos(radian(theta)),-7,11*sin(radian(theta)));
             glScalef(0.58,1,0.5);
             glRotatef(90,1,0,0);
-            drawCylinder(0.6, 0.3, 0.4,  0.2725,0.1355,0.0375);
+            cylindricalShape(0.6, 0.3, 0.4,  0.2725,0.1355,0.0375);
             glPopMatrix();
 
             glPushMatrix();
@@ -902,7 +902,7 @@ void Rides::carousel() {
     glTranslatef(0,-19,0);
     glScalef(8,0.4,8);
     glRotatef(90,1,0,0);
-    drawCylinder(0.6, 0.3, 0.4,  0.2725,0.1355,0.0375);
+    cylindricalShape(0.6, 0.3, 0.4,  0.2725,0.1355,0.0375);
     glPopMatrix();
 
     gluDeleteQuadric(qobj);

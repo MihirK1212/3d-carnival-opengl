@@ -122,7 +122,7 @@ static void getNormal3p(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat 
 }
 
 
-void quad1()
+void quadricShape1()
 {
     glBegin(GL_QUADS);
     glTexCoord2f(1.0f, 1.0f);
@@ -136,7 +136,7 @@ void quad1()
     glEnd();
 }
 
-void quad2()
+void quadricShape2()
 {
     glBegin(GL_QUADS);
     glTexCoord2f(1.0f, 1.0f);
@@ -150,7 +150,7 @@ void quad2()
     glEnd();
 }
 
-void matCurve(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambfactor, GLfloat specfactor, GLfloat shine)
+void materialCurve(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambfactor, GLfloat specfactor, GLfloat shine)
 {
     glColor3f(1, 1, 1);
     GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
@@ -166,7 +166,7 @@ void matCurve(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambfactor, GLflo
     glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
 }
 
-void drawCube(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX , GLfloat ambY , GLfloat ambZ , GLfloat shine )
+void cubicalShape(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX , GLfloat ambY , GLfloat ambZ , GLfloat shine )
 {
     GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
@@ -195,7 +195,7 @@ void drawCube(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX , GLfloat a
     glEnd();
 }
 
-void drawSphere(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
+void sphericalShape(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
 {
     GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
@@ -212,7 +212,7 @@ void drawSphere(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat 
 }
 
 
-void drawTorus(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLdouble innerRadius, GLdouble outerRadius, GLint nsides, GLint rings, GLfloat shine)
+void toroidShape(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLdouble innerRadius, GLdouble outerRadius, GLint nsides, GLint rings, GLfloat shine)
 {
     GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
@@ -229,7 +229,7 @@ void drawTorus(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat a
     glutSolidTorus(innerRadius, outerRadius, nsides, rings);
 }
 
-void drawCylinder(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
+void cylindricalShape(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
 {
     GLfloat no_mat[] =   {0.0, 0.0, 0.0, 1.0};
     GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
@@ -249,7 +249,7 @@ void drawCylinder(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloa
 }
 
 
-void drawTrapezoid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
+void trapezoidalShape(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
 {
     GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
@@ -278,48 +278,7 @@ void drawTrapezoid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLflo
     glEnd();
 }
 
-void drawpyramid(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine)
-{
-    GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
-    GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
-    GLfloat mat_specular[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat mat_shininess[] = {shine};
-
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
-
-    glBegin(GL_TRIANGLES);
-    for (GLint i = 0; i < 4; i++)
-    {
-        getNormal3p(v_pyramid[p_Indices[i][0]][0], v_pyramid[p_Indices[i][0]][1], v_pyramid[p_Indices[i][0]][2],
-                    v_pyramid[p_Indices[i][1]][0], v_pyramid[p_Indices[i][1]][1], v_pyramid[p_Indices[i][1]][2],
-                    v_pyramid[p_Indices[i][2]][0], v_pyramid[p_Indices[i][2]][1], v_pyramid[p_Indices[i][2]][2]);
-        glVertex3fv(&v_pyramid[p_Indices[i][0]][0]);
-        glVertex3fv(&v_pyramid[p_Indices[i][1]][0]);
-        glVertex3fv(&v_pyramid[p_Indices[i][2]][0]);
-    }
-    glEnd();
-
-    glBegin(GL_QUADS);
-    for (GLint i = 0; i < 1; i++)
-    {
-        getNormal3p(v_pyramid[PquadIndices[i][0]][0], v_pyramid[PquadIndices[i][0]][1], v_pyramid[PquadIndices[i][0]][2],
-                    v_pyramid[PquadIndices[i][1]][0], v_pyramid[PquadIndices[i][1]][1], v_pyramid[PquadIndices[i][1]][2],
-                    v_pyramid[PquadIndices[i][2]][0], v_pyramid[PquadIndices[i][2]][1], v_pyramid[PquadIndices[i][2]][2]);
-        glVertex3fv(&v_pyramid[PquadIndices[i][0]][0]);
-        glVertex3fv(&v_pyramid[PquadIndices[i][1]][0]);
-        glVertex3fv(&v_pyramid[PquadIndices[i][2]][0]);
-        glVertex3fv(&v_pyramid[PquadIndices[i][3]][0]);
-    }
-    glEnd();
-}
-
-
-void drawBox()
+void boxShape()
 {
     materialProperty();
     glBegin(GL_QUADS);

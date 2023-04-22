@@ -6,19 +6,19 @@ double radian(double angle)
     return (angle * (pi / 180));
 }
 
-void Human::drawCubeBodyPart()
+void Human::cubicalShapeBodyPart()
 {
-    drawCube(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
+    cubicalShape(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
 }
 
-void Human::drawSphereBodyPart()
+void Human::sphericalShapeBodyPart()
 {
-    drawSphere(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
+    sphericalShape(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
 }
 
-void Human::drawCylinderBodyPart() 
+void Human::cylindricalShapeBodyPart() 
 {
-    drawCylinder(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
+    cylindricalShape(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
 }
 
 
@@ -28,12 +28,12 @@ void Human::drawHuman()
 
     // mainbody
     glPushMatrix();
-    // drawCubeBodyPart();
+    // cubicalShapeBodyPart();
     glTranslatef(3,-2,0);
     glRotatef(90,0,0,1);
     glRotatef(90,0,1,0);
     glScalef(1.5, 1.5, 1);
-    drawCylinderBodyPart();
+    cylindricalShapeBodyPart();
     glPopMatrix();
 
     
@@ -47,7 +47,7 @@ void Human::drawHuman()
         glRotatef(90,0,1,0);
         glScalef(0.5, 0.8, 2);                 // scaling
         glTranslatef(-3, -3, -3);                // take top right corner of box to origin
-        drawCubeBodyPart();
+        cubicalShapeBodyPart();
         glPopMatrix();
 
         // hand2
@@ -58,7 +58,7 @@ void Human::drawHuman()
         glRotatef(-90,0,1,0);
         glScalef(0.5, 0.8, 2);
         glTranslatef(-3, -3, -3);
-        drawCubeBodyPart();
+        cubicalShapeBodyPart();
         glPopMatrix();
 
     }
@@ -71,7 +71,7 @@ void Human::drawHuman()
         glRotatef(hand_angle_1, 1, 0, 0);        // rotate w.r.t x axis to simulate hand movement
         glScalef(0.8, 0.8, 2);                 // scaling
         glTranslatef(-3, -3, -3);                // take top right corner of box to origin
-        drawCubeBodyPart();
+        cubicalShapeBodyPart();
         glPopMatrix();
 
         // hand2
@@ -80,7 +80,7 @@ void Human::drawHuman()
         glRotatef(hand_angle_2, 1, 0, 0);
         glScalef(0.8, 0.8, 2);
         glTranslatef(-3, -3, -3);
-        drawCubeBodyPart();
+        cubicalShapeBodyPart();
         glPopMatrix();
 
         // leg1
@@ -89,7 +89,7 @@ void Human::drawHuman()
         glRotatef(leg_angle_1, 1, 0, 0);
         glScalef(0.5, 4 , 0.5);
         glTranslatef(-3, -3, -3);
-        drawCubeBodyPart();
+        cubicalShapeBodyPart();
         glPopMatrix();
 
         // leg2
@@ -98,14 +98,14 @@ void Human::drawHuman()
         glRotatef(leg_angle_2, 1, 0, 0);
         glScalef(0.5, 4, 0.5);
         glTranslatef(-3, -3, -3);
-        drawCubeBodyPart();
+        cubicalShapeBodyPart();
         glPopMatrix();
 
 
         Objects obj;
 
         //balloon body
-        matCurve(1, 0, 0);
+        materialCurve(1, 0, 0);
         glPushMatrix();
         glTranslatef(6, 15, -4);
         obj.balloon();

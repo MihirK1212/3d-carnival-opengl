@@ -45,9 +45,9 @@ struct Human {
         this->sittingRollerCoaster = sittingRollerCoaster;
     }
 
-    void drawCubeBodyPart();
-    void drawSphereBodyPart();
-    void drawCylinderBodyPart();
+    void cubicalShapeBodyPart();
+    void sphericalShapeBodyPart();
+    void cylindricalShapeBodyPart();
     void drawHuman();
     void move(int key, int x, int y);
 };
