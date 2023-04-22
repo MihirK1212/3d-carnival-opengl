@@ -7,7 +7,7 @@ double degToRad(double angle)
     return (angle * (pi / 180));
 }
 
-GLboolean  orbiterFlag = false, rideFlag = false, carouselFlag = false, doorFlag = false,  day = true;
+GLboolean  aroundTheWorldFlag = false, rideFlag = false, carouselFlag = false, doorFlag = false,  day = true;
 
 double mouse_x = -1, mouse_y = -1;
 double mouse_x_prev = -1, mouse_y_prev = -1;
@@ -107,22 +107,22 @@ void display(void)
 
     glPushMatrix();
     glTranslatef(-25, 0, 0);
-    objects->streetLight1();
+    objects->lampPost1();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(50, 0, 0);
-    objects->streetLight2();
+    objects->lampPost2();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(50, 0, 30);
-    objects->streetLight3();
+    objects->lampPost3();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-25, 0, 30);
-    objects->streetLight4();
+    objects->lampPost4();
     glPopMatrix();
 
     glPushMatrix();
@@ -171,7 +171,7 @@ void display(void)
     glTranslatef(-70, 0, -30);
     glTranslatef(0, 10, 0);
     glScalef(1.5, 1.5, 1.5);
-    rides->orbiter();
+    rides->aroundTheWorld();
     glPopMatrix();
 
     glPushMatrix();
@@ -241,53 +241,7 @@ void mouseButton(int button, int state, int x, int y)
     }
 }
 
-void lighting(float X, float Y, float Z)
-{
-    GLfloat position[] = {X, Y, Z, 0.0}; // using directional source of light
-    GLfloat noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
-    GLfloat whiteDiffuse[] = {intensity, intensity, intensity, 1.0f};
 
-    glEnable(GL_LIGHT0);
-    glLightfv(GL_LIGHT0, GL_POSITION, position);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteDiffuse);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, noAmbient);
-}
-
-void lighting3(float X, float Y, float Z)
-{
-    GLfloat position[] = {X, Y, Z, 0.0}; // using directional source of light
-    GLfloat noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
-    GLfloat whiteDiffuse[] = {intensity, intensity, intensity, 1.0f};
-
-    glEnable(GL_LIGHT5);
-    glLightfv(GL_LIGHT5, GL_POSITION, position);
-    glLightfv(GL_LIGHT5, GL_DIFFUSE, whiteDiffuse);
-    glLightfv(GL_LIGHT5, GL_AMBIENT, noAmbient);
-}
-
-void lighting2(float X, float Y, float Z)
-{
-    GLfloat position[] = {X, Y, Z, 0.0}; // using directional source of light
-    GLfloat noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
-    GLfloat whiteDiffuse[] = {intensity, intensity, intensity, 1.0f};
-
-    glEnable(GL_LIGHT6);
-    glLightfv(GL_LIGHT6, GL_POSITION, position);
-    glLightfv(GL_LIGHT6, GL_DIFFUSE, whiteDiffuse);
-    glLightfv(GL_LIGHT6, GL_AMBIENT, noAmbient);
-}
-
-void lighting1(float X, float Y, float Z)
-{
-    GLfloat position[] = {X, Y, Z, 0.0}; // using directional source of light
-    GLfloat noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
-    GLfloat whiteDiffuse[] = {intensity, intensity, intensity, 1.0f};
-
-    glEnable(GL_LIGHT7);
-    glLightfv(GL_LIGHT7, GL_POSITION, position);
-    glLightfv(GL_LIGHT7, GL_DIFFUSE, whiteDiffuse);
-    glLightfv(GL_LIGHT7, GL_AMBIENT, noAmbient);
-}
 
 void myKeyboardFunc(unsigned char key, int x, int y)
 {
@@ -314,38 +268,14 @@ void myKeyboardFunc(unsigned char key, int x, int y)
         camera->setView((camera->currView  + 1)%3);
         break;
     case '1':
-        if (orbiterFlag == false)
-        {
-            orbiterFlag = true;
-            break;
-        }
-        else if (orbiterFlag == true)
-        {
-            orbiterFlag = false;
-            break;
-        }
+        aroundTheWorldFlag = !aroundTheWorldFlag;
+        break;
     case '2':
-        if (rideFlag == false)
-        {
-            rideFlag = true;
-            break;
-        }
-        else
-        {
-            rideFlag = false;
-            break;
-        }
+        rideFlag = !rideFlag;
+        break;
     case '3': 
-        if (carouselFlag == false) 
-        {
-            carouselFlag = true;
-            break;
-        }
-        else 
-        {
-            carouselFlag = true;
-            break;
-        }
+        carouselFlag = !carouselFlag;
+        break;
     case '6':
         if (objects->switchOne == false)
         {
@@ -425,10 +355,10 @@ void myKeyboardFunc(unsigned char key, int x, int y)
         if (day == false)
         {
             day = true;
-            lighting(100, 100, 100);
-            lighting1(-100, 100, 100);
-            lighting2(100, -100, 100);
-            lighting3(-100, -100, 100);
+            lighting1(-100, 100, 100, intensity);
+            lighting2(100, -100, 100, intensity);
+            lighting3(-100, -100, 100, intensity);
+            lighting4(100, 100, 100, intensity);
             break;
         }
         else if (day == true)
@@ -442,10 +372,10 @@ void myKeyboardFunc(unsigned char key, int x, int y)
         if (intensity < 1.0)
         {
             intensity += 0.1;
-            lighting(100, 100, 100);
-            lighting1(-100, 100, 100);
-            lighting2(100, -100, 100);
-            lighting3(-100, -100, 100);
+            lighting1(-100, 100, 100, intensity);
+            lighting2(100, -100, 100, intensity);
+            lighting3(-100, -100, 100, intensity);
+            lighting4(100, 100, 100, intensity);
             break;
         }
         else
@@ -458,10 +388,10 @@ void myKeyboardFunc(unsigned char key, int x, int y)
         if (intensity > 0.0)
         {
             intensity -= 0.1;
-            lighting1(100, 100, 100);
-            lighting2(-100, 100, 100);
-            lighting3(100, -100, 100);
-            lighting(-100, -100, 100);
+            lighting1(100, 100, 100, intensity);
+            lighting2(-100, 100, 100, intensity);
+            lighting3(100, -100, 100, intensity);
+            lighting4(-100, -100, 100, intensity);
             break;
         }
         else
@@ -489,7 +419,7 @@ void specialKeyboardFunc(int key, int x, int y)
 
 void animate()
 {
-    rides->animateRides(orbiterFlag, rideFlag, carouselFlag, doorFlag);
+    rides->animateRides(aroundTheWorldFlag, rideFlag, carouselFlag, doorFlag);
     objects->animateFlag();
     glutPostRedisplay();
 }

@@ -42,27 +42,24 @@ struct Objects {
     void table();
     void DrawUmbrella();
     void teapot();
-    void diningSet();
+    void diningTables();
     
-    void icecreamParlor();
-    void pizzaHut();
+    void desertShop();
+    void pizzaShop();
     void scaryHouse();
-    void dunkinDonuts();
+    void donutsShop();
     void cafeteriaFence();
     void cafeteria();
 
     void streetLampbody();
-    void streetLight1();
-    void streetLight2();
-    void streetLight3();
-    void streetLight4();
+    void lampPost1();
+    void lampPost2();
+    void lampPost3();
+    void lampPost4();
 
     void wall();
     void walls();
     
-    void bench1();
-    void bench2();
-
     void setNormal(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, GLfloat x3, GLfloat y3, GLfloat z3);
     long long nCr(int n, int r);
     void BezierCurve(double t, float xy[2], int L, GLfloat ctrlpoints[][3]);
@@ -71,9 +68,6 @@ struct Objects {
     void drawFlag();
     void balloon();
     void balloonLine();
-    void balloons();
-    void cart();
-    void balloonCart();
     void flagpole(int seed);
     void flags();
 

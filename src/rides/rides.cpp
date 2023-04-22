@@ -1,7 +1,7 @@
 #include "rides.h"
 
 
-static GLfloat colors[4][6] =
+static GLfloat colorPallete[4][6] =
     {
         {1, 0, 0, 0.5, 0, 0},  // red
         {0, 1, 0, 0, 0.5, 0},  // green
@@ -16,6 +16,13 @@ double radToDeg(double rad) {
 int sgn(double x) {
     return x>=0 ? 1:-1;
 }
+
+double ANIMAL_LEG_LEN = 1.0;
+double ANIMAL_LEG_ANGLE = 0;
+double ANIMAL_NECK_LEN = 2.0;
+double ANIMAL_NECK_ANGLE = 55;
+double ANIMAL_SHOULDER_DIM = 3.0;
+double ANIMAL_SHOULDER_RAD = 1.0;
 
 vector<double> matrix_mul(vector<vector<double>>&A, vector<double>&p)
 {
@@ -364,16 +371,14 @@ void Rides::pole(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat
     gluCylinder(quadratic, 1.5, 1.5, height, 32, 32);
 }
 
-void Rides::orbiterSeat()
+void Rides::aroundTheWorldSeat()
 {
-    // seat
     glPushMatrix();
     glTranslatef(0, -0.5, 0);
     glScalef(0.5, 0.2, 1.5);
     drawCube(0.804, 0.361, 0.361, 0.403, 0.1805, 0.1805);
     glPopMatrix();
 
-    // seat belt rod
     glPushMatrix();
     glTranslatef(1.3, 0.7, 0);
     glScalef(0.02, 0.02, 1.5);
@@ -383,26 +388,6 @@ void Rides::orbiterSeat()
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[4]);
 
-    // back
-    glPushMatrix();
-    glScalef(0.2, 0.5, 1.5);
-    drawBox();
-    glPopMatrix();
-
-    // seat right side
-    glPushMatrix();
-    glScalef(0.5, 0.5, 0.02);
-    drawBox();
-    glPopMatrix();
-
-    // seat left side
-    glPushMatrix();
-    glTranslatef(0, 0, 4.445);
-    glScalef(0.5, 0.5, 0.02);
-    drawBox();
-    glPopMatrix();
-
-    // bottom bent part
     glPushMatrix();
     glTranslatef(1.48, -0.5, 0);
     glRotatef(-45, 0, 0, 1);
@@ -410,35 +395,38 @@ void Rides::orbiterSeat()
     drawBox();
     glPopMatrix();
 
-    // bottom straight part
+    glPushMatrix();
+    glScalef(0.2, 0.5, 1.5);
+    drawBox();
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(0.5, 0.5, 0.02);
+    drawBox();
+    glPopMatrix();
+
     glPushMatrix();
     glTranslatef(1.8, -0.8, 0);
-    // glRotatef(-20, 0, 0, 1);
     glScalef(0.16, 0.02, 1.5);
     drawBox();
     glPopMatrix();
 
-    // bottom farthest part
     glPushMatrix();
     glTranslatef(2.25, -0.8, 0);
     glScalef(0.02, 0.1, 1.5);
     drawBox();
     glPopMatrix();
 
+    glPushMatrix();
+    glTranslatef(0, 0, 4.445);
+    glScalef(0.5, 0.5, 0.02);
+    drawBox();
+    glPopMatrix();
+
     glDisable(GL_TEXTURE_2D);
 }
-void Rides::rings()
+void Rides::aroundTheWordLoops()
 {
-    for (float i = -3.5; i >= -17.5; i -= 1)
-    {
-        glPushMatrix();
-        glTranslatef(0, i, 0);
-        glRotatef(90, 1, 0, 0);
-        glScalef(0.2, 0.2, 0.2);
-        drawTorus(1, 0, 0, 0.5, 0, 0, 1.5, 7.5, 32, 64);
-        glPopMatrix();
-    }
-
     for (float i = -3; i >= -17; i -= 1)
     {
         glPushMatrix();
@@ -448,8 +436,18 @@ void Rides::rings()
         drawTorus(1, 1, 1, 0.5, 0.5, 0.5, 1.5, 7.5, 32, 64);
         glPopMatrix();
     }
+
+    for (float i = -3.5; i >= -17.5; i -= 1)
+    {
+        glPushMatrix();
+        glTranslatef(0, i, 0);
+        glRotatef(90, 1, 0, 0);
+        glScalef(0.2, 0.2, 0.2);
+        drawTorus(1, 0, 0, 0.5, 0, 0, 1.5, 7.5, 32, 64);
+        glPopMatrix();
+    }    
 }
-void Rides::orbiter()
+void Rides::aroundTheWorld()
 {
     glPushMatrix();
     glScalef(2, 1, 2);
@@ -464,7 +462,7 @@ void Rides::orbiter()
     glPopMatrix(); 
 
     // the 1st torus at the bottom
-    rings();
+    aroundTheWordLoops();
 
     glPushMatrix();
     glTranslatef(0, -18, 0);
@@ -508,7 +506,7 @@ void Rides::orbiter()
             glTranslatef(15, 0, -2);
             glRotatef(-0, 0, 1, 0);
             glRotatef(-orbiterAlpha, 0, 0, 1);
-            orbiterSeat();
+            aroundTheWorldSeat();
             glPopMatrix();
 
             glPushMatrix();
@@ -748,135 +746,119 @@ void Rides::rollerCoaster(Human* human) {
 }
 
 
-double HEAD_HEIGHT = 1.5;
-double LEG_LENGTH = 1.0;
-double NECK_LENGTH = 2.0;
-double NECK_ANGLE = 55;
-double SHOULDER_WIDTH = 3.0;
-double SHOULDER_RADIUS = 1.0;
-double LEG_ANGLE = 0;
-void neck() {
+void drawNeck() {
     GLUquadricObj* quad = gluNewQuadric();
-    gluCylinder(quad, 0.5, 0.5, NECK_LENGTH, 10, 5);
+    gluCylinder(quad, 0.5, 0.5, ANIMAL_NECK_LEN, 10, 5);
     gluDeleteQuadric(quad);
 }
-void face() {
+void drawFace() {
     GLUquadricObj* quad = gluNewQuadric();
     gluCylinder(quad, 0.5, 0.2, 1.5, 10, 5);
     gluDeleteQuadric(quad);
 }
-void lower_leg() {
+void drawLowerLeg() {
     GLUquadricObj* quad = gluNewQuadric();
-    gluCylinder(quad, 0.3, 0.2, LEG_LENGTH, 4, 4);
+    gluCylinder(quad, 0.3, 0.2, ANIMAL_LEG_LEN, 4, 4);
     gluDeleteQuadric(quad);
 }
-void upper_leg() {
+void drawUpperLeg() {
     GLUquadricObj* quad = gluNewQuadric();
-    gluCylinder(quad, 0.3, 0.3, LEG_LENGTH, 4, 4);
+    gluCylinder(quad, 0.3, 0.3, ANIMAL_LEG_LEN, 4, 4);
     gluDeleteQuadric(quad);
 }
-void shoulders() {
+void drawShoulders() {
     GLUquadricObj* quad = gluNewQuadric();
-    gluCylinder(quad,SHOULDER_RADIUS, SHOULDER_RADIUS, 3, 10, 4);
+    gluCylinder(quad,ANIMAL_SHOULDER_RAD, ANIMAL_SHOULDER_RAD, 3, 10, 4);
     gluDeleteQuadric(quad);
 }
-void drawHorse() {
 
-  // torso
-  glPushMatrix();
-    glTranslatef(0., 0., -SHOULDER_WIDTH / 2);
-    shoulders();
-  glPopMatrix();
+void getHorse() {
+    
+    glPushMatrix();
+        glTranslatef(0., 0., -ANIMAL_SHOULDER_DIM / 2);
+        drawShoulders();
+    glPopMatrix();
 
-  // front torso cover
-  glPushMatrix();
-    glTranslatef(0, 0, SHOULDER_WIDTH/2);
-    glRotatef(180, 0.0, 1.0, 0.);
-    glRotatef(180, 1.0, .0, 0.);
-    glutSolidCone(SHOULDER_RADIUS, 0.6 ,15, 15);
-  glPopMatrix();
+    glPushMatrix();
+        glTranslatef(0., 0., ANIMAL_SHOULDER_DIM / 2);
+        glRotatef(-ANIMAL_NECK_ANGLE, 1., 0., 0.);
+        drawNeck();
+    glPopMatrix();
 
-  // neck
-  glPushMatrix();
-    glTranslatef(0., 0., SHOULDER_WIDTH / 2);
-    glRotatef(-NECK_ANGLE, 1., 0., 0.);
-    neck();
-  glPopMatrix();
+    glPushMatrix();
+        glTranslatef(0, 0, ANIMAL_SHOULDER_DIM/2);
+        glRotatef(180, 0.0, 1.0, 0.);
+        glRotatef(180, 1.0, .0, 0.);
+        glutSolidCone(ANIMAL_SHOULDER_RAD, 0.6 ,15, 15);
+    glPopMatrix();
 
-  // face
-  glPushMatrix();
-    // coz we know h, and angle, we can find the y axis
-    glTranslatef(0., NECK_LENGTH*sin(-NECK_ANGLE)-0.3, (SHOULDER_WIDTH/2)+NECK_LENGTH*cos(NECK_ANGLE)+1);
-    glRotatef(20, 1., 0., 0.);
-    face();
-  glPopMatrix();
 
-  //sphere
-  glPushMatrix();
-    glTranslatef(0., NECK_LENGTH*sin(-NECK_ANGLE)-0.35, (SHOULDER_WIDTH/2)+NECK_LENGTH*cos(NECK_ANGLE)+1.1);
-    glutSolidSphere(0.475,15,15);
-  glPopMatrix();
+    glPushMatrix();
+        glTranslatef(0, 0, -ANIMAL_SHOULDER_DIM/2);
+        glRotatef(180, 0.0, 1.0, 0.);
+        glutSolidCone(ANIMAL_SHOULDER_RAD, 0.5 ,15, 15);
+    glPopMatrix();
+    
 
-  // back
-  glPushMatrix();
-    glTranslatef(0, 0, -SHOULDER_WIDTH/2);
-    glRotatef(180, 0.0, 1.0, 0.);
-    glutSolidCone(SHOULDER_RADIUS, 0.5 ,15, 15);
-  glPopMatrix();
+    glPushMatrix();
+        glTranslatef(0., ANIMAL_NECK_LEN*sin(-ANIMAL_NECK_ANGLE)-0.3, (ANIMAL_SHOULDER_DIM/2)+ANIMAL_NECK_LEN*cos(ANIMAL_NECK_ANGLE)+1);
+        glRotatef(20, 1., 0., 0.);
+        drawFace();
+    glPopMatrix();
 
-  // tail
-  glPushMatrix();
-    glTranslatef(0, 0, -SHOULDER_WIDTH/2-0.3);
-    glRotatef(120, 1.0, 0.0, 0.);
-    glutSolidCone(0.2, 2 ,15, 15);
-  glPopMatrix();
+    glPushMatrix();
+        glTranslatef(0., ANIMAL_NECK_LEN*sin(-ANIMAL_NECK_ANGLE)-0.35, (ANIMAL_SHOULDER_DIM/2)+ANIMAL_NECK_LEN*cos(ANIMAL_NECK_ANGLE)+1.1);
+        glutSolidSphere(0.475,15,15);
+    glPopMatrix();
 
-  // front left leg
-  glPushMatrix();
-    glTranslatef(SHOULDER_RADIUS/2, -0.7, (SHOULDER_WIDTH / 2.)); // -0.3 to bring it closer to the body
-    glRotatef((double) LEG_ANGLE/-1, 1., 0., 0.);
-    glRotatef(90, 1., 0., 0.);
-    upper_leg();
-    glTranslatef(0., 0., LEG_LENGTH); // now end of leg
-    glRotatef((double) LEG_ANGLE, 1., 0., 0.);
-    glRotatef(45, 1., 0., 0.);
-    lower_leg();
-  glPopMatrix();
+    glPushMatrix();
+        glTranslatef(ANIMAL_SHOULDER_RAD/2, -0.7, (ANIMAL_SHOULDER_DIM / 2.));
+        glRotatef((double) ANIMAL_LEG_ANGLE/-1, 1., 0., 0.);
+        glRotatef(90, 1., 0., 0.);
+        drawUpperLeg();
+        glTranslatef(0., 0., ANIMAL_LEG_LEN);
+        glRotatef((double) ANIMAL_LEG_ANGLE, 1., 0., 0.);
+        glRotatef(45, 1., 0., 0.);
+        drawLowerLeg();
+    glPopMatrix();
 
-  // front right leg
-  glPushMatrix();
-    glTranslatef(-SHOULDER_RADIUS/2, -0.7, (SHOULDER_WIDTH / 2.)-0.3);
-    glRotatef(90, 1., 0., 0.);
-    upper_leg();
-    glTranslatef(0., 0., LEG_LENGTH);
-    glRotatef((double) LEG_ANGLE, 1., 0., 0.);
-    glRotatef(-45, 1., 0., 0.);
-    lower_leg();
-  glPopMatrix();
+    glPushMatrix();
+        glTranslatef(0, 0, -ANIMAL_SHOULDER_DIM/2-0.3);
+        glRotatef(120, 1.0, 0.0, 0.);
+        glutSolidCone(0.2, 2 ,15, 15);
+    glPopMatrix();
 
-  // back left leg
-  glPushMatrix();
-    glTranslatef(SHOULDER_RADIUS/2, -0.7, (-SHOULDER_WIDTH / 2.)+0.3);
-    glRotatef(90, 1., 0., 0.);
-    upper_leg();
-    glTranslatef(0., 0., LEG_LENGTH);
-    glRotatef((double) LEG_ANGLE, 1., 0., 0.);
-    glRotatef(-45, 1., 0., 0.);
-    lower_leg();
-  glPopMatrix();
 
-  // back right leg
-  glPushMatrix();
-    glTranslatef(-SHOULDER_RADIUS/2, -0.7, (-SHOULDER_WIDTH / 2.)+0.3);
-    glRotatef((double) LEG_ANGLE/-1, 1., 0., 0.);
+    glPushMatrix();
+        glTranslatef(-ANIMAL_SHOULDER_RAD/2, -0.7, (ANIMAL_SHOULDER_DIM / 2.)-0.3);
+        glRotatef(90, 1., 0., 0.);
+        drawUpperLeg();
+        glTranslatef(0., 0., ANIMAL_LEG_LEN);
+        glRotatef((double) ANIMAL_LEG_ANGLE, 1., 0., 0.);
+        glRotatef(-45, 1., 0., 0.);
+        drawLowerLeg();
+    glPopMatrix();
 
-    glRotatef(90, 1., 0., 0.);
-    upper_leg();
-    glTranslatef(0., 0., LEG_LENGTH);
-    glRotatef((double) LEG_ANGLE, 1., 0., 0.);
-    glRotatef(45, 1., 0., 0.);
-    lower_leg();
-  glPopMatrix();
+    glPushMatrix();
+        glTranslatef(ANIMAL_SHOULDER_RAD/2, -0.7, (-ANIMAL_SHOULDER_DIM / 2.)+0.3);
+        glRotatef(90, 1., 0., 0.);
+        drawUpperLeg();
+        glTranslatef(0., 0., ANIMAL_LEG_LEN);
+        glRotatef((double) ANIMAL_LEG_ANGLE, 1., 0., 0.);
+        glRotatef(-45, 1., 0., 0.);
+        drawLowerLeg();
+    glPopMatrix();
+
+    glPushMatrix();
+        glTranslatef(-ANIMAL_SHOULDER_RAD/2, -0.7, (-ANIMAL_SHOULDER_DIM / 2.)+0.3);
+        glRotatef((double) ANIMAL_LEG_ANGLE/-1, 1., 0., 0.);
+        glRotatef(90, 1., 0., 0.);
+        drawUpperLeg();
+        glTranslatef(0., 0., ANIMAL_LEG_LEN);
+        glRotatef((double) ANIMAL_LEG_ANGLE, 1., 0., 0.);
+        glRotatef(45, 1., 0., 0.);
+        drawLowerLeg();
+    glPopMatrix();
 }
 
 
@@ -910,7 +892,7 @@ void Rides::carousel() {
             glTranslatef(0,2*sin(radian(theta)),0);
             glTranslatef(11*cos(radian(theta)),-15,11*sin(radian(theta)));
             glRotatef(-theta, 0, 1, 0);
-            drawHorse();
+            getHorse();
             glPopMatrix();
         }
 
@@ -923,13 +905,10 @@ void Rides::carousel() {
     drawCylinder(0.6, 0.3, 0.4,  0.2725,0.1355,0.0375);
     glPopMatrix();
 
-
-
-
     gluDeleteQuadric(qobj);
 }
 
-void Rides::animateRides(GLboolean orbiterFlag, GLboolean rideFlag, GLboolean carouselFlag, GLboolean doorFlag) {
+void Rides::animateRides(GLboolean aroundTheWorldFlag, GLboolean rideFlag, GLboolean carouselFlag, GLboolean doorFlag) {
     
      
     if (rideFlag == true)
@@ -941,7 +920,7 @@ void Rides::animateRides(GLboolean orbiterFlag, GLboolean rideFlag, GLboolean ca
         rideTheta = ((rideTheta - 1)%360 + 360)%360;
     }
 
-    if (orbiterFlag == true)
+    if (aroundTheWorldFlag == true)
     {
         orbiterTheta += 3;
         if (orbiterTheta > 360.0)

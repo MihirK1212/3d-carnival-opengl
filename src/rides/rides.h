@@ -35,9 +35,9 @@ struct Rides {
     void rideGround();
     void rideFence();
 
-    void orbiterSeat();
-    void rings();
-    void orbiter();
+    void aroundTheWorldSeat();
+    void aroundTheWordLoops();
+    void aroundTheWorld();
 
     void coasterRide();
     void track();
@@ -49,7 +49,7 @@ struct Rides {
 
     void carousel();
 
-    void animateRides(GLboolean orbiterFlag, GLboolean rideFlag, GLboolean carouselFlag, GLboolean doorFlag);
+    void animateRides(GLboolean aroundTheWorldFlag, GLboolean rideFlag, GLboolean carouselFlag, GLboolean doorFlag);
 };
 
 

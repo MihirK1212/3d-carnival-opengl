@@ -14,6 +14,57 @@ void light()
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 }
 
+void lighting1(float X, float Y, float Z, float intensity)
+{
+    GLfloat position[] = {X, Y, Z, 0.0}; // using directional source of light
+    GLfloat noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    GLfloat whiteDiffuse[] = {intensity, intensity, intensity, 1.0f};
+
+    glEnable(GL_LIGHT7);
+    glLightfv(GL_LIGHT7, GL_POSITION, position);
+    glLightfv(GL_LIGHT7, GL_DIFFUSE, whiteDiffuse);
+    glLightfv(GL_LIGHT7, GL_AMBIENT, noAmbient);
+}
+
+
+void lighting2(float X, float Y, float Z, float intensity)
+{
+    GLfloat position[] = {X, Y, Z, 0.0}; // using directional source of light
+    GLfloat noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    GLfloat whiteDiffuse[] = {intensity, intensity, intensity, 1.0f};
+
+    glEnable(GL_LIGHT6);
+    glLightfv(GL_LIGHT6, GL_POSITION, position);
+    glLightfv(GL_LIGHT6, GL_DIFFUSE, whiteDiffuse);
+    glLightfv(GL_LIGHT6, GL_AMBIENT, noAmbient);
+}
+
+void lighting3(float X, float Y, float Z, float intensity)
+{
+    GLfloat position[] = {X, Y, Z, 0.0}; // using directional source of light
+    GLfloat noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    GLfloat whiteDiffuse[] = {intensity, intensity, intensity, 1.0f};
+
+    glEnable(GL_LIGHT5);
+    glLightfv(GL_LIGHT5, GL_POSITION, position);
+    glLightfv(GL_LIGHT5, GL_DIFFUSE, whiteDiffuse);
+    glLightfv(GL_LIGHT5, GL_AMBIENT, noAmbient);
+}
+
+void lighting4(float X, float Y, float Z, float intensity)
+{
+    GLfloat position[] = {X, Y, Z, 0.0}; // using directional source of light
+    GLfloat noAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    GLfloat whiteDiffuse[] = {intensity, intensity, intensity, 1.0f};
+
+    glEnable(GL_LIGHT0);
+    glLightfv(GL_LIGHT0, GL_POSITION, position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteDiffuse);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, noAmbient);
+}
+
+
+
 void spotLight1()
 {
     glPushMatrix();

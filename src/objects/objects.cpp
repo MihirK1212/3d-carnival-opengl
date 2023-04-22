@@ -3,8 +3,6 @@
 void Objects::drawPool()
 {
 
-    // glColor3f(0.2,0.2,0.2);
-
     int tx = -115, ty = 5, tz = 15;
 
     // right side
@@ -213,16 +211,9 @@ void Objects::chair()
 
 void Objects::table()
 {
-    // // table
-    // glPushMatrix();
-    // glScalef(4, 0.3, 4);
-    // drawSphere(0.8, 0.4, 0.00, 0.4, 0.2, 0);
-    // glPopMatrix();
 
     // table
     glPushMatrix();
-    // glScalef(4, 0.3, 4);
-    // drawSphere(0.8, 0.4, 0.00, 0.4, 0.2, 0);
     glTranslatef(-2.5, 0, -2);
     glScalef(1.6, 0.3, 1.6);
     drawCube(0.8, 0.4, 0.00, 0.3, 0.5, 0.5);
@@ -265,7 +256,6 @@ void Objects::teapot(void)
 {
     glColor3f(1, 0.9725, 0.9059);
     glPushMatrix();
-    // moving teapot 1 unit above table
     glTranslatef(1,1,11);
     glScaled(10, 10, 10);
     glRotatef(90, -1, 0, 0);
@@ -273,7 +263,7 @@ void Objects::teapot(void)
     glPopMatrix();
 }
 
-void Objects::diningSet()
+void Objects::diningTables()
 {
     glPushMatrix();
     glTranslatef(0, -16, 0);
@@ -292,7 +282,7 @@ void Objects::diningSet()
     }
 }
 
-void Objects::icecreamParlor()
+void Objects::desertShop()
 {
     materialProperty();
     glEnable(GL_TEXTURE_2D);
@@ -344,7 +334,7 @@ void Objects::icecreamParlor()
     glDisable(GL_TEXTURE_2D);
 }
 
-void Objects::pizzaHut()
+void Objects::pizzaShop()
 {
     materialProperty();
     glEnable(GL_TEXTURE_2D);
@@ -443,7 +433,7 @@ void Objects::scaryHouse()
 
     glDisable(GL_TEXTURE_2D);
 }
-void Objects::dunkinDonuts()
+void Objects::donutsShop()
 {
     materialProperty();
     glEnable(GL_TEXTURE_2D);
@@ -526,7 +516,7 @@ void Objects::cafeteria()
             glPushMatrix();
             glTranslatef(i, 10, j);
             glScalef(1, 1.5, 1);
-            diningSet();
+            diningTables();
             glPopMatrix();
         }
     }
@@ -534,19 +524,19 @@ void Objects::cafeteria()
     glPushMatrix();
     glTranslatef(5, -18, -25);
     glScalef(1.5, 2, 1);
-    pizzaHut();
+    pizzaShop();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(-12, -18, -25);
     glScalef(1.5, 2, 1);
-    icecreamParlor();
+    desertShop();
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(22, -18, -25);
     glScalef(1.5, 2, 1);
-    dunkinDonuts();
+    donutsShop();
     glPopMatrix();
 
     cafeteriaFence();
@@ -629,6 +619,13 @@ void Objects::walls()
 void Objects::streetLampbody()
 {
     glPushMatrix();
+    glTranslatef(0, 0, 0);
+    glRotatef(90, 1, 0, 0);
+    glScalef(0.2, 0.2, 0.2);
+    drawTorus(0.1, 0.1, 0.1, 0.05, 0.05, 0.05, 2, 5, 32, 64);
+    glPopMatrix();
+
+    glPushMatrix();
     glRotatef(90, 1, 0, 0);
     glScalef(0.5, 0.5, 1);
     drawCylinder(0.1, 0.1, 0.1, 0.05, 0.05, 0.05);
@@ -640,16 +637,9 @@ void Objects::streetLampbody()
     glScalef(0.2, 0.2, 0.2);
     drawTorus(0.1, 0.1, 0.1, 0.05, 0.05, 0.05, 2, 5, 32, 64);
     glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, 0, 0);
-    glRotatef(90, 1, 0, 0);
-    glScalef(0.2, 0.2, 0.2);
-    drawTorus(0.1, 0.1, 0.1, 0.05, 0.05, 0.05, 2, 5, 32, 64);
-    glPopMatrix();
 }
 
-void Objects::streetLight1()
+void Objects::lampPost1()
 {
 
     GLfloat no_mat[] = {0.4, 0.3, 0.2, 1.0};
@@ -680,7 +670,7 @@ void Objects::streetLight1()
     streetLampbody();
 }
 
-void Objects::streetLight2()
+void Objects::lampPost2()
 {
     GLfloat no_mat[] = {0.4, 0.2, 0.0, 1.0};
     GLfloat mat_ambient[] = {0.3, 0.3, 0.5, 1.0};
@@ -710,7 +700,7 @@ void Objects::streetLight2()
     streetLampbody();
 }
 
-void Objects::streetLight3()
+void Objects::lampPost3()
 {
 
     GLfloat no_mat[] = {0.0, 1.0, 0.4, 1.0};
@@ -741,7 +731,7 @@ void Objects::streetLight3()
     streetLampbody();
 }
 
-void Objects::streetLight4()
+void Objects::lampPost4()
 {
     GLfloat no_mat[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat mat_ambient[] = {0.7, 0.7, 0.7, 1.0};
@@ -771,23 +761,7 @@ void Objects::streetLight4()
     streetLampbody();
 }
 
-void Objects::bench1()
-{
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, ID2[16]);
-    glScalef(2, 0.5, 0.5);
-    drawBox();
-    glDisable(GL_TEXTURE_2D);
-}
 
-void Objects::bench2()
-{
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, ID2[19]);
-    glScalef(2, 0.5, 0.5);
-    drawBox();
-    glDisable(GL_TEXTURE_2D);
-}
 
 void Objects::setNormal(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, GLfloat x3, GLfloat y3, GLfloat z3)
 {
@@ -811,7 +785,7 @@ void Objects::setNormal(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat 
 long long Objects::nCr(int n, int r)
 {
     if (r > n / 2)
-        r = n - r; // because C(n, r) == C(n, n - r)
+        r = n - r; 
     long long ans = 1;
     int i;
 
@@ -840,8 +814,6 @@ void Objects::BezierCurve(double t, float xy[2], int L, GLfloat ctrlpoints[][3])
     }
     xy[0] = float(x);
     xy[1] = float(y);
-
-    // return y;
 }
 
 void Objects::showControlPoints(int L, GLfloat ctrlpoints[][3])
@@ -916,13 +888,12 @@ void Objects::balloonBezier()
                 p2z = z1;
             }
             glVertex3f(x1, y1, z1);
-
             // forms quad with next pair of points with incremented theta value
         }
         glEnd();
         x = x1;
         r = r1;
-    } // for i
+    } 
 
     if (controlPointsFlag == true)
     {
@@ -942,13 +913,11 @@ void Objects::drawFlag()
             {0, 5, 0}, {3.5, 5 + yf, 0}, {3.5, 5 - yf, 0}, {7 + xf, 5, 0}};
     int i;
     float x1, y1, x2, y2; // current coordinates
-    // float x1, y1, z1, r1;            //next coordinates
     const float startx = 0, endx = ctrlpoints1[L][0];
     float t = 0;
     float xy1[2];
     float xy2[2];
     float dt = 1.0 / nt;
-    // glColor3f(0, 0, 1);
     glBegin(GL_QUAD_STRIP);
     for (i = 0; i < nt; i++)
     {
@@ -988,117 +957,6 @@ void Objects::balloonLine()
     glVertex2f(1, 10);
     glVertex2f(1, 1);
     glEnd();
-}
-
-void Objects::balloons()
-{
-    matCurve(1, 0, 0);
-    glPushMatrix();
-    glTranslatef(3, -10, 0.6);
-    balloon();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(1.8, -19, 0.6);
-    balloonLine();
-    glPopMatrix();
-
-    matCurve(0, 0, 1);
-    glPushMatrix();
-    glTranslatef(6.2, -11, 0.6);
-    balloon();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(1.8, -18, 0.6);
-    glRotatef(-22, 0, 0, 1);
-    balloonLine();
-    glPopMatrix();
-
-    matCurve(1, 1, 0);
-    glPushMatrix();
-    glTranslatef(0, -11, 0.6);
-    balloon();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(1.8, -18, 0.6);
-    glRotatef(22, 0, 0, 1);
-    balloonLine();
-    glPopMatrix();
-
-    matCurve(1, 0.5, 0);
-    glPushMatrix();
-    glTranslatef(3, -13, 2.6);
-    balloon();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(1.8, -20, 0.6);
-    glRotatef(16, 1, 0, 0);
-    balloonLine();
-    glPopMatrix();
-
-    matCurve(1, 0, 1);
-    glPushMatrix();
-    glTranslatef(3, -13, -1.8);
-    balloon();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(1.8, -20, 0.6);
-    glRotatef(-14, 1, 0, 0);
-    balloonLine();
-    glPopMatrix();
-}
-
-void Objects::cart()
-{
-    materialProperty();
-    glEnable(GL_TEXTURE_2D);
-
-    glBindTexture(GL_TEXTURE_2D, ID2[26]);
-    glPushMatrix();
-    glScalef(1, 2, 1);
-    quad1();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, 0, -5);
-    glScalef(1, 2, 1);
-    quad1();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, 0, -2);
-    quad2();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(10, 0, -2);
-    quad2();
-    glPopMatrix();
-
-    glBindTexture(GL_TEXTURE_2D, ID2[4]);
-    glPushMatrix();
-    glTranslatef(0, 11, -2);
-    glRotatef(90, 1, 0, 0);
-    glScalef(1, 1.25, 1);
-    quad1();
-    glPopMatrix();
-
-    glDisable(GL_TEXTURE_2D);
-}
-
-void Objects::balloonCart()
-{
-    balloons();
-
-    glPushMatrix();
-    glTranslatef(0, -20, 0);
-    glScalef(0.5, 0.5, 1);
-    cart();
-    glPopMatrix();
 }
 
 void Objects::flagpole(int seed)

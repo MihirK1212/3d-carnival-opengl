@@ -62,7 +62,6 @@ void sky(float x, float y, float z, float width, float height, float length)
 
     GLboolean day = true;
 
-    // front
     glEnable(GL_TEXTURE_2D);
     if (day == true)
     {
@@ -83,7 +82,6 @@ void sky(float x, float y, float z, float width, float height, float length)
     glVertex3f(x + width, y + height, z);
     glEnd();
 
-    // up;
     if (day == true)
     {
         glBindTexture(GL_TEXTURE_2D, ID2[27]);
@@ -102,8 +100,6 @@ void sky(float x, float y, float z, float width, float height, float length)
     glTexCoord2f(0.0f, 1.0f);
     glVertex3f(x, y + height, z);
     glEnd();
-
-    // back
 
     if (day == true)
     {
@@ -124,7 +120,6 @@ void sky(float x, float y, float z, float width, float height, float length)
     glVertex3f(x, y, z);
     glEnd();
 
-    // right
     if (day == true)
     {
         glBindTexture(GL_TEXTURE_2D, ID2[10]);
@@ -132,7 +127,7 @@ void sky(float x, float y, float z, float width, float height, float length)
     else
     {
         glBindTexture(GL_TEXTURE_2D, ID2[28]);
-    } // 10
+    }
     glBegin(GL_QUADS);
     glTexCoord2f(1.0f, 0.0f);
     glVertex3f(x + width, y, z);
@@ -144,8 +139,6 @@ void sky(float x, float y, float z, float width, float height, float length)
     glVertex3f(x, y, z);
     glEnd();
 
-    // left
-
     if (day == true)
     {
         glBindTexture(GL_TEXTURE_2D, ID2[11]);
@@ -153,7 +146,7 @@ void sky(float x, float y, float z, float width, float height, float length)
     else
     {
         glBindTexture(GL_TEXTURE_2D, ID2[28]);
-    } // 11
+    } 
     glBegin(GL_QUADS);
     glTexCoord2f(1.0f, 0.0f);
     glVertex3f(x, y, z + length);
@@ -166,6 +159,4 @@ void sky(float x, float y, float z, float width, float height, float length)
     glEnd();
 
     glDisable(GL_TEXTURE_2D);
-
-    //
 }

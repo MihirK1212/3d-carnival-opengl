@@ -325,7 +325,6 @@ void drawBox()
     glBegin(GL_QUADS);
     for (GLint i = 0; i < 6; i++)
     {
-        // glColor3f(colors[4][0],colors[4][1],colors[4][2]);
         getNormal3p(v_box[BoxquadIndices[i][0]][0], v_box[BoxquadIndices[i][0]][1], v_box[BoxquadIndices[i][0]][2],
                     v_box[BoxquadIndices[i][1]][0], v_box[BoxquadIndices[i][1]][1], v_box[BoxquadIndices[i][1]][2],
                     v_box[BoxquadIndices[i][2]][0], v_box[BoxquadIndices[i][2]][1], v_box[BoxquadIndices[i][2]][2]);
