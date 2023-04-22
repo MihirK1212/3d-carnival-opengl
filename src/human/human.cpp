@@ -8,16 +8,19 @@ double radian(double angle)
 
 void Human::cubicalShapeBodyPart()
 {
+    //draw cubical body part of the human
     cubicalShape(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
 }
 
 void Human::sphericalShapeBodyPart()
 {
+    //draw spherical body part of the human
     sphericalShape(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
 }
 
 void Human::cylindricalShapeBodyPart() 
 {
+    //draw cylindrical body part of the human
     cylindricalShape(0.545, 0.271, 0.075, 0.2725, 0.1355, 0.0375);
 }
 
@@ -128,6 +131,8 @@ void Human::move(int key, int x, int y)
     {
         case GLUT_KEY_UP:
 
+            //move the human forward in the direction which he is currently facing
+
             human_x += (cos(radian(angle_x)));
             human_z -= (sin(radian(angle_x)));
 
@@ -190,19 +195,26 @@ void Human::move(int key, int x, int y)
                 }
             }
             break;
+
+
             
         case GLUT_KEY_DOWN:
+            //move the human backward
             human_x -= (cos(radian(angle_x)));
             human_z += (sin(radian(angle_x)));
             break;
+
         case GLUT_KEY_LEFT:
+            //turn the human anti-clockwise
             angle_x = angle_x + 5;
             if (angle_x <= -360 || angle_x >= 360)
             {
                 angle_x = 0;
             }
             break;
+
         case GLUT_KEY_RIGHT:
+            //turn the human clockwise
             angle_x = (angle_x - 5);
             if (angle_x <= -360 || angle_x >= 360)
             {

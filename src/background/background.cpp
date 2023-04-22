@@ -54,6 +54,8 @@ void ground()
 
 void sky(float x, float y, float z, float width, float height, float length)
 {
+    //function to draw the sky
+    
     materialProperty();
     glDisable(GL_DEPTH_TEST);
     x = x - width / 2;
