@@ -900,9 +900,9 @@ void Rides::carousel() {
     gluDeleteQuadric(qobj);
 }
 
+
 void Rides::animateRides(GLboolean aroundTheWorldFlag, GLboolean rideFlag, GLboolean carouselFlag, GLboolean doorFlag) {
     
-     
     if (rideFlag == true)
     {
         theta += 2;
