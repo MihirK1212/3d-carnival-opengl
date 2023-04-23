@@ -7,12 +7,16 @@ double degToRad(double angle)
     return (angle * (pi / 180));
 }
 
+//flags to toggle the rides
 GLboolean  aroundTheWorldFlag = false, rideFlag = false, carouselFlag = false, doorFlag = false,  day = true;
 
+//variables to track the motion of mouse
 double mouse_x = -1, mouse_y = -1;
 double mouse_x_prev = -1, mouse_y_prev = -1;
 
 static double windowHeight = 1000, windowWidth = 1000;
+
+//intensity of the diffused light
 float intensity = 0;
 
 Human* human = new Human();
@@ -83,27 +87,41 @@ void display(void)
     glLoadIdentity();
     gluPerspective(60, 1, 1, 300);
     
+    //set the view reference
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(camera->eyeX, camera->eyeY, camera->eyeZ, camera->refX, camera->refY, camera->refZ, 0, 1, 0);
 
+    //enable lighting in the scene
     glEnable(GL_LIGHTING);
 
+    //draw the sky
     glPushMatrix();
     sky(camera->eyeX + (0.05 * camera->refX), camera->eyeY + (0.05 * camera->refY), camera->eyeZ + (0.05 * camera->refZ), 250, 250, 250);
     glPopMatrix();
 
     glEnable(GL_DEPTH_TEST);
 
+    //draw the four spotLights
     spotLight1();
     spotLight2();
     spotLight3();
     spotLight4();
+
+    //generate the circular, sandy ground
     ground();
 
+    //draw the boundary wall
     objects->walls();
+    
+    //draw the boundary flags
     objects->flags();
+
+    //draw the swimming pool
     objects->drawPool();
+
+
+    //draw the four lamp posts
 
     glPushMatrix();
     glTranslatef(-25, 0, 0);
@@ -125,11 +143,13 @@ void display(void)
     objects->lampPost4();
     glPopMatrix();
 
+    //draw the cafeteria
     glPushMatrix();
     glTranslatef(0, 0, 10);
     objects->cafeteria();
     glPopMatrix();
 
+    //draw the scary house
     glPushMatrix();
     glTranslatef(5,-18,-60);
     glScalef(3,4,4);
@@ -151,7 +171,7 @@ void display(void)
         camera->setView(2);
     }
 
-    /****/
+    //Draw the roller coster ride
     glPushMatrix();
     glTranslatef(-70, -5, 40);
     glTranslatef(0, 8, 0);
@@ -164,9 +184,8 @@ void display(void)
     glScalef(1.5, 1.5, 1.5);
     rides->rideFence();
     glPopMatrix();
-    /****/
 
-    /****/
+    //Draw the around-the-world ride
     glPushMatrix();
     glTranslatef(-70, 0, -30);
     glTranslatef(0, 10, 0);
@@ -179,14 +198,13 @@ void display(void)
     glScalef(1.5, 1.5, 1.5);
     rides->rideFence();
     glPopMatrix();
-    /****/
+    
 
-    /****/
+    //draw the carousel ride
     glPushMatrix();
     glTranslatef(70,10,-60);
     rides->carousel();
     glPopMatrix();
-    /****/
 
     glDisable(GL_LIGHTING);
 
@@ -197,6 +215,8 @@ void display(void)
 
 void mouseMove(int x, int y)
 {
+    //function to change the view reference according to mouse motion
+
     mouse_x = (double)x;
     mouse_y = (double)y;
 
@@ -218,6 +238,7 @@ void mouseMove(int x, int y)
 
 void mouseButton(int button, int state, int x, int y)
 {
+    //function to handle mouse button press
     if (button == GLUT_LEFT_BUTTON)
     {
         if (state == GLUT_UP)
@@ -226,6 +247,8 @@ void mouseButton(int button, int state, int x, int y)
             mouse_y_prev = -1;
         }
     }
+
+    //function to handle mousepad scroll for zoom functionality
     if(button == 3 || button == 4) 
     {
         if (state == GLUT_UP) return;
@@ -248,34 +271,36 @@ void myKeyboardFunc(unsigned char key, int x, int y)
     switch (key)
     {
     case 'a':
-        camera->refX -= 1.0;
+        camera->refX -= 1.0; //look left
         break;
     case 'd':
-        camera->refX += 1.0;
+        camera->refX += 1.0; //look right
         break;
     case 's':
-        human->sittingRollerCoaster = true;
+        human->sittingRollerCoaster = true; //sit in roller coaster
         camera->setView(2);
         break;
     case 'e':
-        human->sittingRollerCoaster = false;
+        human->sittingRollerCoaster = false; //exit roller coaster
         camera->setView(1);
         break;
     case 'r':
-        camera->setView(0);
+        camera->setView(0); //reset view reference
         break;
     case 'c':
-        camera->setView((camera->currView  + 1)%3);
+        camera->setView((camera->currView  + 1)%3); //toggle view references
         break;
     case '1':
-        aroundTheWorldFlag = !aroundTheWorldFlag;
+        aroundTheWorldFlag = !aroundTheWorldFlag; //toggle around-the-world ride
         break;
     case '2':
-        rideFlag = !rideFlag;
+        rideFlag = !rideFlag; //toggle roller coaster ride
         break;
     case '3': 
-        carouselFlag = !carouselFlag;
+        carouselFlag = !carouselFlag; //toggle carousel ride
         break;
+
+    //toggle the four lamp posts
     case '6':
         if (objects->switchOne == false)
         {
@@ -408,7 +433,7 @@ void myKeyboardFunc(unsigned char key, int x, int y)
 
 void specialKeyboardFunc(int key, int x, int y)
 {
-    human->move(key, x, y);
+    human->move(key, x, y); //handle motion of the human
     
     if(camera->currView == 1){
         camera->setView(1);
@@ -419,6 +444,7 @@ void specialKeyboardFunc(int key, int x, int y)
 
 void animate()
 {
+    //animate all the motions 
     rides->animateRides(aroundTheWorldFlag, rideFlag, carouselFlag, doorFlag);
     objects->animateFlag();
     glutPostRedisplay();

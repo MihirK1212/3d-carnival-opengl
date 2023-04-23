@@ -2,6 +2,8 @@
 
 void light()
 {
+    //use of glLightfv to add lighting and shading effect
+    
     GLfloat light_ambient[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light_specular[] = {1.0, 1.0, 1.0, 1.0};
@@ -71,7 +73,7 @@ void spotLight1()
     GLfloat light_ambient[] = {0.5, 0.5, 0.5, 1.0};
     GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light_specular[] = {1.0, 1.0, 1.0, 1.0};
-    GLfloat light_position[] = {-5.0, 30, 0.0, 1.0}; // 0.7, 4.5, 9.0
+    GLfloat light_position[] = {-5.0, 30, 0.0, 1.0}; 
 
     glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);

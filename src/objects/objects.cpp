@@ -2,6 +2,7 @@
 
 void Objects::drawPool()
 {
+    //function to draw a swimming pool
 
     int tx = -115, ty = 5, tz = 15;
 
@@ -123,6 +124,8 @@ void Objects::drawPool()
 
 void Objects::bush()
 {
+    //function to draw a bush
+
     quad = gluNewQuadric();
 
     glEnable(GL_TEXTURE_2D);
@@ -136,6 +139,8 @@ void Objects::bush()
 
 void Objects::chair()
 {
+    //function to draw a chair
+
     // seat part
     glPushMatrix();
     glScalef(0.5, 0.05, 0.5);
@@ -194,6 +199,7 @@ void Objects::chair()
 
 void Objects::table()
 {
+    //function to draw a table
 
     // table
     glPushMatrix();
@@ -218,6 +224,8 @@ void Objects::table()
 
 void Objects::DrawUmbrella(void)
 {
+    //function to draw an umbrella
+
     GLUquadricObj *qobj;
     qobj = gluNewQuadric();
     gluQuadricDrawStyle(qobj, GLU_FILL);
@@ -237,6 +245,8 @@ void Objects::DrawUmbrella(void)
 
 void Objects::teapot(void)
 {
+    //function to draw a teapot
+
     glColor3f(1, 0.9725, 0.9059);
     glPushMatrix();
     glTranslatef(1,1,11);
@@ -248,6 +258,8 @@ void Objects::teapot(void)
 
 void Objects::diningTables()
 {
+    //function to draw a dining set with a table, chairs, umbrella and teapot
+
     glPushMatrix();
     glTranslatef(0, -16, 0);
     table();
@@ -267,6 +279,8 @@ void Objects::diningTables()
 
 void Objects::desertShop()
 {
+    //function to draw a desert shop
+
     materialProperty();
     glEnable(GL_TEXTURE_2D);
 
@@ -318,6 +332,8 @@ void Objects::desertShop()
 }
 void Objects::pizzaShop()
 {
+    //function to draw a pizza shop
+
     materialProperty();
     glEnable(GL_TEXTURE_2D);
 
@@ -371,6 +387,8 @@ void Objects::pizzaShop()
 }
 void Objects::donutsShop()
 {
+    //function to draw a donut shop
+
     materialProperty();
     glEnable(GL_TEXTURE_2D);
 
@@ -422,6 +440,8 @@ void Objects::donutsShop()
 
 void Objects::scaryHouse()
 {
+    //function to draw a scary house
+
     materialProperty();
     glEnable(GL_TEXTURE_2D);
 
@@ -469,6 +489,8 @@ void Objects::scaryHouse()
 
 void Objects::cafeteriaFence()
 {
+    //function for the cafeteria fence
+
     for (float i = -12; i <= 24; i += 4)
     {
         glPushMatrix();
@@ -492,6 +514,9 @@ void Objects::cafeteriaFence()
 
 void Objects::cafeteria()
 {
+    //function for the cafeteria fence consisting of dining tables, a pizza shop
+    //a desert shop, and a donuts shop
+
     for (float i = -4; i <= 32; i += 12)
     {
         for (float j = 2; j <= 26; j += 12)
@@ -532,6 +557,8 @@ void Objects::cafeteria()
 
 void Objects::wall()
 {
+    //function to draw the single unit of the wall
+
     materialProperty();
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[31]);
@@ -550,6 +577,8 @@ void Objects::wall()
 
 void Objects::walls()
 {
+    //function to draw the wall boundary
+
     //first part in front
     for (float i = -120; i <= -10; i += 10)
     {
@@ -601,6 +630,9 @@ void Objects::walls()
 
 void Objects::streetLampbody()
 {
+    //function to draw the body of the lamp post
+
+    //top of the lamp
     glPushMatrix();
     glTranslatef(0, 0, 0);
     glRotatef(90, 1, 0, 0);
@@ -608,12 +640,14 @@ void Objects::streetLampbody()
     toroidShape(0.1, 0.1, 0.1, 0.05, 0.05, 0.05, 2, 5, 32, 64);
     glPopMatrix();
 
+    //cylindrical rod of the lamp
     glPushMatrix();
     glRotatef(90, 1, 0, 0);
     glScalef(0.5, 0.5, 1);
     cylindricalShape(0.1, 0.1, 0.1, 0.05, 0.05, 0.05);
     glPopMatrix();
 
+    //bottom of the lamp
     glPushMatrix();
     glTranslatef(0, -19, 0);
     glRotatef(90, 1, 0, 0);
@@ -884,6 +918,8 @@ void Objects::balloonBezier()
 
 void Objects::drawFlag()
 {
+    //function to draw a flag
+
     int L = 3;
     GLfloat ctrlpoints1[4][3] =
         {
@@ -924,6 +960,7 @@ void Objects::drawFlag()
 
 void Objects::balloon()
 {
+    //function to draw a balloon
     glPushMatrix();
     glRotatef(90, 0, 0, 1);
     glScalef(2, 2.5, 2);
@@ -933,6 +970,7 @@ void Objects::balloon()
 
 void Objects::balloonLine()
 {
+    //function to draw the rope attached to the balloon
     materialCurve(0, 0, 0);
     glBegin(GL_LINES);
     glVertex2f(1, 10);
@@ -942,6 +980,7 @@ void Objects::balloonLine()
 
 void Objects::flagpole(int seed)
 {
+    //function to draw the flag 
     glPushMatrix();
     glTranslatef(0, 5.5, 0);
     glRotatef(90, 1, 0, 0);
@@ -967,7 +1006,8 @@ void Objects::flagpole(int seed)
 
 void Objects::flags()
 {
-    
+    //function to draw the flag boundary
+
     for (float i = -60; i <= 80; i += 15)
     {
         glPushMatrix();
@@ -987,6 +1027,8 @@ void Objects::flags()
 
 void Objects::animateFlag()
 {
+    //function to animate the waving motion of the flag
+    
     if (yflag == true)
     {
         yf += 0.1;

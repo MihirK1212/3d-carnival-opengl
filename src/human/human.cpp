@@ -45,18 +45,16 @@ void Human::drawHuman()
         // hand1
         glPushMatrix();
         glTranslatef(2, 9, 0);                 // translate relative to the main body of the human
-        // glRotatef(60, 1, 0, 0);        // rotate w.r.t x axis to simulate hand movement
         glRotatef(-60,0,0,1);
         glRotatef(90,0,1,0);
         glScalef(0.5, 0.8, 2);                 // scaling
-        glTranslatef(-3, -3, -3);                // take top right corner of box to origin
+        glTranslatef(-3, -3, -3);              // take top right corner of box to origin
         cubicalShapeBodyPart();
         glPopMatrix();
 
         // hand2
         glPushMatrix();
         glTranslatef(4, 9, 1.5);
-        // glRotatef(60, 1, 0, 0);
         glRotatef(60,0,0,1);
         glRotatef(-90,0,1,0);
         glScalef(0.5, 0.8, 2);

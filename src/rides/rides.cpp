@@ -52,12 +52,16 @@ vector<double> matrix_mul(vector<vector<double>>&A, vector<double>&p)
 
 vector<double> translate(vector<double>&v,double tx,double ty, double tz)
 {
+    //function to perform translation operation on a vector
+
     vector<vector<double>> T = {{1,0,0,tx},{0,1,0,ty},{0,0,1,tz},{0,0,0,1}};
     return matrix_mul(T, v);
 }
 
 vector<double> rotate(vector<double>&v,double theta)
 {
+    //function to perform rotation operation on a vector
+
     theta = radian(theta);
     vector<vector<double>> T = {{cos(theta),0,sin(theta),0},{0,1,0,0},{-sin(theta),0,cos(theta),0},{0,0,0,1}};
     return matrix_mul(T, v);
@@ -65,12 +69,16 @@ vector<double> rotate(vector<double>&v,double theta)
 
 vector<double> scale(vector<double>&v,double sx,double sy, double sz)
 {
+    //function to perform scaling operation on a vector
+
     vector<vector<double>> T = {{sx,0,0,0},{0,sy,0,0},{0,0,sz,0},{0,0,0,1}};
     return matrix_mul(T, v);
 }
 
 
 vector<double> get_pos(double theta) {
+
+    //function to get the position of the track segment, given the theta parameter
 
     double pi = 3.14159265359;
     theta = (theta * (pi / 180));
@@ -83,6 +91,7 @@ vector<double> get_pos(double theta) {
 }
 vector<double> get_tangent(double theta) {
 
+    //function to get the tangent to the curve of the track, given the theta parameter
 
     double pi = 3.14159265359;
     theta = (theta * (pi / 180));
@@ -146,6 +155,8 @@ vector<double> get_angle(double theta) {
 }
 
 void Rides::rideFence() {
+
+    //function to draw the fence around a ride
     
     //fence in the front
     for (float j = -10; j <= 16; j += 2)
@@ -335,6 +346,8 @@ void Rides::rideFence() {
 }
 void Rides::rideGround()
 {
+    //function to get the ground underneath each ride
+
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[2]); // 2
     glPushMatrix();
@@ -354,6 +367,7 @@ void Rides::rideGround()
 }
 void Rides::pole(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLfloat shine, GLfloat height)
 {
+    //function to draw one pole of the roller coaster
     GLfloat no_mat[] =   {0.0, 0.0, 0.0, 1.0};
     GLfloat mat_ambient[] = {ambX, ambY, ambZ, 1.0};
     GLfloat mat_diffuse[] = {difX, difY, difZ, 1.0};
@@ -373,6 +387,7 @@ void Rides::pole(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat
 
 void Rides::aroundTheWorldSeat()
 {
+    //function to draw the seat of the around-the-world ride
     glPushMatrix();
     glTranslatef(0, -0.5, 0);
     glScalef(0.5, 0.2, 1.5);
@@ -449,6 +464,7 @@ void Rides::aroundTheWordLoops()
 }
 void Rides::aroundTheWorld()
 {
+    //function to draw around-the-world ride
     glPushMatrix();
     glScalef(2, 1, 2);
     rideGround();
@@ -517,6 +533,8 @@ void Rides::aroundTheWorld()
 
 void Rides::coasterRide()
 {
+    //function to draw the car of the roller coaster ride
+
     glPushMatrix();
     glTranslatef(-1.3, 0, 0);
     glScalef(3.7, 0.1, 1);
@@ -582,6 +600,8 @@ void Rides::coasterRide()
 }
 void Rides::track() {
 
+    //function to draw one track segment of the roller coaster
+
     //left bound
     glPushMatrix();
     glScalef(0.1,0.1,0.1);
@@ -609,6 +629,8 @@ void Rides::track() {
 }
 void Rides::coasterSegment(double theta) {
 
+    //function to perform appropriate transofrmations on the track segment to align it along the curve
+
     vector<double> pos = get_pos(theta);
     vector<double> angle = get_angle(theta);
 
@@ -624,6 +646,8 @@ void Rides::coasterSegment(double theta) {
 }
 void Rides::coasterPole(double theta) {
 
+    //function to draw the pole of the roller coaster at the appropriate position
+
     vector<double> pos = get_pos(theta);
     
     glPushMatrix();
@@ -634,6 +658,8 @@ void Rides::coasterPole(double theta) {
     glPopMatrix();
 }
 vector<double> Rides::getRollerCoasterViewRef() {
+
+    //function to get the view reference when camera angle is set to roller coaster view
     
     vector<double> pos = get_pos(rideTheta);
     vector<double> tangent = get_tangent(rideTheta);
@@ -666,6 +692,7 @@ vector<double> Rides::getRollerCoasterViewRef() {
 }
 void Rides::rollerCoaster(Human* human) {
 
+    //function to draw the roller coaster ride
     
     glPushMatrix();
 
@@ -738,6 +765,8 @@ void Rides::rollerCoaster(Human* human) {
 }
 
 
+//Functions to draw the body parts of the horse
+
 void drawNeck() {
     GLUquadricObj* quad = gluNewQuadric();
     gluCylinder(quad, 0.5, 0.5, ANIMAL_NECK_LEN, 10, 5);
@@ -764,7 +793,10 @@ void drawShoulders() {
     gluDeleteQuadric(quad);
 }
 
+
 void getHorse() {
+
+    //function to draw the horse
     
     glPushMatrix();
         glTranslatef(0., 0., -ANIMAL_SHOULDER_DIM / 2);
@@ -855,6 +887,8 @@ void getHorse() {
 
 
 void Rides::carousel() {
+
+    //function to draw the carousel ride
     
     GLUquadricObj *qobj;
     qobj = gluNewQuadric();
@@ -903,6 +937,8 @@ void Rides::carousel() {
 
 void Rides::animateRides(GLboolean aroundTheWorldFlag, GLboolean rideFlag, GLboolean carouselFlag, GLboolean doorFlag) {
     
+    //function that animates the motion of the rides
+
     if (rideFlag == true)
     {
         theta += 2;
