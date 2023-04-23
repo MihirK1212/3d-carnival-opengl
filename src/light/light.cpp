@@ -2,7 +2,6 @@
 
 void light()
 {
-    GLfloat no_light[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat light_ambient[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light_specular[] = {1.0, 1.0, 1.0, 1.0};
@@ -69,7 +68,6 @@ void spotLight1()
 {
     glPushMatrix();
 
-    GLfloat no_light[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat light_ambient[] = {0.5, 0.5, 0.5, 1.0};
     GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light_specular[] = {1.0, 1.0, 1.0, 1.0};
@@ -91,7 +89,6 @@ void spotLight2()
 {
     glPushMatrix();
 
-    GLfloat no_light[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat light_ambient[] = {0.5, 0.5, 0.5, 1.0};
     GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light_specular[] = {1.0, 1.0, 1.0, 1.0};
@@ -112,7 +109,6 @@ void spotLight3()
 {
     glPushMatrix();
 
-    GLfloat no_light[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat light_ambient[] = {0.5, 0.5, 0.5, 1.0};
     GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light_specular[] = {1.0, 1.0, 1.0, 1.0};
@@ -133,7 +129,6 @@ void spotLight4()
 {
     glPushMatrix();
 
-    GLfloat no_light[] = {0.0, 0.0, 0.0, 1.0};
     GLfloat light_ambient[] = {0.5, 0.5, 0.5, 1.0};
     GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
     GLfloat light_specular[] = {1.0, 1.0, 1.0, 1.0};

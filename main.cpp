@@ -356,8 +356,8 @@ void myKeyboardFunc(unsigned char key, int x, int y)
         {
             day = true;
             lighting1(-100, 100, 100, intensity);
-            lighting2(100, -100, 100, intensity);
-            lighting3(-100, -100, 100, intensity);
+            lighting2(100, 100, -100, intensity);
+            lighting3(-100, 100, -100, intensity);
             lighting4(100, 100, 100, intensity);
             break;
         }
@@ -373,8 +373,8 @@ void myKeyboardFunc(unsigned char key, int x, int y)
         {
             intensity += 0.1;
             lighting1(-100, 100, 100, intensity);
-            lighting2(100, -100, 100, intensity);
-            lighting3(-100, -100, 100, intensity);
+            lighting2(100, 100, -100, intensity);
+            lighting3(-100, 100, -100, intensity);
             lighting4(100, 100, 100, intensity);
             break;
         }
@@ -390,8 +390,8 @@ void myKeyboardFunc(unsigned char key, int x, int y)
             intensity -= 0.1;
             lighting1(100, 100, 100, intensity);
             lighting2(-100, 100, 100, intensity);
-            lighting3(100, -100, 100, intensity);
-            lighting4(-100, -100, 100, intensity);
+            lighting3(100, 100, -100, intensity);
+            lighting4(-100, 100, -100, intensity);
             break;
         }
         else

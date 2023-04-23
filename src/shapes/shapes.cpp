@@ -1,6 +1,6 @@
 #include "shapes.h"
 
-static GLfloat v_cube[8][3] =
+static GLfloat cubeVertices[8][3] =
     {
         {0.0, 0.0, 0.0}, // 0
         {0.0, 0.0, 3.0}, // 1
@@ -12,7 +12,7 @@ static GLfloat v_cube[8][3] =
         {3.0, 3.0, 0.0}  // 7
 };
 
-static GLubyte quadIndices[6][4] =
+static GLubyte quadricIndices[6][4] =
     {
         {0, 1, 2, 3}, // bottom
         {4, 5, 6, 7}, // top
@@ -22,7 +22,7 @@ static GLubyte quadIndices[6][4] =
         {0, 4, 5, 1}  // left
 };
 
-static GLfloat v_box[8][3] =
+static GLfloat boxVertices[8][3] =
     {
         {0.0, 0.0, 0.0}, // 0
         {3.0, 0.0, 0.0}, // 1
@@ -35,7 +35,7 @@ static GLfloat v_box[8][3] =
 
 };
 
-static GLubyte BoxquadIndices[6][4] =
+static GLubyte quadricBoxIndices[6][4] =
     {
         {0, 2, 3, 1},
         {0, 2, 6, 4},
@@ -45,26 +45,8 @@ static GLubyte BoxquadIndices[6][4] =
         {6, 7, 5, 4}
     };
 
-static GLfloat v_pyramid[5][3] =
-    {
-        {0.0, 0.0, 0.0},
-        {0.0, 0.0, 2.0},
-        {2.0, 0.0, 2.0},
-        {2.0, 0.0, 0.0},
-        {1.0, 4.0, 1.0}};
 
-static GLubyte p_Indices[4][3] =
-    {
-        {4, 1, 2},
-        {4, 2, 3},
-        {4, 3, 0},
-        {4, 0, 1}};
-
-static GLubyte PquadIndices[1][4] =
-    {
-        {0, 3, 2, 1}};
-
-static GLfloat v_trapezoid[8][3] =
+static GLfloat trapezoidVertices[8][3] =
     {
         {0.0, 0.0, 0.0}, // 0
         {0.0, 0.0, 3.0}, // 1
@@ -76,7 +58,7 @@ static GLfloat v_trapezoid[8][3] =
         {2.5, 3.0, 0.5}  // 7
 };
 
-static GLubyte TquadIndices[6][4] =
+static GLubyte quadricTrapezoidIndices[6][4] =
     {
         {0, 1, 2, 3}, // bottom
         {4, 5, 6, 7}, // top
@@ -184,13 +166,13 @@ void cubicalShape(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX , GLflo
 
     for (GLint i = 0; i < 6; i++)
     {
-        getNormal3p(v_cube[quadIndices[i][0]][0], v_cube[quadIndices[i][0]][1], v_cube[quadIndices[i][0]][2],
-                    v_cube[quadIndices[i][1]][0], v_cube[quadIndices[i][1]][1], v_cube[quadIndices[i][1]][2],
-                    v_cube[quadIndices[i][2]][0], v_cube[quadIndices[i][2]][1], v_cube[quadIndices[i][2]][2]);
-        glVertex3fv(&v_cube[quadIndices[i][0]][0]);
-        glVertex3fv(&v_cube[quadIndices[i][1]][0]);
-        glVertex3fv(&v_cube[quadIndices[i][2]][0]);
-        glVertex3fv(&v_cube[quadIndices[i][3]][0]);
+        getNormal3p(cubeVertices[quadricIndices[i][0]][0], cubeVertices[quadricIndices[i][0]][1], cubeVertices[quadricIndices[i][0]][2],
+                    cubeVertices[quadricIndices[i][1]][0], cubeVertices[quadricIndices[i][1]][1], cubeVertices[quadricIndices[i][1]][2],
+                    cubeVertices[quadricIndices[i][2]][0], cubeVertices[quadricIndices[i][2]][1], cubeVertices[quadricIndices[i][2]][2]);
+        glVertex3fv(&cubeVertices[quadricIndices[i][0]][0]);
+        glVertex3fv(&cubeVertices[quadricIndices[i][1]][0]);
+        glVertex3fv(&cubeVertices[quadricIndices[i][2]][0]);
+        glVertex3fv(&cubeVertices[quadricIndices[i][3]][0]);
     }
     glEnd();
 }
@@ -211,6 +193,28 @@ void sphericalShape(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfl
     glutSolidSphere(1.0, 16, 16);
 }
 
+
+void boxShape()
+{
+    materialProperty();
+    glBegin(GL_QUADS);
+    for (GLint i = 0; i < 6; i++)
+    {
+        getNormal3p(boxVertices[quadricBoxIndices[i][0]][0], boxVertices[quadricBoxIndices[i][0]][1], boxVertices[quadricBoxIndices[i][0]][2],
+                    boxVertices[quadricBoxIndices[i][1]][0], boxVertices[quadricBoxIndices[i][1]][1], boxVertices[quadricBoxIndices[i][1]][2],
+                    boxVertices[quadricBoxIndices[i][2]][0], boxVertices[quadricBoxIndices[i][2]][1], boxVertices[quadricBoxIndices[i][2]][2]);
+
+        glVertex3fv(&boxVertices[quadricBoxIndices[i][0]][0]);
+        glTexCoord2f(1, 1);
+        glVertex3fv(&boxVertices[quadricBoxIndices[i][1]][0]);
+        glTexCoord2f(1, 0);
+        glVertex3fv(&boxVertices[quadricBoxIndices[i][2]][0]);
+        glTexCoord2f(0, 0);
+        glVertex3fv(&boxVertices[quadricBoxIndices[i][3]][0]);
+        glTexCoord2f(0, 1);
+    }
+    glEnd();
+}
 
 void toroidShape(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GLfloat ambY, GLfloat ambZ, GLdouble innerRadius, GLdouble outerRadius, GLint nsides, GLint rings, GLfloat shine)
 {
@@ -266,36 +270,15 @@ void trapezoidalShape(GLfloat difX, GLfloat difY, GLfloat difZ, GLfloat ambX, GL
     glBegin(GL_QUADS);
     for (GLint i = 0; i < 6; i++)
     {
-        getNormal3p(v_trapezoid[TquadIndices[i][0]][0], v_trapezoid[TquadIndices[i][0]][1], v_trapezoid[TquadIndices[i][0]][2],
-                    v_trapezoid[TquadIndices[i][1]][0], v_trapezoid[TquadIndices[i][1]][1], v_trapezoid[TquadIndices[i][1]][2],
-                    v_trapezoid[TquadIndices[i][2]][0], v_trapezoid[TquadIndices[i][2]][1], v_trapezoid[TquadIndices[i][2]][2]);
+        getNormal3p(trapezoidVertices[quadricTrapezoidIndices[i][0]][0], trapezoidVertices[quadricTrapezoidIndices[i][0]][1], trapezoidVertices[quadricTrapezoidIndices[i][0]][2],
+                    trapezoidVertices[quadricTrapezoidIndices[i][1]][0], trapezoidVertices[quadricTrapezoidIndices[i][1]][1], trapezoidVertices[quadricTrapezoidIndices[i][1]][2],
+                    trapezoidVertices[quadricTrapezoidIndices[i][2]][0], trapezoidVertices[quadricTrapezoidIndices[i][2]][1], trapezoidVertices[quadricTrapezoidIndices[i][2]][2]);
 
-        glVertex3fv(&v_trapezoid[TquadIndices[i][0]][0]);
-        glVertex3fv(&v_trapezoid[TquadIndices[i][1]][0]);
-        glVertex3fv(&v_trapezoid[TquadIndices[i][2]][0]);
-        glVertex3fv(&v_trapezoid[TquadIndices[i][3]][0]);
+        glVertex3fv(&trapezoidVertices[quadricTrapezoidIndices[i][0]][0]);
+        glVertex3fv(&trapezoidVertices[quadricTrapezoidIndices[i][1]][0]);
+        glVertex3fv(&trapezoidVertices[quadricTrapezoidIndices[i][2]][0]);
+        glVertex3fv(&trapezoidVertices[quadricTrapezoidIndices[i][3]][0]);
     }
     glEnd();
 }
 
-void boxShape()
-{
-    materialProperty();
-    glBegin(GL_QUADS);
-    for (GLint i = 0; i < 6; i++)
-    {
-        getNormal3p(v_box[BoxquadIndices[i][0]][0], v_box[BoxquadIndices[i][0]][1], v_box[BoxquadIndices[i][0]][2],
-                    v_box[BoxquadIndices[i][1]][0], v_box[BoxquadIndices[i][1]][1], v_box[BoxquadIndices[i][1]][2],
-                    v_box[BoxquadIndices[i][2]][0], v_box[BoxquadIndices[i][2]][1], v_box[BoxquadIndices[i][2]][2]);
-
-        glVertex3fv(&v_box[BoxquadIndices[i][0]][0]);
-        glTexCoord2f(1, 1);
-        glVertex3fv(&v_box[BoxquadIndices[i][1]][0]);
-        glTexCoord2f(1, 0);
-        glVertex3fv(&v_box[BoxquadIndices[i][2]][0]);
-        glTexCoord2f(0, 0);
-        glVertex3fv(&v_box[BoxquadIndices[i][3]][0]);
-        glTexCoord2f(0, 1);
-    }
-    glEnd();
-}

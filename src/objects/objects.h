@@ -37,7 +37,6 @@ struct Objects {
     void drawPool();
 
     void bush();
-    void tree();
     void chair();
     void table();
     void DrawUmbrella();

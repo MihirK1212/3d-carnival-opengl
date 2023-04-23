@@ -124,29 +124,12 @@ void Objects::drawPool()
 void Objects::bush()
 {
     quad = gluNewQuadric();
+
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, ID2[24]);
-
     glPushMatrix();
     gluQuadricTexture(quad, 1);
     gluSphere(quad, 1, 100, 100);
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-}
-
-void Objects::tree()
-{
-    quad = gluNewQuadric();
-    glEnable(GL_TEXTURE_2D);
-
-    glBindTexture(GL_TEXTURE_2D, ID2[30]);
-
-    glBindTexture(GL_TEXTURE_2D, ID2[29]);
-    glPushMatrix();
-    glTranslatef(0, -7, 0);
-    glRotatef(90, 1, 0, 0);
-    gluQuadricTexture(quad, 1);
-    gluCylinder(quad, 1, 1, 10, 32, 32);
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
 }
@@ -309,8 +292,9 @@ void Objects::desertShop()
     glBindTexture(GL_TEXTURE_2D, ID2[18]);
 
     glPushMatrix();
-    glTranslatef(0, 0, -2);
-    quadricShape2();
+    glTranslatef(0, 3, -2);
+    glRotatef(90, 1, 0, 0);
+    quadricShape1();
     glPopMatrix();
 
     glPushMatrix();
@@ -319,9 +303,8 @@ void Objects::desertShop()
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(0, 3, -2);
-    glRotatef(90, 1, 0, 0);
-    quadricShape1();
+    glTranslatef(0, 0, -2);
+    quadricShape2();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[5]);
@@ -333,7 +316,6 @@ void Objects::desertShop()
 
     glDisable(GL_TEXTURE_2D);
 }
-
 void Objects::pizzaShop()
 {
     materialProperty();
@@ -361,6 +343,13 @@ void Objects::pizzaShop()
 
     glBindTexture(GL_TEXTURE_2D, ID2[4]);
     glPushMatrix();
+    glTranslatef(0, 3, -2);
+    glRotatef(90, 1, 0, 0);
+    quadricShape1();
+    glPopMatrix();
+
+    glBindTexture(GL_TEXTURE_2D, ID2[4]);
+    glPushMatrix();
     glTranslatef(0, 0, -2);
     quadricShape2();
     glPopMatrix();
@@ -369,13 +358,6 @@ void Objects::pizzaShop()
     glPushMatrix();
     glTranslatef(10, 0, -2);
     quadricShape2();
-    glPopMatrix();
-
-    glBindTexture(GL_TEXTURE_2D, ID2[4]);
-    glPushMatrix();
-    glTranslatef(0, 3, -2);
-    glRotatef(90, 1, 0, 0);
-    quadricShape1();
     glPopMatrix();
 
     glBindTexture(GL_TEXTURE_2D, ID2[6]);
@@ -387,6 +369,57 @@ void Objects::pizzaShop()
 
     glDisable(GL_TEXTURE_2D);
 }
+void Objects::donutsShop()
+{
+    materialProperty();
+    glEnable(GL_TEXTURE_2D);
+
+    glBindTexture(GL_TEXTURE_2D, ID2[19]);
+    glPushMatrix();
+    quadricShape1();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0, 11, -2);
+    glRotatef(90, 1, 0, 0);
+    glScalef(1, 1.5, 1);
+    quadricShape1();
+    glPopMatrix();
+
+    glBindTexture(GL_TEXTURE_2D, ID2[21]);
+    glPushMatrix();
+    glTranslatef(0, 0, -5);
+    glScalef(1, 2, 1);
+    quadricShape1();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0, 3, -2);
+    glRotatef(90, 1, 0, 0);
+    quadricShape1();
+    glPopMatrix();
+
+    glBindTexture(GL_TEXTURE_2D, ID2[7]);
+    glPushMatrix();
+    glTranslatef(0, 6, 1);
+    glScalef(1, 0.5, 1);
+    quadricShape1();
+    glPopMatrix();
+
+    glBindTexture(GL_TEXTURE_2D, ID2[20]);
+    glPushMatrix();
+    glTranslatef(0, 0, -2);
+    quadricShape2();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(10, 0, -2);
+    quadricShape2();
+    glPopMatrix();
+
+    glDisable(GL_TEXTURE_2D);
+}
+
 void Objects::scaryHouse()
 {
     materialProperty();
@@ -430,56 +463,6 @@ void Objects::scaryHouse()
     quadricShape2();
     glPopMatrix();
 
-
-    glDisable(GL_TEXTURE_2D);
-}
-void Objects::donutsShop()
-{
-    materialProperty();
-    glEnable(GL_TEXTURE_2D);
-
-    glBindTexture(GL_TEXTURE_2D, ID2[19]);
-    glPushMatrix();
-    quadricShape1();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, 11, -2);
-    glRotatef(90, 1, 0, 0);
-    glScalef(1, 1.5, 1);
-    quadricShape1();
-    glPopMatrix();
-
-    glBindTexture(GL_TEXTURE_2D, ID2[21]);
-    glPushMatrix();
-    glTranslatef(0, 0, -5);
-    glScalef(1, 2, 1);
-    quadricShape1();
-    glPopMatrix();
-
-    glBindTexture(GL_TEXTURE_2D, ID2[20]);
-    glPushMatrix();
-    glTranslatef(0, 0, -2);
-    quadricShape2();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(10, 0, -2);
-    quadricShape2();
-    glPopMatrix();
-
-    glPushMatrix();
-    glTranslatef(0, 3, -2);
-    glRotatef(90, 1, 0, 0);
-    quadricShape1();
-    glPopMatrix();
-
-    glBindTexture(GL_TEXTURE_2D, ID2[7]);
-    glPushMatrix();
-    glTranslatef(0, 6, 1);
-    glScalef(1, 0.5, 1);
-    quadricShape1();
-    glPopMatrix();
 
     glDisable(GL_TEXTURE_2D);
 }
@@ -829,9 +812,7 @@ void Objects::showControlPoints(int L, GLfloat ctrlpoints[][3])
 void Objects::balloonBezier()
 {
     int L = 5;
-    GLfloat balloonctrlpoints[6][3] =
-        {
-            {0.0, 0.0, 0.0}, {0.7, 0.8, 0}, {2, 0.9, 0}, {2.3, 0.5, 0}, {2.5, 0.1, 0}, {2.4, 0, 0}};
+    GLfloat balloonctrlpoints[6][3] = {{0.0, 0.0, 0.0}, {0.7, 0.8, 0}, {2, 0.9, 0}, {2.3, 0.5, 0}, {2.5, 0.1, 0}, {2.4, 0, 0}};
 
     int i, j;
     float x, y, z, r;     // current coordinates

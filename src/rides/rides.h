@@ -12,8 +12,8 @@ struct Rides {
     GLfloat alpha;
     GLfloat theta;
 
-    GLfloat orbiterAlpha;
-    GLfloat orbiterTheta;
+    GLfloat atwAlpha;
+    GLfloat atwTheta;
     
     int rideTheta;
 
@@ -24,8 +24,8 @@ struct Rides {
         alpha = 0.0; 
         theta = 0.0;
 
-        orbiterAlpha = -45.0;
-        orbiterTheta = 0.0;
+        atwAlpha = -45.0;
+        atwTheta = 0.0;
 
         rideTheta = 0;
 

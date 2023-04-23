@@ -433,7 +433,7 @@ void Rides::aroundTheWordLoops()
         glTranslatef(0, i, 0);
         glRotatef(90, 1, 0, 0);
         glScalef(0.2, 0.2, 0.2);
-        toroidShape(1, 1, 1, 0.5, 0.5, 0.5, 1.5, 7.5, 32, 64);
+        toroidShape(0.2, 0.5, 0.6, 0.1, 0.7, 0.8, 1.5, 7.5, 32, 64);
         glPopMatrix();
     }
 
@@ -479,21 +479,13 @@ void Rides::aroundTheWorld()
     toroidShape(1, 0, 0, 0.5, 0, 0, 2, 10, 32, 64);
     glPopMatrix();
 
-    // the sphere
-    glPushMatrix();
-    glTranslatef(0, -1, 0);
-    glScalef(2.5, 2.5, 2.5);
-    sphericalShape(1, 0, 0, 0.5, 0, 0);
-    glPopMatrix();
-
-    
     // translating the rotating part down
     glPushMatrix();
     glTranslatef(0, -5, 0);
 
         // rotating part
         glPushMatrix();
-        glRotatef(orbiterTheta, 0, 1, 0);
+        glRotatef(atwTheta, 0, 1, 0);
         // seat
         for (int i = 0; i <= 360; i += 45)
         {
@@ -501,16 +493,16 @@ void Rides::aroundTheWorld()
             glRotatef(i, 0, 1, 0);
 
             glPushMatrix();
-            glRotatef(orbiterAlpha, 0, 0, 1);
+            glRotatef(atwAlpha, 0, 0, 1);
             glRotatef(0, 0, 1, 0);
             glTranslatef(15, 0, -2);
             glRotatef(-0, 0, 1, 0);
-            glRotatef(-orbiterAlpha, 0, 0, 1);
+            glRotatef(-atwAlpha, 0, 0, 1);
             aroundTheWorldSeat();
             glPopMatrix();
 
             glPushMatrix();
-            glRotatef(orbiterAlpha, 0, 0, 1);
+            glRotatef(atwAlpha, 0, 0, 1);
             glScalef(5.1, 0.2, 0.2);
             cubicalShape(0, 0, 1, 0, 0, 0.5);
             glPopMatrix();
@@ -922,23 +914,23 @@ void Rides::animateRides(GLboolean aroundTheWorldFlag, GLboolean rideFlag, GLboo
 
     if (aroundTheWorldFlag == true)
     {
-        orbiterTheta += 3;
-        if (orbiterTheta > 360.0)
-            orbiterTheta -= 360.0 * floor(theta / 360.0);
+        atwTheta += 3;
+        if (atwTheta > 360.0)
+            atwTheta -= 360.0 * floor(theta / 360.0);
 
-        orbiterAlpha += 2;
-        if (orbiterAlpha >= 45)
-            orbiterAlpha = 45;
+        atwAlpha += 2;
+        if (atwAlpha >= 45)
+            atwAlpha = 45;
     }
     else
     {
-        orbiterAlpha -= 1;
-        if (orbiterAlpha <= -45)
-            orbiterAlpha = -45;
+        atwAlpha -= 1;
+        if (atwAlpha <= -45)
+            atwAlpha = -45;
 
-        orbiterTheta += 3;
-        if (orbiterAlpha == -45)
-            orbiterTheta = 0;
+        atwTheta += 3;
+        if (atwAlpha == -45)
+            atwTheta = 0;
     }
 
     if (carouselFlag == true)
