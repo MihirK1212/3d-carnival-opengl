@@ -461,7 +461,7 @@ void fullScreen(int w, int h)
     glLoadIdentity();
 
     glViewport(0, 0, w, h);
-    gluPerspective(60, ratio, 1, 500);
+    gluPerspective(60, ratio, 1, 500); //fov-y, aspect, zNear, zFar
     glMatrixMode(GL_MODELVIEW);
 }
 
