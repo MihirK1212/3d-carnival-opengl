@@ -465,6 +465,7 @@ void Rides::aroundTheWordLoops()
 void Rides::aroundTheWorld()
 {
     //function to draw around-the-world ride
+
     glPushMatrix();
     glScalef(2, 1, 2);
     rideGround();
@@ -477,9 +478,9 @@ void Rides::aroundTheWorld()
     cubicalShape(0.7, 0.7, 0.7,  0.1,0.1,0.6);
     glPopMatrix(); 
 
-    // the 1st torus at the bottom
     aroundTheWordLoops();
 
+    // the 1st torus at the bottom
     glPushMatrix();
     glTranslatef(0, -18, 0);
     glRotatef(90, 1, 0, 0);
@@ -499,32 +500,32 @@ void Rides::aroundTheWorld()
     glPushMatrix();
     glTranslatef(0, -5, 0);
 
-        // rotating part
+        
         glPushMatrix();
-        glRotatef(atwTheta, 0, 1, 0);
-        // seat
-        for (int i = 0; i <= 360; i += 45)
-        {
-            glPushMatrix();
-            glRotatef(i, 0, 1, 0);
 
-            glPushMatrix();
-            glRotatef(atwAlpha, 0, 0, 1);
-            glRotatef(0, 0, 1, 0);
-            glTranslatef(15, 0, -2);
-            glRotatef(-0, 0, 1, 0);
-            glRotatef(-atwAlpha, 0, 0, 1);
-            aroundTheWorldSeat();
-            glPopMatrix();
+            // rotating part
+            glRotatef(atwTheta, 0, 1, 0);
 
-            glPushMatrix();
-            glRotatef(atwAlpha, 0, 0, 1);
-            glScalef(5.1, 0.2, 0.2);
-            cubicalShape(0, 0, 1, 0, 0, 0.5);
-            glPopMatrix();
+            for (int i = 0; i <= 360; i += 45)
+            {
+                glPushMatrix();
+                glRotatef(i, 0, 1, 0);
 
-            glPopMatrix();
-        }
+                    glPushMatrix();
+                    glRotatef(atwAlpha, 0, 0, 1);
+                    glTranslatef(15, 0, -2);
+                    glRotatef(-atwAlpha, 0, 0, 1);
+                    aroundTheWorldSeat();
+                    glPopMatrix();
+
+                    glPushMatrix();
+                    glRotatef(atwAlpha, 0, 0, 1);
+                    glScalef(5.1, 0.2, 0.2);
+                    cubicalShape(0, 0, 1, 0, 0, 0.5);
+                    glPopMatrix();
+
+                glPopMatrix();
+            }
 
         glPopMatrix();
 

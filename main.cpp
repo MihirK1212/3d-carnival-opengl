@@ -206,6 +206,8 @@ void display(void)
     rides->carousel();
     glPopMatrix();
 
+    double test_theta = -45;
+
     glDisable(GL_LIGHTING);
 
     glFlush();
