@@ -134,6 +134,14 @@ void Human::move(int key, int x, int y)
             human_x += (cos(radian(angle_x)));
             human_z -= (sin(radian(angle_x)));
 
+            if(human_x>=121 || human_x<=-120) {
+                human_x -= (cos(radian(angle_x)));
+            }
+
+            if(human_z>=80 || human_z<=-95) {
+                human_z += (sin(radian(angle_x)));
+            }
+ 
             if (!leg_flag)
             {
                 if (!leg_coming_back)
